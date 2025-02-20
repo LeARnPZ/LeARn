@@ -11,6 +11,8 @@ public class ModifyStructure : MonoBehaviour
     private GameObject addBtn;
     [SerializeField]
     private GameObject popBtn;
+    [SerializeField]
+    private GameObject peekBtn;
 
     public void OnButtonClick()
     {
@@ -27,6 +29,14 @@ public class ModifyStructure : MonoBehaviour
         else if (this.gameObject.Equals(popBtn))
         {
             animation.transform.GetChild(0).GetComponent<Structures>().PopItem();
+            GetComponent<Button>().interactable = false;
+            yield return new WaitForSeconds(0.5f);
+            if (!animation.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
+                GetComponent<Button>().interactable = true;
+        }
+        else if (this.gameObject.Equals(peekBtn))
+        {
+            animation.transform.GetChild(0).GetComponent<Structures>().PeekItem();
             GetComponent<Button>().interactable = false;
             yield return new WaitForSeconds(0.5f);
             if (!animation.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
