@@ -40,7 +40,7 @@ public abstract class Structures : MonoBehaviour
         if (index > 0)
             items[index].transform.localPosition = items[index - 1].transform.localPosition + offset * direction;
         else
-            items[index].transform.localPosition = Vector3.zero;
+            items[index].transform.localPosition = direction;
 
         values.Add((int)(Random.value * 100));
         items[index].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[index].ToString();
@@ -52,8 +52,7 @@ public abstract class Structures : MonoBehaviour
 
         Rigidbody rigidbody = items[popIndex].GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.AddForce(1.5f * rigidbody.mass * Vector3.up, ForceMode.Impulse);
-        rigidbody.AddForce(rigidbody.mass * Vector3.forward, ForceMode.Impulse);
+        rigidbody.AddRelativeForce(rigidbody.mass * (1.5f * Vector3.up + Vector3.forward + 0.5f * Vector3.right), ForceMode.Impulse);
         
         Destroy(items[popIndex], 1f);
 
