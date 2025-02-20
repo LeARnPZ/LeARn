@@ -52,7 +52,7 @@ public abstract class Structures : MonoBehaviour
 
         Rigidbody rigidbody = items[popIndex].GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.AddRelativeForce(1.5f * Vector3.up + Vector3.forward + Vector3.right, ForceMode.Impulse);
+        rigidbody.AddRelativeForce(2 * Vector3.up + 0.5f * Vector3.forward + 0.5f * Vector3.right, ForceMode.Impulse);
         
         Destroy(items[popIndex], 1f);
 
@@ -65,7 +65,7 @@ public abstract class Structures : MonoBehaviour
         if (items.Count < 1) return;
 
         Rigidbody rigidbody = items[popIndex].GetComponent<Rigidbody>();
-        rigidbody.AddRelativeForce(1.5f * Vector3.up, ForceMode.Impulse);
+        rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
     }
 
     protected void Start()
@@ -76,5 +76,4 @@ public abstract class Structures : MonoBehaviour
 
         warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
     }
-
 }

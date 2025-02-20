@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class ModifyStructure : MonoBehaviour
 {
     [SerializeField]
-    private new GameObject animation;
+    private GameObject anim;
+    [SerializeField]
+    private float timeout;
+
+    [Header("Button objects")]
     [SerializeField]
     private GameObject addBtn;
     [SerializeField]
@@ -14,33 +18,35 @@ public class ModifyStructure : MonoBehaviour
     [SerializeField]
     private GameObject peekBtn;
 
-    public void OnButtonClick()
+    public void AddButtonClick()
     {
-        StartCoroutine(ClickHandler());
+        anim.transform.GetChild(0).GetComponent<Structures>().AddItem();
+        StartCoroutine(ButtonsTimeout());
+    }
+    
+    public void PopButtonClick()
+    {
+        anim.transform.GetChild(0).GetComponent<Structures>().PopItem();
+        StartCoroutine(ButtonsTimeout());
+    }
+    
+    public void PeekButtonClick()
+    {
+        anim.transform.GetChild(0).GetComponent<Structures>().PeekItem();
+        StartCoroutine(ButtonsTimeout());
     }
 
-    private IEnumerator ClickHandler()
+    private IEnumerator ButtonsTimeout()
     {
-        if (this.gameObject.Equals(addBtn))
+        addBtn.GetComponent<Button>().interactable = false;
+        popBtn.GetComponent<Button>().interactable = false;
+        peekBtn.GetComponent<Button>().interactable = false;
+        yield return new WaitForSeconds(timeout);
+        addBtn.GetComponent<Button>().interactable = true;
+        if (!anim.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
         {
-            animation.transform.GetChild(0).GetComponent<Structures>().AddItem();
             popBtn.GetComponent<Button>().interactable = true;
-        }
-        else if (this.gameObject.Equals(popBtn))
-        {
-            animation.transform.GetChild(0).GetComponent<Structures>().PopItem();
-            GetComponent<Button>().interactable = false;
-            yield return new WaitForSeconds(0.5f);
-            if (!animation.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
-                GetComponent<Button>().interactable = true;
-        }
-        else if (this.gameObject.Equals(peekBtn))
-        {
-            animation.transform.GetChild(0).GetComponent<Structures>().PeekItem();
-            GetComponent<Button>().interactable = false;
-            yield return new WaitForSeconds(0.5f);
-            if (!animation.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
-                GetComponent<Button>().interactable = true;
+            peekBtn.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -51,6 +57,8 @@ public class ModifyStructure : MonoBehaviour
         else
             gameObject.SetActive(false);
 
-        GetComponent<Button>().interactable = false;
+        addBtn.GetComponent<Button>().interactable = false;
+        popBtn.GetComponent<Button>().interactable = false;
+        peekBtn.GetComponent<Button>().interactable = false;
     }
 }

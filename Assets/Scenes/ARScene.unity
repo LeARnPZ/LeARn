@@ -276,6 +276,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &567307490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567307491}
+  - component: {fileID: 567307492}
+  m_Layer: 5
+  m_Name: StructButtons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &567307491
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567307490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1153645584}
+  - {fileID: 1830815729}
+  - {fileID: 2107770836}
+  m_Father: {fileID: 1508836326}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1000}
+  m_SizeDelta: {x: 1000, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &567307492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567307490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda199f138efcfb46b90b68716a1f377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 566207622}
+  timeout: 0.5
+  addBtn: {fileID: 1153645583}
+  popBtn: {fileID: 1830815728}
+  peekBtn: {fileID: 2107770835}
 --- !u!1 &576906013
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +1011,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958406007}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1074,7 +1130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecccf56aa3f0174e9d700de36bdd375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation: {fileID: 566207622}
+  anim: {fileID: 0}
 --- !u!1 &1143472800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1277,6 @@ GameObject:
   - component: {fileID: 1153645588}
   - component: {fileID: 1153645587}
   - component: {fileID: 1153645586}
-  - component: {fileID: 1153645585}
   m_Layer: 5
   m_Name: AddItemButton
   m_TagString: Untagged
@@ -1236,35 +1291,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153645583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 921765317}
-  m_Father: {fileID: 1508836326}
+  m_Father: {fileID: 567307491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 1000}
+  m_AnchoredPosition: {x: -250, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1153645585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153645583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda199f138efcfb46b90b68716a1f377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animation: {fileID: 566207622}
-  addBtn: {fileID: 1153645583}
-  popBtn: {fileID: 1830815728}
-  peekBtn: {fileID: 2107770835}
 --- !u!114 &1153645586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,9 +1348,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1153645585}
+      - m_Target: {fileID: 567307492}
         m_TargetAssemblyTypeName: ModifyStructure, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: AddButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1520,7 +1559,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179631052}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1872,9 +1911,7 @@ RectTransform:
   - {fileID: 576906014}
   - {fileID: 1520763244}
   - {fileID: 958406008}
-  - {fileID: 1153645584}
-  - {fileID: 1830815729}
-  - {fileID: 2107770836}
+  - {fileID: 567307491}
   - {fileID: 1590973565}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1910,7 +1947,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520763243}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2460,7 +2497,6 @@ GameObject:
   - component: {fileID: 1830815733}
   - component: {fileID: 1830815732}
   - component: {fileID: 1830815731}
-  - component: {fileID: 1830815730}
   m_Layer: 5
   m_Name: PopItemButton
   m_TagString: Untagged
@@ -2475,35 +2511,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830815728}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1637185709}
-  m_Father: {fileID: 1508836326}
+  m_Father: {fileID: 567307491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110, y: 1000}
+  m_AnchoredPosition: {x: -110, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1830815730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1830815728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda199f138efcfb46b90b68716a1f377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animation: {fileID: 566207622}
-  addBtn: {fileID: 1153645583}
-  popBtn: {fileID: 1830815728}
-  peekBtn: {fileID: 2107770835}
 --- !u!114 &1830815731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2548,9 +2568,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1830815730}
+      - m_Target: {fileID: 567307492}
         m_TargetAssemblyTypeName: ModifyStructure, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: PopButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2776,7 +2796,6 @@ GameObject:
   - component: {fileID: 2107770840}
   - component: {fileID: 2107770839}
   - component: {fileID: 2107770838}
-  - component: {fileID: 2107770837}
   m_Layer: 5
   m_Name: PeekItemButton
   m_TagString: Untagged
@@ -2791,35 +2810,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107770835}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1633554226}
-  m_Father: {fileID: 1508836326}
+  m_Father: {fileID: 567307491}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 1000}
+  m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2107770837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2107770835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda199f138efcfb46b90b68716a1f377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animation: {fileID: 566207622}
-  addBtn: {fileID: 1153645583}
-  popBtn: {fileID: 1830815728}
-  peekBtn: {fileID: 2107770835}
 --- !u!114 &2107770838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2864,9 +2867,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2107770837}
+      - m_Target: {fileID: 567307492}
         m_TargetAssemblyTypeName: ModifyStructure, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: PeekButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
