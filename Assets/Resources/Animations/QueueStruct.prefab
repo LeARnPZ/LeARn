@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad0142ab153263440a250e55618664f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7330828157124615930, guid: 43d97cc8652e724478fe77d1e7308af3, type: 3}
+  prefab: {fileID: 185193376915255039, guid: 215b947ca3cb8cb4b984454346d0f47c, type: 3}
   maxCount: 10
   offset: 1.5
   speed: 1

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de603c3ac957124ca6f1f64e8c4a4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 185193376915255039, guid: 64c077e443a35ff4c8859b2d427df2e8, type: 3}
+  prefab: {fileID: 185193376915255039, guid: 215b947ca3cb8cb4b984454346d0f47c, type: 3}
   maxCount: 10
   offset: 1.5
 --- !u!1 &8132882296070092401
