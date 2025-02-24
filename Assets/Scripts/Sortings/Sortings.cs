@@ -64,7 +64,8 @@ public abstract class Sortings : MonoBehaviour
 
     protected void Start()
     {
-        Vector3 startPosition = new(-numberOfItems/2 + 1, 0, 0);
+        //Vector3 startPosition = new(-numberOfItems/2 + 1, 0, 0);
+        Vector3 startPosition = new(-numberOfItems / 2 + 1, 2f, 0);
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
