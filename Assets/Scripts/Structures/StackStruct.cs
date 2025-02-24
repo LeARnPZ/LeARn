@@ -11,13 +11,13 @@ public class StackStruct : Structures
 
     public override void PopItem()
     {
-        popIndex = items.Count - 1;
+        iterator = items.Count - 1;
         base.PopItem();
     }
 
     public override void PeekItem()
     {
-        popIndex = items.Count - 1;
+        iterator = items.Count - 1;
         base.PeekItem();
     }
 }

@@ -43,7 +43,7 @@ public class QueueStruct : Structures
 
     public override void PopItem()
     {
-        popIndex = 0;
+        iterator = 0;
         base.PopItem();
 
         if (items.Count < 1) return;
@@ -52,7 +52,7 @@ public class QueueStruct : Structures
 
     public override void PeekItem()
     {
-        popIndex = 0;
+        iterator = 0;
         base.PeekItem();
     }
 }
