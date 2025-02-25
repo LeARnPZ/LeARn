@@ -36,9 +36,11 @@ public class ListStruct : Structures
         }
         else if (adjustMode == AdjustMode.outwards)
         {
+            if (iterator == items.Count-1) yield break;
+
             foreach (GameObject item in items)
             {
-                if (items.IndexOf(item) >= iterator)
+                if (items.IndexOf(item) > iterator)
                 {
                     currentPositions.Add(item.transform.localPosition);
                     newPositions.Add(item.transform.localPosition + offset * Vector3.right);
@@ -75,8 +77,12 @@ public class ListStruct : Structures
 
     public override void AddItem()
     {
-        //StartCoroutine(AdjustPosition(AdjustMode.outwards));
+        if (items.Count >= maxCount) return;
         base.AddItem();
+
+        items[iterator].GetComponent<Rigidbody>().useGravity = false;
+        StartCoroutine(AdjustPosition(AdjustMode.outwards));
+        items[iterator].GetComponent<Rigidbody>().useGravity = true;
         iterator++;
     }
 
@@ -125,7 +131,7 @@ public class ListStruct : Structures
             Debug.Log(iterator);
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-            StartCoroutine(AdjustPosition(AdjustMode.outwards));
+        //if (Input.GetKeyDown(KeyCode.U))
+        //    StartCoroutine(AdjustPosition(AdjustMode.outwards));
     }
 }

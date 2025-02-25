@@ -28,21 +28,21 @@ public abstract class Structures : MonoBehaviour
 
     public virtual void AddItem()
     {
-        int index = items.Count;
-        if (index >= maxCount)
+        //int index = items.Count;
+        if (items.Count >= maxCount)
         {
-            StartCoroutine(warning.ShowWarning());
+            //StartCoroutine(warning.ShowWarning());
             return;
         }
 
         items.Insert(iterator, Instantiate(prefab, this.transform));
         //items.Add(Instantiate(prefab, this.transform));
 
-        items[iterator].name = $"Block{index}";
+        items[iterator].name = $"Block{items.Count-1}";
         if (iterator > 0)
             items[iterator].transform.localPosition = items[iterator - 1].transform.localPosition + offset * direction;
         else
-            items[iterator].transform.localPosition = direction;
+            items[iterator].transform.localPosition = offset * direction;
 
         values.Insert(iterator, (int)(Random.value * 100));
         items[iterator].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[iterator].ToString();
