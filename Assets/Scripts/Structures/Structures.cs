@@ -21,9 +21,14 @@ public abstract class Structures : MonoBehaviour
 
     protected abstract void SetDirection();
 
-    public bool IsEmpty()
+    public int GetCount()
     {
-        return items.Count == 0;
+        return items.Count;
+    }
+
+    public int GetIterator()
+    {
+        return iterator;
     }
 
     public virtual void AddItem()
@@ -31,7 +36,7 @@ public abstract class Structures : MonoBehaviour
         //int index = items.Count;
         if (items.Count >= maxCount)
         {
-            //StartCoroutine(warning.ShowWarning());
+            StartCoroutine(warning.ShowWarning());
             return;
         }
 

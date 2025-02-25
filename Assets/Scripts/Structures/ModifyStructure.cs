@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,10 @@ public class ModifyStructure : MonoBehaviour
     private GameObject popBtn;
     [SerializeField]
     private GameObject peekBtn;
+    [SerializeField]
+    private GameObject iterLeftBtn;
+    [SerializeField]
+    private GameObject iterRightBtn;
 
     public void AddButtonClick()
     {
@@ -36,17 +41,37 @@ public class ModifyStructure : MonoBehaviour
         StartCoroutine(ButtonsTimeout());
     }
 
+    public void IteratorLeftButtonClick()
+    {
+        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.left));
+        StartCoroutine(ButtonsTimeout());
+    }
+
+    public void IteratorRightButtonClick()
+    {
+        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.right));
+        StartCoroutine(ButtonsTimeout());
+    }
+
     private IEnumerator ButtonsTimeout()
     {
         addBtn.GetComponent<Button>().interactable = false;
         popBtn.GetComponent<Button>().interactable = false;
         peekBtn.GetComponent<Button>().interactable = false;
+        iterLeftBtn.GetComponent<Button>().interactable = false;
+        iterRightBtn.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(timeout);
         addBtn.GetComponent<Button>().interactable = true;
-        if (!anim.transform.GetChild(0).GetComponent<Structures>().IsEmpty())
+        Structures structures = anim.transform.GetChild(0).GetComponent<Structures>();
+        if (structures.GetCount() != 0 && structures.GetIterator() < structures.GetCount())
         {
             popBtn.GetComponent<Button>().interactable = true;
             peekBtn.GetComponent<Button>().interactable = true;
+            iterRightBtn.GetComponent<Button>().interactable = true;
+        }
+        if (structures.GetIterator() > 0)
+        {
+            iterLeftBtn.GetComponent<Button>().interactable = true;
         }
     }
 
@@ -60,5 +85,7 @@ public class ModifyStructure : MonoBehaviour
         addBtn.GetComponent<Button>().interactable = false;
         popBtn.GetComponent<Button>().interactable = false;
         peekBtn.GetComponent<Button>().interactable = false;
+        iterLeftBtn.GetComponent<Button>().interactable = false;
+        iterRightBtn.GetComponent<Button>().interactable = false;
     }
 }

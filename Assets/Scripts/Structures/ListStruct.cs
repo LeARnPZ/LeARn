@@ -50,8 +50,13 @@ public class ListStruct : Structures
         direction = Vector3.up + Vector3.right;
     }
 
-    private IEnumerator MoveIterator(Vector3 moveVector)
+    public IEnumerator MoveIterator(Vector3 moveVector)
     {
+        if (moveVector == Vector3.right)
+            iterator++;
+        else if (moveVector == Vector3.left)
+            iterator--;
+
         float elapsedTime = 0;
         Vector3 currentPosition = iteratorObject.transform.localPosition;
         Vector3 newPosition = currentPosition + moveVector * offset;
@@ -76,7 +81,7 @@ public class ListStruct : Structures
         items[iterator].GetComponent<Rigidbody>().useGravity = false;
         StartCoroutine(AdjustPosition());
         items[iterator].GetComponent<Rigidbody>().useGravity = true;
-        iterator++;
+        //iterator++;
         StartCoroutine(MoveIterator(Vector3.right));
     }
 
@@ -117,7 +122,7 @@ public class ListStruct : Structures
         {
             if (iterator < maxCount && iterator < items.Count)
             {  
-                iterator++;
+                //iterator++;
                 StartCoroutine(MoveIterator(Vector3.right));
             }
             Debug.Log(iterator);
@@ -127,7 +132,7 @@ public class ListStruct : Structures
         {
             if (iterator > 0)
             {
-                iterator--;
+                //iterator--;
                 StartCoroutine(MoveIterator(Vector3.left));
             }
             Debug.Log(iterator);
