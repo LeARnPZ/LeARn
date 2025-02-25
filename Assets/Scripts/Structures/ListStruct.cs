@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ListStruct : Structures
@@ -10,12 +9,9 @@ public class ListStruct : Structures
     [SerializeField]
     private float speed;
 
-    private enum AdjustMode
-    {
-        inwards, outwards
-    }
+    private Vector3 adjustmentVector;
 
-    private IEnumerator AdjustPosition(AdjustMode adjustMode)
+    private IEnumerator AdjustPosition()
     {
         float elapsedTime = 0;
         float animDuration = 0.5f;
@@ -23,41 +19,15 @@ public class ListStruct : Structures
         List<Vector3> currentPositions = new();
         List<Vector3> newPositions = new();
 
-        // "Œci¹ganie" kostek (przy usuwaniu)
-        if (adjustMode == AdjustMode.inwards)
-        {
-            if (iterator == items.Count) yield break;
+        if (iterator == items.Count-1) yield break;
 
-            foreach (GameObject item in items)
-            {
-                currentPositions.Add(item.transform.localPosition);
-                if (items.IndexOf(item) >= iterator)
-                {
-                    newPositions.Add(item.transform.localPosition + offset * Vector3.left);
-                }
-                else
-                {
-                    newPositions.Add(currentPositions.Last());
-                }
-            }
-        }
-        // "Rozci¹ganie" kostek (przy dodawaniu)
-        else if (adjustMode == AdjustMode.outwards)
+        foreach (GameObject item in items)
         {
-            if (iterator == items.Count-1) yield break;
-
-            foreach (GameObject item in items)
-            {
-                currentPositions.Add(item.transform.localPosition);
-                if (items.IndexOf(item) > iterator)
-                {
-                    newPositions.Add(item.transform.localPosition + offset * Vector3.right);
-                }
-                else
-                {
-                    newPositions.Add(currentPositions.Last());
-                }
-            }
+            currentPositions.Add(item.transform.localPosition);
+            if (items.IndexOf(item) > iterator)
+                newPositions.Add(item.transform.localPosition + offset * adjustmentVector);
+            else
+                newPositions.Add(currentPositions.Last());
         }
 
         while (elapsedTime < animDuration)
@@ -83,8 +53,9 @@ public class ListStruct : Structures
         if (items.Count >= maxCount) return;
         base.AddItem();
 
+        adjustmentVector = Vector3.right;
         items[iterator].GetComponent<Rigidbody>().useGravity = false;
-        StartCoroutine(AdjustPosition(AdjustMode.outwards));
+        StartCoroutine(AdjustPosition());
         items[iterator].GetComponent<Rigidbody>().useGravity = true;
         iterator++;
     }
@@ -94,7 +65,10 @@ public class ListStruct : Structures
         if (items.Count < 1) return;
         base.PopItem();
 
-        StartCoroutine(AdjustPosition(AdjustMode.inwards));
+        iterator--;
+        adjustmentVector = Vector3.left;
+        StartCoroutine(AdjustPosition());
+        iterator++;
     }
 
     public override void PeekItem()
