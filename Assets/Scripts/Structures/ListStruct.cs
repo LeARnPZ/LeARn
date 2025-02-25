@@ -23,35 +23,38 @@ public class ListStruct : Structures
         List<Vector3> currentPositions = new();
         List<Vector3> newPositions = new();
 
+        // "Œci¹ganie" kostek (przy usuwaniu)
         if (adjustMode == AdjustMode.inwards)
         {
+            if (iterator == items.Count) yield break;
+
             foreach (GameObject item in items)
             {
                 currentPositions.Add(item.transform.localPosition);
-                if (items.IndexOf(item) < iterator)
-                    newPositions.Add(item.transform.localPosition + offset * Vector3.left / 2);
+                if (items.IndexOf(item) >= iterator)
+                {
+                    newPositions.Add(item.transform.localPosition + offset * Vector3.left);
+                }
                 else
-                    newPositions.Add(item.transform.localPosition + offset * Vector3.right / 2);
+                {
+                    newPositions.Add(currentPositions.Last());
+                }
             }
         }
+        // "Rozci¹ganie" kostek (przy dodawaniu)
         else if (adjustMode == AdjustMode.outwards)
         {
             if (iterator == items.Count-1) yield break;
 
             foreach (GameObject item in items)
             {
+                currentPositions.Add(item.transform.localPosition);
                 if (items.IndexOf(item) > iterator)
                 {
-                    currentPositions.Add(item.transform.localPosition);
                     newPositions.Add(item.transform.localPosition + offset * Vector3.right);
                 }
                 else
                 {
-                    //if (iterator > 0)
-                    //    newPositions.Add(item.transform.localPosition + offset * Vector3.right / 2);
-                    //else
-                    //    newPositions.Add(item.transform.localPosition + offset * Vector3.right);
-                    currentPositions.Add(item.transform.localPosition);
                     newPositions.Add(currentPositions.Last());
                 }
             }
@@ -88,9 +91,9 @@ public class ListStruct : Structures
 
     public override void PopItem()
     {
+        if (items.Count < 1) return;
         base.PopItem();
 
-        if (items.Count < 1) return;
         StartCoroutine(AdjustPosition(AdjustMode.inwards));
     }
 
