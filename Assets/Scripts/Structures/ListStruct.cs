@@ -8,13 +8,15 @@ public class ListStruct : Structures
 {
     [SerializeField]
     private float speed;
+    [SerializeField]
+    private GameObject iteratorObject;
 
+    float animDuration = 0.5f;
     private Vector3 adjustmentVector;
 
     private IEnumerator AdjustPosition()
     {
         float elapsedTime = 0;
-        float animDuration = 0.5f;
 
         List<Vector3> currentPositions = new();
         List<Vector3> newPositions = new();
@@ -48,6 +50,23 @@ public class ListStruct : Structures
         direction = Vector3.up + Vector3.right;
     }
 
+    private IEnumerator MoveIterator(Vector3 moveVector)
+    {
+        float elapsedTime = 0;
+        Vector3 currentPosition = iteratorObject.transform.localPosition;
+        Vector3 newPosition = currentPosition + moveVector * offset;
+
+        while (elapsedTime < animDuration)
+        {
+            iteratorObject.transform.localPosition = Vector3.Lerp(currentPosition, newPosition, elapsedTime / animDuration);
+
+            yield return null;
+            elapsedTime += Time.deltaTime;
+        }
+
+        iteratorObject.transform.localPosition = newPosition;
+    }
+
     public override void AddItem()
     {
         if (items.Count >= maxCount) return;
@@ -58,6 +77,7 @@ public class ListStruct : Structures
         StartCoroutine(AdjustPosition());
         items[iterator].GetComponent<Rigidbody>().useGravity = true;
         iterator++;
+        StartCoroutine(MoveIterator(Vector3.right));
     }
 
     public override void PopItem()
@@ -71,11 +91,10 @@ public class ListStruct : Structures
         iterator++;
     }
 
-    public override void PeekItem()
-    {
-        base.PeekItem();
-    }
-
+    //public override void PeekItem()
+    //{
+    //    base.PeekItem();
+    //}
 
     private void Update()
     {
@@ -97,14 +116,20 @@ public class ListStruct : Structures
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (iterator < maxCount && iterator < items.Count)
+            {  
                 iterator++;
+                StartCoroutine(MoveIterator(Vector3.right));
+            }
             Debug.Log(iterator);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (iterator > 0)
+            {
                 iterator--;
+                StartCoroutine(MoveIterator(Vector3.left));
+            }
             Debug.Log(iterator);
         }
 
