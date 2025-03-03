@@ -64,8 +64,7 @@ public abstract class Sortings : MonoBehaviour
 
     protected void Start()
     {
-        //Vector3 startPosition = new(-numberOfItems/2 + 1, 0, 0);
-        Vector3 startPosition = new(-numberOfItems / 2 + 1, 2f, 0);
+        Vector3 startPosition = new(-numberOfItems / 2 + 1, 5f, 0);
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
@@ -74,6 +73,7 @@ public abstract class Sortings : MonoBehaviour
             if (values.Count < numberOfItems)
                 values.Add((int)(Random.value * 100));
             items[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[i].ToString();
+            items[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[i].ToString();
         }
 
         StartCoroutine(Sort());
