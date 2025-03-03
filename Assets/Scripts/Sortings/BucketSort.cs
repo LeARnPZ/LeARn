@@ -67,7 +67,7 @@ public class BucketSort : Sortings
                 bucket[k + 1] = keyItem;
 
                 // Move keyItem down to its sorted position
-                StartCoroutine(MoveObject(keyItem, keyItem.transform.localPosition + Vector3.down));
+                // StartCoroutine(MoveObject(keyItem, keyItem.transform.localPosition + Vector3.down));
                 yield return new WaitForSeconds(timeout);
             }
 
@@ -78,6 +78,7 @@ public class BucketSort : Sortings
                 StartCoroutine(ChangeColor(sortedItem, Color.green));
                 yield return StartCoroutine(MoveObject(sortedItem, sortedItem.transform.localPosition + Vector3.up));
                 yield return StartCoroutine(MoveObject(sortedItem, new Vector3(index, sortedItem.transform.localPosition.y, sortedItem.transform.localPosition.z)));
+                yield return StartCoroutine(MoveObject(sortedItem, sortedItem.transform.localPosition + Vector3.down));
                 yield return new WaitForSeconds(timeout);
                 index++;
             }
@@ -86,3 +87,6 @@ public class BucketSort : Sortings
         Debug.Log("Bucket Sort Finished!");
     }
 }
+
+
+

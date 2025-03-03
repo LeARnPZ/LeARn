@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9068875025780525389}
-  - component: {fileID: 3367818812383872791}
+  - component: {fileID: 8080535236926202591}
   m_Layer: 0
   m_Name: InsertSort
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3367818812383872791
+--- !u!114 &8080535236926202591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2846033845506020427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83f9a68bcc45b97488e357ab11ebe260, type: 3}
+  m_Script: {fileID: 11500000, guid: d8f496e7512013d459be6d47d8f2c0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5678352577494420287, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
   numberOfItems: 5
-  animDuration: 1.5
+  animDuration: 1.75
   timeout: 1
