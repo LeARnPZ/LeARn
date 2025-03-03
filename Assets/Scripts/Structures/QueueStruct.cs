@@ -49,4 +49,10 @@ public class QueueStruct : Structures
         if (items.Count < 1) return;
         StartCoroutine(AdjustPosition());
     }
+
+    public override void PeekItem()
+    {
+        popIndex = 0;
+        base.PeekItem();
+    }
 }

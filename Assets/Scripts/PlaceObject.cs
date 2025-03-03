@@ -63,6 +63,7 @@ public class PlaceObject : MonoBehaviour
             {
                 GameObject.Find("AddItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PopItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
 
