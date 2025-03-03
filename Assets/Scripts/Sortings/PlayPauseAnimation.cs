@@ -49,6 +49,12 @@ public class PlayPauseAnimation : MonoBehaviour
     void Start()
     {
         buttonText = playPauseButton.GetComponentInChildren<TextMeshProUGUI>();
-        playPauseButton.interactable = false;
+        if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
+            gameObject.SetActive(true);
+        else
+            gameObject.SetActive(false);
+
+        GetComponent<Button>().interactable = false;
+        //playPauseButton.interactable = false;
     }
 }
