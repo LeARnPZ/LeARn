@@ -47,7 +47,7 @@ public class SelectSort : Sortings
             int aktMin = i;
             for (int j = i + 1; j < numberOfItems; j++)
             {
-                SetColor(items[j], Color.green);
+                SetColor(items[j], Color.yellow);
                 yield return new WaitForSeconds(timeout);
                 if (heights[j] < heights[aktMin])
                 {
@@ -102,10 +102,10 @@ public class SelectSort : Sortings
             items[i].transform.localPosition = PointFirst;
 
 
-            SetColor(items[i], Color.yellow);
+            SetColor(items[i], Color.green);
             yield return new WaitForSeconds(timeout);
         }
-        SetColor(items[numberOfItems - 1], Color.yellow);
+        SetColor(items[numberOfItems - 1], Color.green);
         items[numberOfItems - 1].transform.localPosition = new Vector3(items[numberOfItems - 1].transform.localPosition.x, (items[numberOfItems - 1 ].transform.localScale.y / 2) - 0.1f, 0);
     }
     void SetColor(GameObject cube, Color color)
