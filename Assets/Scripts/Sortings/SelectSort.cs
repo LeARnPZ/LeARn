@@ -9,11 +9,9 @@ public class SelectSort : Sortings
     private int minIndex;
     private Color defaultColor;
     private int[] heights;
-    static private float saveTimeout;
 
     void setup()
     {
-        saveTimeout = -1;
         ColorUtility.TryParseHtmlString("#4274b2", out defaultColor);
 
         heights = new int[numberOfItems];
@@ -115,18 +113,5 @@ public class SelectSort : Sortings
         cube.gameObject.GetComponent<MeshRenderer>().material.color = color;
     }
 
-    public void Pause()
-    {
-        if(saveTimeout == -1)
-        {
-            saveTimeout = timeout;
-            timeout = Mathf.Infinity;
-        }
-        else
-        {
-            timeout = saveTimeout;
-            saveTimeout = -1;
-        }
-    } 
 
 }

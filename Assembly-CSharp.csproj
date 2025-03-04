@@ -63,7 +63,6 @@
     <Compile Include="Assets\Scripts\PlaceObject.cs" />
     <Compile Include="Assets\Scripts\OpenAR.cs" />
     <Compile Include="Assets\Scripts\LimitWarning.cs" />
-    <Compile Include="Assets\Scripts\Sortings\PauseButton.cs" />
     <Compile Include="Assets\Scripts\Sortings\BubbleSort.cs" />
     <Compile Include="Assets\Scripts\Structures\QueueStruct.cs" />
     <Compile Include="Assets\Scripts\Sortings\StalinSort.cs" />

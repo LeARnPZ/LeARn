@@ -60,7 +60,6 @@ public class PlaceObject : MonoBehaviour
             if (algorithm.Contains("Sort"))
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("PauseButton").GetComponent<Button>().interactable = true;
             }
                
 
