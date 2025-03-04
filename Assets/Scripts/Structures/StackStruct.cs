@@ -9,10 +9,17 @@ public class StackStruct : Structures
         direction = Vector3.up;
     }
 
+    public override void AddItem()
+    {
+        iterator = items.Count;
+        base.AddItem();
+    }
+
     public override void PopItem()
     {
         iterator = items.Count - 1;
         base.PopItem();
+        iterator--;
     }
 
     public override void PeekItem()
