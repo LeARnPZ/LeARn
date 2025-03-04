@@ -17,6 +17,8 @@ public abstract class Sortings : MonoBehaviour
     protected List<GameObject> items = new();
     private List<int> values = new();
 
+    protected bool isPaused;
+
     protected int GetValue(GameObject gameObject)
     {
         return int.Parse(gameObject.transform.GetChild(0).GetComponent<TextMeshPro>().text);
@@ -27,13 +29,15 @@ public abstract class Sortings : MonoBehaviour
         Renderer renderer = gameObject.GetComponent<Renderer>();
         Color currentColor = renderer.material.color;
 
-        float elapsedTime = 0;
+        float elapsedTime = 0f;
+
         while (elapsedTime < animDuration)
         {
             renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         renderer.material.color = newColor;
     }
 
@@ -42,17 +46,27 @@ public abstract class Sortings : MonoBehaviour
         Vector3 currentPosition = gameObject.transform.localPosition;
 
         float elapsedTime = 0;
+
         while (elapsedTime < animDuration)
         {
             gameObject.transform.localPosition = Vector3.Lerp(currentPosition, newPosition, elapsedTime / animDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         gameObject.transform.localPosition = newPosition;
+    }
+
+    public void Pause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
     }
 
     public void Restart()
     {
+        //isPaused = false;
+        //Time.timeScale = 1f;
         StopAllCoroutines();
         foreach (GameObject item in items)
             Destroy(item);
@@ -60,11 +74,16 @@ public abstract class Sortings : MonoBehaviour
         Start();
     }
 
+    public bool getPaused()
+    {
+        return isPaused;
+    }
+
     protected abstract IEnumerator Sort();
 
     protected void Start()
     {
-        Vector3 startPosition = new(-numberOfItems / 2 + 1, 5f, 0);
+        Vector3 startPosition = new(-numberOfItems / 2 + 1, 0f, 0);
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
@@ -75,7 +94,8 @@ public abstract class Sortings : MonoBehaviour
             items[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[i].ToString();
             items[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[i].ToString();
         }
-
+        isPaused = false;
+        Time.timeScale = 1f;
         StartCoroutine(Sort());
     }
 }

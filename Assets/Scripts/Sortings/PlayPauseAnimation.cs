@@ -17,17 +17,15 @@ public class PlayPauseAnimation : MonoBehaviour
 
     public void onButtonClick()
     {
-        BubbleSort bubbleSort = animationObject.transform.GetChild(0).GetComponent<BubbleSort>();
-        bool isPaused = bubbleSort.getPaused();
 
-        playPauseButton.interactable = true;
+        Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+        bool isPaused = sort.getPaused();
 
+         //Debug.Log("Bool pauza = " + isPaused);
+ 
+        sort.Pause();
 
-        Debug.Log("Bool pauza = " + isPaused);
-        isPaused = !isPaused;
-        bubbleSort.setPaused(isPaused);
-
-        if (bubbleSort.getPaused())
+        if (sort.getPaused())
         {
             buttonText.text = "PLAY";
         }
@@ -37,7 +35,7 @@ public class PlayPauseAnimation : MonoBehaviour
         }
         
 
-        Debug.Log("Przycisk Play/Pause klikniêty. Bool pauza = " + isPaused);
+        //Debug.Log("Przycisk Play/Pause klikniêty. Bool pauza = " + isPaused);
     }
 
     public void resetButtonText()
@@ -55,6 +53,5 @@ public class PlayPauseAnimation : MonoBehaviour
             gameObject.SetActive(false);
 
         GetComponent<Button>().interactable = false;
-        //playPauseButton.interactable = false;
     }
 }
