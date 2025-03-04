@@ -64,11 +64,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("AddItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PopItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PeekItemButton").GetComponent<Button>().interactable = true;
-                if (algorithm.Contains("List"))
-                {
-                    GameObject.Find("IteratorLeftButton").GetComponent<Button>().interactable = true;
-                    GameObject.Find("IteratorRightButton").GetComponent<Button>().interactable = true;
-                }
             }
         }
 

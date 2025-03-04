@@ -81,7 +81,6 @@ public class ListStruct : Structures
         items[iterator].GetComponent<Rigidbody>().useGravity = false;
         StartCoroutine(AdjustPosition());
         items[iterator].GetComponent<Rigidbody>().useGravity = true;
-        //iterator++;
         StartCoroutine(MoveIterator(Vector3.right));
     }
 
@@ -94,51 +93,5 @@ public class ListStruct : Structures
         adjustmentVector = Vector3.left;
         StartCoroutine(AdjustPosition());
         iterator++;
-    }
-
-    //public override void PeekItem()
-    //{
-    //    base.PeekItem();
-    //}
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            PopItem();
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            AddItem();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            PeekItem();
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (iterator < maxCount && iterator < items.Count)
-            {  
-                //iterator++;
-                StartCoroutine(MoveIterator(Vector3.right));
-            }
-            Debug.Log(iterator);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (iterator > 0)
-            {
-                //iterator--;
-                StartCoroutine(MoveIterator(Vector3.left));
-            }
-            Debug.Log(iterator);
-        }
-
-        //if (Input.GetKeyDown(KeyCode.U))
-        //    StartCoroutine(AdjustPosition(AdjustMode.outwards));
     }
 }

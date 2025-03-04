@@ -10,6 +10,8 @@ public class ModifyStructure : MonoBehaviour
     private GameObject anim;
     [SerializeField]
     private float timeout;
+    private bool isTimeout;
+    private bool touchInput;
 
     [Header("Button objects")]
     [SerializeField]
@@ -18,10 +20,6 @@ public class ModifyStructure : MonoBehaviour
     private GameObject popBtn;
     [SerializeField]
     private GameObject peekBtn;
-    [SerializeField]
-    private GameObject iterLeftBtn;
-    [SerializeField]
-    private GameObject iterRightBtn;
 
     public void AddButtonClick()
     {
@@ -41,25 +39,12 @@ public class ModifyStructure : MonoBehaviour
         StartCoroutine(ButtonsTimeout());
     }
 
-    public void IteratorLeftButtonClick()
-    {
-        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.left));
-        StartCoroutine(ButtonsTimeout());
-    }
-
-    public void IteratorRightButtonClick()
-    {
-        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.right));
-        StartCoroutine(ButtonsTimeout());
-    }
-
     private IEnumerator ButtonsTimeout()
     {
+        isTimeout = true;
         addBtn.GetComponent<Button>().interactable = false;
         popBtn.GetComponent<Button>().interactable = false;
         peekBtn.GetComponent<Button>().interactable = false;
-        iterLeftBtn.GetComponent<Button>().interactable = false;
-        iterRightBtn.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(timeout);
         addBtn.GetComponent<Button>().interactable = true;
         Structures structures = anim.transform.GetChild(0).GetComponent<Structures>();
@@ -67,25 +52,56 @@ public class ModifyStructure : MonoBehaviour
         {
             popBtn.GetComponent<Button>().interactable = true;
             peekBtn.GetComponent<Button>().interactable = true;
-            iterRightBtn.GetComponent<Button>().interactable = true;
         }
-        if (structures.GetIterator() > 0)
-        {
-            iterLeftBtn.GetComponent<Button>().interactable = true;
-        }
+        isTimeout = false;
     }
 
     private void Start()
     {
+        touchInput = false;
         if (PlayerPrefs.GetString("algorithm").Contains("Struct"))
+        {
             gameObject.SetActive(true);
+            if (PlayerPrefs.GetString("algorithm").Contains("List"))
+                touchInput = true;
+        }
         else
             gameObject.SetActive(false);
 
         addBtn.GetComponent<Button>().interactable = false;
         popBtn.GetComponent<Button>().interactable = false;
         peekBtn.GetComponent<Button>().interactable = false;
-        iterLeftBtn.GetComponent<Button>().interactable = false;
-        iterRightBtn.GetComponent<Button>().interactable = false;
+    }
+
+    private void Update()
+    {
+        if (touchInput && anim.transform.childCount > 0 && Input.touchCount > 0 && !isTimeout)
+        {
+            int screenWidth = Screen.width;
+            int screenHeight = Screen.height;
+            Touch touch = Input.GetTouch(0);
+            Structures structures = anim.transform.GetChild(0).GetComponent<Structures>();
+
+            if (touch.position.y < 0.8 * screenHeight)
+            {
+                if (touch.position.x > 0.8 * screenWidth)
+                {
+                    if (structures.GetIterator() < structures.GetCount())
+                    {
+                        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.right));
+                        StartCoroutine(ButtonsTimeout());
+                    }
+                }
+
+                if (touch.position.x < 0.2 * screenWidth)
+                {
+                    if (structures.GetIterator() > 0)
+                    {
+                        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.left));
+                        StartCoroutine(ButtonsTimeout());
+                    }
+                }
+            }
+        }
     }
 }

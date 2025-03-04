@@ -33,7 +33,6 @@ public abstract class Structures : MonoBehaviour
 
     public virtual void AddItem()
     {
-        //int index = items.Count;
         if (items.Count >= maxCount)
         {
             StartCoroutine(warning.ShowWarning());
@@ -41,7 +40,6 @@ public abstract class Structures : MonoBehaviour
         }
 
         items.Insert(iterator, Instantiate(prefab, this.transform));
-        //items.Add(Instantiate(prefab, this.transform));
 
         items[iterator].name = $"Block{items.Count-1}";
         if (iterator > 0)
