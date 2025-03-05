@@ -681,14 +681,6 @@ MonoBehaviour:
   m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 61
-    m_Height: 62
-  - m_X: 61
-    m_Y: 0
-    m_Width: 67
-    m_Height: 25
-  - m_X: 128
-    m_Y: 0
     m_Width: 83
     m_Height: 28
   - m_X: 211

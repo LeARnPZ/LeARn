@@ -7,11 +7,14 @@ public class RestartSorting : MonoBehaviour
 {
     [SerializeField]
     private GameObject anim;
+    [SerializeField]
+    private Button playPauseButton;
 
     public void OnButtonClick()
     {
-        if (GetComponent<Button>().interactable) 
+        if (GetComponent<Button>().interactable)
             anim.transform.GetChild(0).GetComponent<Sortings>().Restart();
+        playPauseButton.GetComponent<PlayPauseAnimation>().resetButtonText();
     }
 
     private void Start()
