@@ -81,6 +81,7 @@ public class StalinSort : Sortings
             {
                 items[i+1].GetComponent<MeshRenderer>().enabled = false;
                 items[i+1].transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                items[i + 1].transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
                 AddParticles(items[i + 1]);
                 yield return new WaitForSeconds(timeout);
 
