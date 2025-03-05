@@ -58,7 +58,11 @@ public class PlaceObject : MonoBehaviour
 
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort"))
+            {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
+            }
+               
+
             else if (algorithm.Contains("Struct"))
             {
                 GameObject.Find("AddItemButton").GetComponent<Button>().interactable = true;
