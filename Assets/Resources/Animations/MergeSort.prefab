@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5681000459234146101}
-  - component: {fileID: -7514675511793528058}
+  - component: {fileID: 7182144759137758324}
   m_Layer: 0
   m_Name: MergeSort
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7514675511793528058
+--- !u!114 &7182144759137758324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5232733511151049724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e1fa8fe73a9456498653820dccfd2a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 63acad3c5b7b9ac42bb24cdcec36dfb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5678352577494420287, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}

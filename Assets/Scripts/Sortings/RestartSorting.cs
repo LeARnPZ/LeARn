@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class RestartSorting : MonoBehaviour
 {
     [SerializeField]
-    private new GameObject animation;
+    private GameObject anim;
+    [SerializeField]
+    private Button playPauseButton;
 
     public void OnButtonClick()
     {
-        if (GetComponent<Button>().interactable) 
-            animation.transform.GetChild(0).GetComponent<Sortings>().Restart();
+        if (GetComponent<Button>().interactable)
+            anim.transform.GetChild(0).GetComponent<Sortings>().Restart();
+        playPauseButton.GetComponent<PlayPauseAnimation>().resetButtonText();
     }
 
     private void Start()

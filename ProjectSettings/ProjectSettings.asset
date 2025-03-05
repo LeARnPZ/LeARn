@@ -141,11 +141,7 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.11.3-alpha
-  preloadedAssets:
-  - {fileID: 11400000, guid: bcce92f90e092b349a6fe58cadfd7cd8, type: 2}
-  - {fileID: -8256455837201874754, guid: 80781d191a118f449b8a747ba06dfa8d, type: 2}
-  - {fileID: 4800000, guid: c9f956787b1d945e7b36e0516201fc76, type: 3}
-  - {fileID: 4800000, guid: 0945859e5a1034c2cb6dce53cb4fb899, type: 3}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -167,7 +163,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.kpogodzinski.LeARnalpha
-    Standalone: com.DefaultCompany.AR-Sort
+    Standalone: com.kpogodzinski.LeARn-alpha
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -293,7 +289,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: 11606296852195342aad965f3f052f76, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -784,8 +780,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: ARSort
-  metroPackageVersion: 1.0.0.0
+  metroPackageName: AR_Sort
+  metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -793,7 +789,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: AR_Sort
   wsaImages: {}
-  metroTileShortName: LeARn alpha
+  metroTileShortName: 
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

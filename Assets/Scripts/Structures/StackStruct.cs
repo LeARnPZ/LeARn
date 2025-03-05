@@ -14,4 +14,10 @@ public class StackStruct : Structures
         popIndex = items.Count - 1;
         base.PopItem();
     }
+
+    public override void PeekItem()
+    {
+        popIndex = items.Count - 1;
+        base.PeekItem();
+    }
 }

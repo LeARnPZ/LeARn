@@ -23,7 +23,6 @@ public class PlaceObject : MonoBehaviour
         planeManager = GetComponent<ARPlaneManager>();
 
         algorithmName = PlayerPrefs.GetString("algorithm");
-        
     }
 
     private void OnEnable()
@@ -55,16 +54,21 @@ public class PlaceObject : MonoBehaviour
             //}
             Pose pose = hits[0].pose;
                 Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            
             placed = true;
 
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort"))
+            {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
+            }
+               
+
             else if (algorithm.Contains("Struct"))
             {
                 GameObject.Find("AddItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PopItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
 
