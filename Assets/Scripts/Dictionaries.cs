@@ -24,6 +24,6 @@ public class Dictionaries : MonoBehaviour
         if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie b¹belkowe to algorytm sortowania, w którym s¹siednie elementy s¹ wielokrotnie porównywane i zamieniane miejscami, a¿ najwiêksze wartoœci „wyp³yn¹” na koniec listy. Proces ten jest powtarzany tak d³ugo, a¿ lista stanie siê posortowana.");
         if (!descriptions.ContainsKey(3)) descriptions.Add(3, "Stos to struktura danych dzia³aj¹ca na zasadzie last in, first out. Elementy s¹ dodawane i usuwane z jednego koñca – wierzcho³ka stosu.");
         if (!descriptions.ContainsKey(4)) descriptions.Add(4, "Kolejka to struktura danych dzia³aj¹ca na zasadzie first in, first out. Elementy s¹ dodawane na koñcu i usuwane z pocz¹tku.");
-        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "Kolejka to struktura danych dzia³aj¹ca na zasadzie first in, first out. Elementy s¹ dodawane na koñcu i usuwane z pocz¹tku.");
+        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "MergeSort");
     }
 }

@@ -1,70 +1,147 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class MergeSort : Sortings
 {
-    protected override IEnumerator Sort()
+    private int interpolationX = -5;
+    private IEnumerator Sorting(List<GameObject> array)
     {
-        yield return StartCoroutine(MergeSortCoroutine(0, items.Count - 1));
-    }
+        Debug.Log("Dzia³aj proszê");
 
-    private IEnumerator MergeSortCoroutine(int left, int right)
-    {
-        if (left < right)
+        // Jeœli lista ma 1 element, nie trzeba sortowaæ
+        if (array.Count <= 1)
         {
-            int middle = (left + right) / 2;
-
-            yield return StartCoroutine(MergeSortCoroutine(left, middle));
-            yield return StartCoroutine(MergeSortCoroutine(middle + 1, right));
-            yield return StartCoroutine(Merge(left, middle, right));
+            yield break;
         }
+
+        int mid = array.Count / 2;
+
+        // Obliczamy odstêp, aby elementy nie nachodzi³y na siebie
+        float distance = 2.0f; // Odstêp miêdzy elementami w jednostkach
+        float offsetLeft = -distance * mid / 2; // Rozpoczynamy od przesuniêcia w lewo
+        float offsetRight = distance * mid / 2; // Rozpoczynamy od przesuniêcia w prawo
+        float offsetUp = 2.0f; // Odstêp w kierunku góry dla obydwu stron
+
+        // Pierwsza animacja - tylko rozdzielamy strony
+        for (int i = 0; i < mid; i++)
+        {
+            // Przesuwamy elementy z lewej strony w lewo i w górê
+            StartCoroutine(MoveObject(array[i], array[i].transform.localPosition + new Vector3(offsetLeft, offsetUp, 0)));
+            yield return new WaitForSeconds(timeout);
+        }
+
+        for (int i = mid; i < array.Count; i++)
+        {
+            // Przesuwamy elementy z prawej strony w prawo i w górê
+            StartCoroutine(MoveObject(array[i], array[i].transform.localPosition + new Vector3(offsetRight, offsetUp, 0)));
+            yield return new WaitForSeconds(timeout);
+        }
+
+        // Czekamy chwilê po rozdzieleniu stron
+        yield return new WaitForSeconds(timeout);
+
+        // Teraz wykonujemy sortowanie lewej i prawej czêœci
+        List<GameObject> left = new List<GameObject>(array.GetRange(0, mid));
+        List<GameObject> right = new List<GameObject>(array.GetRange(mid, array.Count - mid));
+
+        // Sortowanie lewej czêœci
+        yield return StartCoroutine(Sorting(left));
+
+        // Sortowanie prawej czêœci
+        yield return StartCoroutine(Sorting(right));
+
+        
+        // Scalanie obu czêœci
+        yield return StartCoroutine(Merge(left, right, array));
     }
 
-    private IEnumerator Merge(int left, int middle, int right)
+    private IEnumerator Merge(List<GameObject> left, List<GameObject> right, List<GameObject> result)
     {
-        List<GameObject> temp = new List<GameObject>();
-        int i = left, j = middle + 1;
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int resultIndex = 0;
 
-        while (i <= middle && j <= right)
+        // Tworzymy listê, aby przechowaæ pozycje przed animowaniem
+        List<Vector3> resultPositions = new List<Vector3>();
+
+        // Przechodzimy przez obie listy, porównuj¹c elementy i dodaj¹c mniejsze do wyniku
+        while (leftIndex < left.Count && rightIndex < right.Count)
         {
-            int leftValue = GetValue(items[i]);
-            int rightValue = GetValue(items[j]);
-
-            if (leftValue <= rightValue)
+            if (GetValue(left[leftIndex]) <= GetValue(right[rightIndex]))
             {
-                temp.Add(items[i]);
-                i++;
+                result[resultIndex] = left[leftIndex];
+                Vector3 tmp = left[leftIndex].transform.localPosition;
+                resultPositions.Add(new Vector3(interpolationX * 1.0f, tmp.y - 2.0f, 0)); // Zapisujemy docelow¹ pozycjê
+                leftIndex++;
             }
             else
             {
-                temp.Add(items[j]);
-                j++;
+                result[resultIndex] = right[rightIndex];
+                Vector3 tmp = right[rightIndex].transform.localPosition;
+                resultPositions.Add(new Vector3(interpolationX * 1.0f, tmp.y - 2.0f, 0)); // Zapisujemy docelow¹ pozycjê
+                rightIndex++;
             }
+            resultIndex++;
+            interpolationX++;
+            yield return new WaitForSeconds(timeout); 
         }
 
-        while (i <= middle)
+        // Dodajemy pozosta³e elementy z lewej czêœci, jeœli s¹
+        while (leftIndex < left.Count)
         {
-            temp.Add(items[i]);
-            i++;
+            result[resultIndex] = left[leftIndex];
+            Vector3 tmp = left[leftIndex].transform.localPosition;
+            resultPositions.Add(new Vector3(interpolationX * 1.0f, tmp.y - 2.0f, 0)); // Zapisujemy docelow¹ pozycjê
+            leftIndex++;
+            resultIndex++;
+            interpolationX++;
+            yield return new WaitForSeconds(timeout); 
         }
 
-        while (j <= right)
+        // Dodajemy pozosta³e elementy z prawej czêœci, jeœli s¹
+        while (rightIndex < right.Count)
         {
-            temp.Add(items[j]);
-            j++;
+            result[resultIndex] = right[rightIndex];
+            Vector3 tmp = right[rightIndex].transform.localPosition;
+            resultPositions.Add(new Vector3(interpolationX * 1.0f, tmp.y - 2.0f, 0)); // Zapisujemy docelow¹ pozycjê
+            rightIndex++;
+            resultIndex++;
+            interpolationX++;
+            yield return new WaitForSeconds(timeout); // Czekamy chwilê na animacjê
         }
 
-        for (int k = 0; k < temp.Count; k++)
+        // Teraz animujemy elementy w wyniku, aby przemieœci³y siê na swoje ostateczne pozycje
+        for (int i = 0; i < result.Count; i++)
         {
-            GameObject obj = temp[k];
-            Vector3 initialPosition = obj.transform.localPosition;
-            Vector3 raisedPosition = initialPosition + Vector3.up * 0.5f;
-            Vector3 newPosition = new Vector3(-numberOfItems / 2 + 1 + (left + k) * 1.2f, 0, 0);
+            StartCoroutine(MoveObject(result[i], resultPositions[i])); // Przemieszczamy do zapisanych pozycji
+            yield return new WaitForSeconds(timeout); 
 
-            yield return StartCoroutine(MoveObject(obj, raisedPosition));
-            yield return StartCoroutine(MoveObject(obj, newPosition));
+            /*
+            //ustawiamy kolor dla porownywanych elementow
+            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i], Color.yellow));
+            yield return new WaitForSeconds(timeout);
+            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i + 1], Color.yellow));
+            yield return new WaitForSeconds(timeout);
+
+            // Przemieszczamy do zapisanych pozycji
+            StartCoroutine(MoveObject(result[i], resultPositions[i]));
+            yield return new WaitForSeconds(timeout);
+            if (i + 1 < result.Count) StartCoroutine(MoveObject(result[i + 1], resultPositions[i + 1]));
+            yield return new WaitForSeconds(timeout);
+
+            //wracamy do pierwotnego koloru
+            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i], Color.white));
+            yield return new WaitForSeconds(timeout);
+            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i + 1], Color.white));
+            yield return new WaitForSeconds(timeout);*/
         }
+    }
+
+    protected override IEnumerator Sort()
+    {
+        // Rozpoczêcie sortowania
+        yield return StartCoroutine(Sorting(items));
     }
 }
