@@ -1446,7 +1446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090d3a4d2f12bff40af6f96e1a4c79a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Assets/Scenes/MainMenu.unity
 --- !u!1 &945201420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,8 +1592,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945201420}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Assets/Scenes/MainMenu.unity
 --- !u!1 &1335810419
 GameObject:
   m_ObjectHideFlags: 0
