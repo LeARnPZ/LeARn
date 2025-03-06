@@ -63,10 +63,11 @@
     <Compile Include="Assets\Scripts\PlaceObject.cs" />
     <Compile Include="Assets\Scripts\OpenAR.cs" />
     <Compile Include="Assets\Scripts\LimitWarning.cs" />
+    <Compile Include="Assets\Scripts\Not Used\SelectionSort.cs" />
     <Compile Include="Assets\Scripts\Sortings\PlayPauseAnimation.cs" />
     <Compile Include="Assets\Scripts\Sortings\BubbleSort.cs" />
     <Compile Include="Assets\Scripts\Structures\QueueStruct.cs" />
-    <Compile Include="Assets\Scripts\Sortings\StalinSort.cs" />
+    <Compile Include="Assets\Scripts\Not Used\StalinSort.cs" />
     <Compile Include="Assets\Scripts\Sortings\RestartSorting.cs" />
     <Compile Include="Assets\Scripts\Structures\ModifyStructure.cs" />
     <Compile Include="Assets\Scripts\Sortings\SelectSort.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Assets\Scripts\EasterEgg.cs" />
     <Compile Include="Assets\Scripts\Sortings\Sortings.cs" />
     <Compile Include="Assets\Scripts\Structures\Structures.cs" />
-    <Compile Include="Assets\Scripts\Sortings\SelectionSort.cs" />
     <Compile Include="Assets\Scripts\ToggleInfo.cs" />
     <Compile Include="Assets\Scripts\Structures\StackStruct.cs" />
     <Compile Include="Assets\Scripts\Dictionaries.cs" />
