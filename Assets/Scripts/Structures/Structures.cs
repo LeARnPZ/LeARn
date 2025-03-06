@@ -26,6 +26,11 @@ public abstract class Structures : MonoBehaviour
         return items.Count;
     }
 
+    public int GetMaxCount()
+    {
+        return maxCount;
+    }
+
     public int GetIterator()
     {
         return iterator;
@@ -35,7 +40,7 @@ public abstract class Structures : MonoBehaviour
     {
         if (items.Count >= maxCount)
         {
-            StartCoroutine(warning.ShowWarning());
+            //StartCoroutine(warning.ShowWarning());
             return;
         }
 
@@ -93,6 +98,6 @@ public abstract class Structures : MonoBehaviour
         }
         iterator = 0;
 
-        warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
+        //warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
     }
 }

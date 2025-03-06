@@ -46,8 +46,11 @@ public class ModifyStructure : MonoBehaviour
         popBtn.GetComponent<Button>().interactable = false;
         peekBtn.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(timeout);
-        addBtn.GetComponent<Button>().interactable = true;
         Structures structures = anim.transform.GetChild(0).GetComponent<Structures>();
+        if (structures.GetCount() < structures.GetMaxCount())
+        {
+            addBtn.GetComponent<Button>().interactable = true;
+        }
         if (structures.GetCount() != 0 && structures.GetIterator() < structures.GetCount())
         {
             popBtn.GetComponent<Button>().interactable = true;
@@ -80,24 +83,24 @@ public class ModifyStructure : MonoBehaviour
             int screenWidth = Screen.width;
             int screenHeight = Screen.height;
             Touch touch = Input.GetTouch(0);
-            Structures structures = anim.transform.GetChild(0).GetComponent<Structures>();
+            ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();
 
             if (touch.position.y < 0.8 * screenHeight)
             {
                 if (touch.position.x > 0.7 * screenWidth)
                 {
-                    if (structures.GetIterator() < structures.GetCount())
+                    if (listStruct.GetIterator() < listStruct.GetCount())
                     {
-                        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.right));
+                        StartCoroutine(listStruct.MoveIterator(Vector3.right));
                         StartCoroutine(ButtonsTimeout());
                     }
                 }
 
                 if (touch.position.x < 0.3 * screenWidth)
                 {
-                    if (structures.GetIterator() > 0)
+                    if (listStruct.GetIterator() > 0)
                     {
-                        StartCoroutine(anim.transform.GetChild(0).GetComponent<ListStruct>().MoveIterator(Vector3.left));
+                        StartCoroutine(listStruct.MoveIterator(Vector3.left));
                         StartCoroutine(ButtonsTimeout());
                     }
                 }
