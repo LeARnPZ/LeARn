@@ -63,7 +63,7 @@ public abstract class Sortings : MonoBehaviour
         Time.timeScale = isPaused ? 0f : 1f;
     }
 
-    public void Restart()
+    public virtual void Restart()
     {
         //isPaused = false;
         //Time.timeScale = 1f;

@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class MergeSort : Sortings
 {
-    private int interpolationX = -5;
+    private int interpolationX = -9;
+    
     private IEnumerator Sorting(List<GameObject> array)
     {
-        Debug.Log("Dzia³aj proszê");
+        
 
         // Jeœli lista ma 1 element, nie trzeba sortowaæ
         if (array.Count <= 1)
@@ -52,7 +53,9 @@ public class MergeSort : Sortings
         // Sortowanie prawej czêœci
         yield return StartCoroutine(Sorting(right));
 
-        
+    
+
+
         // Scalanie obu czêœci
         yield return StartCoroutine(Merge(left, right, array));
     }
@@ -85,7 +88,7 @@ public class MergeSort : Sortings
             }
             resultIndex++;
             interpolationX++;
-            yield return new WaitForSeconds(timeout); 
+            
         }
 
         // Dodajemy pozosta³e elementy z lewej czêœci, jeœli s¹
@@ -97,7 +100,7 @@ public class MergeSort : Sortings
             leftIndex++;
             resultIndex++;
             interpolationX++;
-            yield return new WaitForSeconds(timeout); 
+           
         }
 
         // Dodajemy pozosta³e elementy z prawej czêœci, jeœli s¹
@@ -109,33 +112,57 @@ public class MergeSort : Sortings
             rightIndex++;
             resultIndex++;
             interpolationX++;
-            yield return new WaitForSeconds(timeout); // Czekamy chwilê na animacjê
+            
         }
 
         // Teraz animujemy elementy w wyniku, aby przemieœci³y siê na swoje ostateczne pozycje
         for (int i = 0; i < result.Count; i++)
         {
-            StartCoroutine(MoveObject(result[i], resultPositions[i])); // Przemieszczamy do zapisanych pozycji
-            yield return new WaitForSeconds(timeout); 
+            //StartCoroutine(MoveObject(result[i], resultPositions[i])); // Przemieszczamy do zapisanych pozycji
+            //yield return new WaitForSeconds(timeout); 
 
-            /*
+
             //ustawiamy kolor dla porownywanych elementow
-            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i], Color.yellow));
-            yield return new WaitForSeconds(timeout);
-            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i + 1], Color.yellow));
-            yield return new WaitForSeconds(timeout);
+            if (i + 1 < result.Count)
+            {
+                StartCoroutine(ChangeColor(result[i], Color.yellow));
+                yield return new WaitForSeconds(timeout);
+                StartCoroutine(ChangeColor(result[i + 1], Color.yellow));
+                yield return new WaitForSeconds(timeout);
+            }
 
             // Przemieszczamy do zapisanych pozycji
             StartCoroutine(MoveObject(result[i], resultPositions[i]));
             yield return new WaitForSeconds(timeout);
-            if (i + 1 < result.Count) StartCoroutine(MoveObject(result[i + 1], resultPositions[i + 1]));
-            yield return new WaitForSeconds(timeout);
+            if (i + 1 < result.Count)
+            {
+                StartCoroutine(MoveObject(result[i + 1], resultPositions[i + 1]));
+                yield return new WaitForSeconds(timeout);
+            }
 
             //wracamy do pierwotnego koloru
-            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i], Color.white));
+            if (i + 1 < result.Count)
+            {
+                StartCoroutine(ChangeColor(result[i], Color.white));
+                yield return new WaitForSeconds(timeout);
+                StartCoroutine(ChangeColor(result[i + 1], Color.white));
+                yield return new WaitForSeconds(timeout);
+            }
+        }
+    }
+
+    public override void Restart()
+    {
+        interpolationX = 0;
+        base.Restart();
+    }
+
+    private IEnumerator EndSorting(List<GameObject> array)
+    {
+        for (int i = 0; i < array.Count; i++)
+        {
+            StartCoroutine(ChangeColor(array[i], Color.green));
             yield return new WaitForSeconds(timeout);
-            if (i + 1 < result.Count) StartCoroutine(ChangeColor(result[i + 1], Color.white));
-            yield return new WaitForSeconds(timeout);*/
         }
     }
 
@@ -143,5 +170,8 @@ public class MergeSort : Sortings
     {
         // Rozpoczêcie sortowania
         yield return StartCoroutine(Sorting(items));
+
+        //koniec sortowania 
+        yield return StartCoroutine(EndSorting(items));
     }
 }
