@@ -45,7 +45,7 @@ public abstract class Structures : MonoBehaviour
         if (iterator > 0)
             items[iterator].transform.localPosition = items[iterator - 1].transform.localPosition + offset * direction;
         else
-            items[iterator].transform.localPosition = offset * direction;
+            items[iterator].transform.localPosition = offset * direction + 3 * Vector3.left * direction.x;
 
         values.Insert(iterator, (int)(Random.value * 100));
         items[iterator].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[iterator].ToString();
@@ -83,7 +83,7 @@ public abstract class Structures : MonoBehaviour
         rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         SetDirection();
         iterator = 0;

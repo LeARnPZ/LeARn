@@ -84,7 +84,7 @@ public class ModifyStructure : MonoBehaviour
 
             if (touch.position.y < 0.8 * screenHeight)
             {
-                if (touch.position.x > 0.8 * screenWidth)
+                if (touch.position.x > 0.7 * screenWidth)
                 {
                     if (structures.GetIterator() < structures.GetCount())
                     {
@@ -93,7 +93,7 @@ public class ModifyStructure : MonoBehaviour
                     }
                 }
 
-                if (touch.position.x < 0.2 * screenWidth)
+                if (touch.position.x < 0.3 * screenWidth)
                 {
                     if (structures.GetIterator() > 0)
                     {

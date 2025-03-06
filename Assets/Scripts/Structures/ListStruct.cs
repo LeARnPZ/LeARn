@@ -21,7 +21,7 @@ public class ListStruct : Structures
         List<Vector3> currentPositions = new();
         List<Vector3> newPositions = new();
 
-        if (iterator == items.Count-1) yield break;
+        if (iterator == items.Count - 1) yield break;
 
         foreach (GameObject item in items)
         {
@@ -93,5 +93,11 @@ public class ListStruct : Structures
         adjustmentVector = Vector3.left;
         StartCoroutine(AdjustPosition());
         iterator++;
+    }
+
+    protected override void Start()
+    {
+        iteratorObject.transform.localPosition += 2 * offset * Vector3.left;
+        base.Start();
     }
 }
