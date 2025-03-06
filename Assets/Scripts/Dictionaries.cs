@@ -24,6 +24,6 @@ public class Dictionaries : MonoBehaviour
         if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie bąbelkowe to algorytm sortowania, w którym sąsiednie elementy są wielokrotnie porównywane i zamieniane miejscami, aż największe wartości „wypłyną” na koniec listy. Proces ten jest powtarzany tak długo, aż lista stanie się posortowana.");
         if (!descriptions.ContainsKey(3)) descriptions.Add(3, "Stos to struktura danych działająca na zasadzie last in, first out. Elementy są dodawane i usuwane z jednego końca – wierzchołka stosu.");
         if (!descriptions.ContainsKey(4)) descriptions.Add(4, "Kolejka to struktura danych działająca na zasadzie first in, first out. Elementy są dodawane na końcu i usuwane z początku.");
-        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "MergeSort");
+        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "MergeSort to algorytm sortowania działający na zasadzie dziel i rządź. Polega na rekurencyjnym dzieleniu tablicy na mniejsze podtablice, sortowaniu ich i scalaniu w jedną posortowaną całość.");
     }
 }
