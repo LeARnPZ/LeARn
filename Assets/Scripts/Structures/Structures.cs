@@ -54,6 +54,7 @@ public abstract class Structures : MonoBehaviour
 
         values.Insert(iterator, (int)(Random.value * 100));
         items[iterator].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[iterator].ToString();
+        items[iterator].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[iterator].ToString();
     }
 
     public virtual void PopItem()
