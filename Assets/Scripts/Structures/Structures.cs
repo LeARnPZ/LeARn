@@ -14,66 +14,91 @@ public abstract class Structures : MonoBehaviour
     private LimitWarning warning;
 
     protected Vector3 direction;
-    protected int popIndex;
+    protected int iterator;
 
     protected List<GameObject> items = new();
     protected List<int> values = new();
 
     protected abstract void SetDirection();
 
-    public bool IsEmpty()
+    public int GetCount()
     {
-        return items.Count == 0;
+        return items.Count;
     }
 
-    public void AddItem()
+    public int GetMaxCount()
     {
-        int index = items.Count;
-        if (index >= maxCount)
+        return maxCount;
+    }
+
+    public int GetIterator()
+    {
+        return iterator;
+    }
+
+    public virtual void AddItem()
+    {
+        if (items.Count >= maxCount)
         {
-            StartCoroutine(warning.ShowWarning());
+            //StartCoroutine(warning.ShowWarning());
             return;
         }
 
-        items.Add(Instantiate(prefab, this.transform));
-        items[index].name = $"Block{index}";
-        if (index > 0)
-            items[index].transform.localPosition = items[index - 1].transform.localPosition + offset * direction;
-        else
-            items[index].transform.localPosition = direction;
+        items.Insert(iterator, Instantiate(prefab, this.transform));
 
-        values.Add((int)(Random.value * 100));
-        items[index].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[index].ToString();
+        items[iterator].name = $"Block{items.Count-1}";
+        if (iterator > 0)
+            items[iterator].transform.localPosition = items[iterator - 1].transform.localPosition + offset * direction;
+        else
+            items[iterator].transform.localPosition = offset * direction + 3 * Vector3.left * direction.x;
+
+        values.Insert(iterator, (int)(Random.value * 100));
+        items[iterator].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[iterator].ToString();
+        items[iterator].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[iterator].ToString();
     }
 
     public virtual void PopItem()
     {
         if (items.Count < 1) return;
+        if (iterator >= items.Count)
+        {
+            Debug.Log("Out of bounds.");
+            return;
+        }
 
-        Rigidbody rigidbody = items[popIndex].GetComponent<Rigidbody>();
+        Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddRelativeForce(2 * Vector3.up + 0.5f * Vector3.forward + 0.5f * Vector3.right, ForceMode.Impulse);
         
-        Destroy(items[popIndex], 1f);
+        Destroy(items[iterator], 1f);
 
-        items.RemoveAt(popIndex);
-        values.RemoveAt(popIndex);
+        items.RemoveAt(iterator);
+        values.RemoveAt(iterator);
     }
 
     public virtual void PeekItem()
     {
         if (items.Count < 1) return;
+        if (iterator >= items.Count)
+        {
+            Debug.Log("Out of bounds.");
+            return;
+        }
 
-        Rigidbody rigidbody = items[popIndex].GetComponent<Rigidbody>();
+        Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
         rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         SetDirection();
+        iterator = 0;
         for (int i = 0; i < 3; i++)
+        {
             AddItem();
+        }
+        iterator = 0;
 
-        warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
+        //warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
     }
 }
