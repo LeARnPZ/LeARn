@@ -41,9 +41,15 @@ public class QueueStruct : Structures
         direction = Vector3.up + Vector3.right;
     }
 
+    public override void AddItem()
+    {
+        iterator = items.Count;
+        base.AddItem();
+    }
+
     public override void PopItem()
     {
-        popIndex = 0;
+        iterator = 0;
         base.PopItem();
 
         if (items.Count < 1) return;
@@ -52,7 +58,7 @@ public class QueueStruct : Structures
 
     public override void PeekItem()
     {
-        popIndex = 0;
+        iterator = 0;
         base.PeekItem();
     }
 }

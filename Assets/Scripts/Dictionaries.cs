@@ -17,13 +17,15 @@ public class Dictionaries : MonoBehaviour
         if (!algorithms.ContainsKey("StackStruct")) algorithms.Add("StackStruct", 3);
         if (!algorithms.ContainsKey("QueueStruct")) algorithms.Add("QueueStruct", 4);
         if (!algorithms.ContainsKey("MergeSort")) algorithms.Add("MergeSort", 5);
-
-        // Add descriptions for indices
-        if (!descriptions.ContainsKey(0)) descriptions.Add(0, "Stalin sort (znany rÃ³wnieÅ¼ jako â€dictator sortâ€) to absurdalny algorytm sortowania, w ktÃ³rym kaÅ¼dy element, ktÃ³ry nie znajduje siÄ™ we wÅ‚aÅ›ciwej kolejnoÅ›ci, jest po prostu usuwany z listy. W efekcie, na koniec faktycznie dostajemy posortowanÄ… listÄ™, jednak czÄ™Å›Ä‡ danych zostaje utracona.");
-        if (!descriptions.ContainsKey(1)) descriptions.Add(1, "Sortowanie przez wybÃ³r to prosty algorytm sortowania, w ktÃ³rym za kaÅ¼dym razem wybierany jest najmniejszy element i zamieniany z kolejnym w kolejnoÅ›ci, aÅ¼ lista stanie siÄ™ caÅ‚kowicie uporzÄ…dkowana.");
-        if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie bÄ…belkowe to algorytm sortowania, w ktÃ³rym sÄ…siednie elementy sÄ… wielokrotnie porÃ³wnywane i zamieniane miejscami, aÅ¼ najwiÄ™ksze wartoÅ›ci â€wypÅ‚ynÄ…â€ na koniec listy. Proces ten jest powtarzany tak dÅ‚ugo, aÅ¼ lista stanie siÄ™ posortowana.");
-        if (!descriptions.ContainsKey(3)) descriptions.Add(3, "Stos to struktura danych dziaÅ‚ajÄ…ca na zasadzie last in, first out. Elementy sÄ… dodawane i usuwane z jednego koÅ„ca â€“ wierzchoÅ‚ka stosu.");
-        if (!descriptions.ContainsKey(4)) descriptions.Add(4, "Kolejka to struktura danych dziaÅ‚ajÄ…ca na zasadzie first in, first out. Elementy sÄ… dodawane na koÅ„cu i usuwane z poczÄ…tku.");
-        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "MergeSort to algorytm sortowania dziaÅ‚ajÄ…cy na zasadzie dziel i rzÄ…dÅº. Polega na rekurencyjnym dzieleniu tablicy na mniejsze podtablice, sortowaniu ich i scalaniu w jednÄ… posortowanÄ… caÅ‚oÅ›Ä‡.");
+	if (!algorithms.ContainsKey("ListStruct")) algorithms.Add("ListStruct", 6);	
+        
+	// Add descriptions for indices
+        if (!descriptions.ContainsKey(0)) descriptions.Add(0, "Stalin sort (znany równie¿ jako „dictator sort”) to absurdalny algorytm sortowania, w którym ka¿dy element, który nie znajduje siê we w³aœciwej kolejnoœci, jest po prostu usuwany z listy. W efekcie, na koniec faktycznie dostajemy posortowan¹ listê, jednak czêœæ danych zostaje utracona.");
+        if (!descriptions.ContainsKey(1)) descriptions.Add(1, "Sortowanie przez wybór to prosty algorytm sortowania, w którym za ka¿dym razem wybierany jest najmniejszy element i zamieniany z kolejnym w kolejnoœci, a¿ lista stanie siê ca³kowicie uporz¹dkowana.");
+        if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie b¹belkowe to algorytm sortowania, w którym s¹siednie elementy s¹ wielokrotnie porównywane i zamieniane miejscami, a¿ najwiêksze wartoœci „wyp³yn¹” na koniec listy. Proces ten jest powtarzany tak d³ugo, a¿ lista stanie siê posortowana.");
+        if (!descriptions.ContainsKey(3)) descriptions.Add(3, "Stos to struktura danych dzia³aj¹ca na zasadzie last in, first out. Elementy s¹ dodawane i usuwane z jednego koñca – wierzcho³ka stosu.");
+        if (!descriptions.ContainsKey(4)) descriptions.Add(4, "Kolejka to struktura danych dzia³aj¹ca na zasadzie first in, first out. Elementy s¹ dodawane na koñcu i usuwane z pocz¹tku.");
+        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "MergeSort to algorytm sortowania dzia³aj¹cy na zasadzie dziel i rz¹dŸ. Polega na rekurencyjnym dzieleniu tablicy na mniejsze podtablice, sortowaniu ich i scalaniu w jedn¹ posortowan¹ ca³oœæ.");
+        if (!descriptions.ContainsKey(5)) descriptions.Add(6, "Lista to struktura danych umo¿liwiaj¹ca przechowywanie elementów w okreœlonej kolejnoœci, z mo¿liwoœci¹ ich dynamicznego dodawania, usuwania i modyfikowania. W przeciwieñstwie do stosu i kolejki, elementy mog¹ byæ wstawiane lub usuwane w dowolnym miejscu.\n\nPodstawowe operacje na liœcie to:\n• wstawianie – dodawanie elementu na pocz¹tku, koñcu lub w œrodku listy,\n• usuwanie – kasowanie dowolnego elementu,\n• wyszukiwanie – odnalezienie elementu na podstawie wartoœci lub indeksu,\n• iterowanie – przechodzenie przez kolejne elementy listy.");
     }
 }
