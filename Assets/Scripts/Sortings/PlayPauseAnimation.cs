@@ -12,7 +12,8 @@ public class PlayPauseAnimation : MonoBehaviour
     [SerializeField]
     private Button playPauseButton;
 
-    private TextMeshProUGUI buttonText;
+    private Transform pauseImage;
+    private Transform playImage;
 
 
     public void onButtonClick()
@@ -21,17 +22,19 @@ public class PlayPauseAnimation : MonoBehaviour
         Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
         bool isPaused = sort.getPaused();
 
-         //Debug.Log("Bool pauza = " + isPaused);
  
         sort.Pause();
 
         if (sort.getPaused())
         {
-            buttonText.text = "PLAY";
+            pauseImage.gameObject.SetActive(false);
+            playImage.gameObject.SetActive(true);
+
         }
         else
         {
-            buttonText.text = "PAUZA";
+            playImage.gameObject.SetActive(false);
+            pauseImage.gameObject.SetActive(true);
         }
         
 
@@ -40,13 +43,16 @@ public class PlayPauseAnimation : MonoBehaviour
 
     public void resetButtonText()
     {
-        buttonText.text = "PAUZA";
+        playImage.gameObject.SetActive(false);
+        pauseImage.gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        buttonText = playPauseButton.GetComponentInChildren<TextMeshProUGUI>();
+        playImage = playPauseButton.transform.Find("PlayImage");
+        pauseImage = playPauseButton.transform.Find("PauseImage");
+
         if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
             gameObject.SetActive(true);
         else
