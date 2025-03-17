@@ -1,28 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class DFS : Graphs
 {
-    //int MarkEdges(int node, Color color)
-    //{
-    //    int count = 0;
-    //    for (int i = 0; i < numberOfNodes; i++)
-    //    {
-    //        GameObject line = GameObject.Find($"{node}-{i}");
-    //        if (line == null)
-    //            line = GameObject.Find($"{i}-{node}");
-    //        if (line != null)
-    //        {
-    //            line.GetComponent<Renderer>().material.color = color;
-    //            count++;
-    //        }
-    //    }
-    //    return count;
-    //}
-
     protected override IEnumerator SearchGraph()
     {
         yield return new WaitForSeconds(timeout);
@@ -44,9 +26,18 @@ public class DFS : Graphs
             yield return new WaitForSeconds(timeout);
 
             // Przeszukanie s¹siadów wêz³a
-            foreach (int nb in neighborsList[n])
+            foreach (GameObject edge in edgesList)
             {
-                // Dodanie nieodwiedzonych s¹siadów do stosu
+                if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
+                {
+                    StartCoroutine(ChangeColor(edge, Color.red));
+                }
+            }
+            yield return new WaitForSeconds(timeout);
+            
+            // Dodanie nieodwiedzonych s¹siadów do stosu
+            foreach (int nb in neighborsList[n])
+            { 
                 if (!visited.Contains(nb) && !stack.Contains(nb))
                 {
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
@@ -54,6 +45,14 @@ public class DFS : Graphs
                 }
             }
             yield return new WaitForSeconds(timeout);
+
+            foreach (GameObject edge in edgesList)
+            {
+                if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
+                {
+                    StartCoroutine(ChangeColor(edge, Color.white));
+                }
+            }
 
             StartCoroutine(ChangeSize(nodesList[n], Vector3.one));
             yield return new WaitForSeconds(timeout);

@@ -77,15 +77,25 @@ public abstract class Graphs : MonoBehaviour
         }
 
         matrix[0][1] = true;
+        matrix[1][0] = true;
         matrix[0][4] = true;
+        matrix[4][0] = true;
         matrix[1][2] = true;
+        matrix[2][1] = true;
         matrix[2][3] = true;
+        matrix[3][2] = true;
         matrix[2][4] = true;
+        matrix[4][2] = true;
         matrix[3][7] = true;
+        matrix[7][3] = true;
         matrix[4][5] = true;
+        matrix[5][4] = true;
         matrix[4][7] = true;
+        matrix[7][4] = true;
         matrix[5][6] = true;
+        matrix[6][5] = true;
         matrix[7][8] = true;
+        matrix[8][7] = true;
     }
 
     private void CreateNeighborsList()
@@ -124,6 +134,7 @@ public abstract class Graphs : MonoBehaviour
                     lr.SetPosition(1, to);
                     lr.startWidth = lr.endWidth = 0.1f;
                     lr.material.color = Color.white;
+                    lr.material.SetFloat("_Glossiness", 0);
 
                     edgesList.Add(line);
                 }
