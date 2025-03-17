@@ -85,7 +85,7 @@ public class ModifyStructure : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();
 
-            if (touch.position.y < 0.8 * screenHeight)
+            if (touch.position.y > 0.15 * screenHeight && touch.position.y < 0.85 * screenHeight)
             {
                 if (touch.position.x > 0.7 * screenWidth)
                 {
