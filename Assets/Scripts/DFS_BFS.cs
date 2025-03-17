@@ -1,16 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class DFS_BFS : MonoBehaviour
 {
     [SerializeField]
     private GameObject prefab;
+
     [Header("Ustawienia animacji")]
     [SerializeField]
     private int numberOfNodes;
@@ -18,11 +16,13 @@ public class DFS_BFS : MonoBehaviour
     private int startingNode;
     [SerializeField]
     private string searchType;
+
     [Header("Czas trwania")]
     [SerializeField]
     private float timeout;
     [SerializeField]
     private float animDuration;
+
     [Header("Obiekty-rodzice")]
     [SerializeField]
     private GameObject nodes;
@@ -69,6 +69,23 @@ public class DFS_BFS : MonoBehaviour
 
         renderer.material.color = newColor;
     }
+
+    private IEnumerator ChangeSize(GameObject gameObject, Vector3 newScale)
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < animDuration)
+        {
+            gameObject.transform.localScale = Vector3.Lerp(currentScale, newScale, elapsedTime / animDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        gameObject.transform.localScale = newScale;
+    }
+
 
     /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
     private void CreateMatrix()
@@ -146,19 +163,29 @@ public class DFS_BFS : MonoBehaviour
 
         while (stack.Count > 0)
         {
+            // Przejœcie do kolejnego wêz³a
             int n = stack.Pop();
+            StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
+            yield return new WaitForSeconds(timeout);
+
+            // Oznaczenie wêz³a jako odwiedzonego
             visited[n] = true;
             StartCoroutine(ChangeColor(nodesList[n], Color.green));
             yield return new WaitForSeconds(timeout);
 
+            // Przeszukanie s¹siadów wêz³a
             foreach (int nb in neighborsList[n])
             {
+                // Dodanie nieodwiedzonych s¹siadów do stosu
                 if (!visited[nb] && !stack.Contains(nb))
                 {
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
                     stack.Push(nb);
                 }
             }
+            yield return new WaitForSeconds(timeout);
+
+            StartCoroutine(ChangeSize(nodesList[n], Vector3.one));
             yield return new WaitForSeconds(timeout);
         }
     }
@@ -222,10 +249,5 @@ public class DFS_BFS : MonoBehaviour
             StartCoroutine(DFS(startingNode));
         //else if (searchType == "BFS")
         //    StartCoroutine(BFS(startingNode));
-    }
-
-    void Update()
-    {
-        
     }
 }
