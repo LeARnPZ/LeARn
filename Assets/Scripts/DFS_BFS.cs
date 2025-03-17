@@ -11,16 +11,19 @@ public class DFS_BFS : MonoBehaviour
 {
     [SerializeField]
     private GameObject prefab;
+    [Header("Ustawienia animacji")]
     [SerializeField]
     private int numberOfNodes;
     [SerializeField]
     private int startingNode;
     [SerializeField]
     private string searchType;
+    [Header("Czas trwania")]
     [SerializeField]
     private float timeout;
     [SerializeField]
     private float animDuration;
+    [Header("Obiekty-rodzice")]
     [SerializeField]
     private GameObject nodes;
     [SerializeField]
@@ -106,6 +109,34 @@ public class DFS_BFS : MonoBehaviour
         }
     }
 
+    private void DrawEdges()
+    {
+        for (int i = 0; i < numberOfNodes; i++)
+        {
+            for (int j = 0; j < numberOfNodes; j++)
+            {
+                if (matrix[i][j])
+                {
+                    GameObject line = new();
+                    line.transform.parent = edges.transform;
+                    line.name = $"{i}-{j}";
+
+                    Vector3 from = nodesList[i].transform.position;
+                    Vector3 to = nodesList[j].transform.position;
+
+                    line.AddComponent<LineRenderer>();
+                    LineRenderer lr = line.GetComponent<LineRenderer>();
+                    lr.SetPosition(0, from);
+                    lr.SetPosition(1, to);
+                    lr.startWidth = lr.endWidth = 0.1f;
+                    lr.material.color = Color.white;
+
+                    edgesList.Add(line);
+                }
+            }
+        }
+    }
+
     private IEnumerator DFS(int start)
     {
         yield return new WaitForSeconds(timeout);
@@ -115,16 +146,12 @@ public class DFS_BFS : MonoBehaviour
 
         while (stack.Count > 0)
         {
-            // Get next node from the stack
             int n = stack.Pop();
-
-            // Set the node as visited
             visited[n] = true;
             StartCoroutine(ChangeColor(nodesList[n], Color.green));
             yield return new WaitForSeconds(timeout);
 
-            // Check all neighbors of the current node
-            foreach(int nb in neighborsList[n])
+            foreach (int nb in neighborsList[n])
             {
                 if (!visited[nb] && !stack.Contains(nb))
                 {
@@ -132,20 +159,7 @@ public class DFS_BFS : MonoBehaviour
                     stack.Push(nb);
                 }
             }
-            
-            //for (int i = numberOfNodes - 1; i >= 0; i--)
-            //{
-            //    if (matrix[n][i] || matrix[i][n])
-            //    { 
-            //        // If the neighbor was not visited, add it to the visit list (if does not exist yet)
-            //        if (!visited[i])
-            //            if (!nodesToVisit.Contains(i))
-            //                nodesToVisit = nodesToVisit.Prepend(i).ToList();
-            //    }
-            //}
             yield return new WaitForSeconds(timeout);
-
-            //node.transform.localScale = Vector3.one;
         }
     }
 
@@ -197,38 +211,12 @@ public class DFS_BFS : MonoBehaviour
         for (int i = 0; i < numberOfNodes; i++)
         {
             nodesList.Add(nodes.transform.GetChild(i).gameObject);
-            nodesList[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = (i + 1).ToString();
-            nodesList[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = (i + 1).ToString();
+            nodesList[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = i.ToString();
+            nodesList[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = i.ToString();
         }
 
-        // Draw lines that connect the nodes
-        for (int i = 0; i < numberOfNodes; i++)
-        {
-            for (int j = 0; j < numberOfNodes; j++)
-            {
-                GameObject line;
-                Vector3 from, to;
-
-                if (matrix[i][j])
-                {
-                    from = nodesList[i].transform.position;
-                    to = nodesList[j].transform.position;
-                    line = new() { name = $"{i}-{j}" };
-
-                }
-                else continue;
-
-                line.transform.position = from;
-                line.AddComponent<LineRenderer>();
-                LineRenderer lr = line.GetComponent<LineRenderer>();
-                lr.SetPosition(0, from);
-                lr.SetPosition(1, to);
-                lr.startWidth = 0.1f;
-                lr.endWidth = 0.1f;
-                line.GetComponent<Renderer>().material.color = Color.white;
-                edgesList.Add(line);
-            }
-        }
+        // Utworzenie krawêdzi ³¹cz¹cych odpowiednie wêz³y i dodanie ich do listy
+        DrawEdges();
 
         if (searchType == "DFS")
             StartCoroutine(DFS(startingNode));

@@ -1024,8 +1024,8 @@ MonoBehaviour:
   numberOfNodes: 9
   startingNode: 0
   searchType: DFS
-  timeout: 1
-  animDuration: 0.75
+  timeout: 1.5
+  animDuration: 1
   nodes: {fileID: 1072008953}
   edges: {fileID: 1744243084}
 --- !u!4 &2104082129
