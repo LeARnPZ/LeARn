@@ -12,7 +12,8 @@ public class Dictionaries : MonoBehaviour
     {
         // Add indices for algorithms
         if (!algorithms.ContainsKey("StalinSort")) algorithms.Add("StalinSort", 0);
-        if (!algorithms.ContainsKey("SelectionSort")) algorithms.Add("SelectionSort", 1);
+        if (!algorithms.ContainsKey("SelectSort")) algorithms.Add("SelectSort", 1);
+        //if (!algorithms.ContainsKey("SelectionSort")) algorithms.Add("SelectionSort", 1);
         if (!algorithms.ContainsKey("BubbleSort")) algorithms.Add("BubbleSort", 2);
         if (!algorithms.ContainsKey("StackStruct")) algorithms.Add("StackStruct", 3);
         if (!algorithms.ContainsKey("QueueStruct")) algorithms.Add("QueueStruct", 4);
