@@ -10,8 +10,8 @@ public class BFS : Graphs
         yield return new WaitForSeconds(timeout);
 
         Queue<int> queue = new();  
-        queue.Enqueue(startingNode); // Dodajemy wêze³ pocz¹tkowy do kolejki
-        List<int> visited = new();   // Lista odwiedzonych wêz³ów
+        queue.Enqueue(startingNode); 
+        List<int> visited = new();   
 
         while (queue.Count > 0)
         {
