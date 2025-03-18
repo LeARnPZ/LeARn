@@ -62,3 +62,4 @@ public class QueueStruct : Structures
         base.PeekItem();
     }
 }
+

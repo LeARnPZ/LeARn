@@ -5,27 +5,34 @@ using UnityEngine;
 
 public class BFS : Graphs
 {
+    public VisualQueue queueVisual;
+
     protected override IEnumerator SearchGraph()
     {
         yield return new WaitForSeconds(timeout);
 
-        Queue<int> queue = new();  
-        queue.Enqueue(startingNode); 
-        List<int> visited = new();   
+        Queue<int> queue = new();
+        // Dodajemy wêze³ pocz¹tkowy zarówno do logiki jak i wizualizacji
+        queue.Enqueue(startingNode);
+        queueVisual.EnqueueVisual(startingNode);
+        yield return new WaitForSeconds(timeout*2);
 
+        List<int> visited = new();
         while (queue.Count > 0)
         {
-            // Przejœcie do kolejnego wêz³a
-            int n = queue.Dequeue();  // Usuwamy wêze³ z przodu kolejki
+            // Pobieramy element z kolejki i wizualnie go usuwamy
+            int n = queue.Dequeue();
+            queueVisual.DequeueVisual();
+
+            // Wizualizacja aktualnego wêz³a
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
-            // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
             StartCoroutine(ChangeColor(nodesList[n], Color.green));
             yield return new WaitForSeconds(timeout);
 
-            // Przeszukanie s¹siadów wêz³a
+            // Zaznaczamy krawêdzie powi¹zane z wêz³em
             foreach (GameObject edge in edgesList)
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
@@ -35,27 +42,30 @@ public class BFS : Graphs
             }
             yield return new WaitForSeconds(timeout);
 
-            // Dodanie nieodwiedzonych s¹siadów do kolejki
+            // Przetwarzamy s¹siadów wêz³a
             foreach (int nb in neighborsList[n])
             {
-                if (!visited.Contains(nb) && !queue.Contains(nb))  // Sprawdzamy, czy s¹siad nie by³ ju¿ odwiedzony ani nie znajduje siê w kolejce
+                if (!visited.Contains(nb) && !queue.Contains(nb))
                 {
-                    StartCoroutine(ChangeColor(nodesList[nb], Color.yellow)); // Zmieniamy kolor wêz³a na ¿ó³ty
-                    queue.Enqueue(nb); // Dodajemy s¹siada do kolejki
+                    StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
+                    queue.Enqueue(nb);
+                    queueVisual.EnqueueVisual(nb);
                 }
             }
             yield return new WaitForSeconds(timeout);
 
+            // Przywracamy domyœlny kolor krawêdzi
             foreach (GameObject edge in edgesList)
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
                 {
-                    StartCoroutine(ChangeColor(edge, Color.white)); // Przywracamy kolor krawêdzi do bia³ego
+                    StartCoroutine(ChangeColor(edge, Color.white));
                 }
             }
 
-            StartCoroutine(ChangeSize(nodesList[n], Vector3.one)); // Przywracamy oryginalny rozmiar wêz³a
+            StartCoroutine(ChangeSize(nodesList[n], Vector3.one));
             yield return new WaitForSeconds(timeout);
         }
     }
+
 }
