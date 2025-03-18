@@ -9,31 +9,41 @@ public class SelectSort : Sortings
     private int minIndex;
     private Color defaultColor;
     private int[] heights;
+    private static int[] saveHeights;
+    private bool firstTime = true;
 
     void setup()
     {
         ColorUtility.TryParseHtmlString("#4274b2", out defaultColor);
 
-        heights = new int[numberOfItems];
+        if (firstTime)
+        {
+            heights = new int[numberOfItems];
+        }
+        else { 
+            heights = new int[saveHeights.Length];
+            Array.Copy(saveHeights, heights, saveHeights.Length);
+        }
+        
         System.Random rnd = new System.Random();
-
-        /*
-        heights[0] = 10;
-        heights[1] = 2;
-        heights[2] = 5;
-        heights[3] = 1;
-        heights[4] = 8;
-        heights[5] = 3;
-        heights[6] = 7;
-        */
 
         for (int i = 0; i < numberOfItems; i++)
         {
-            heights[i] = rnd.Next(1, 16);
+            if (firstTime)
+            {
+                heights[i] = rnd.Next(1, 16);
+            }
+            
             items[i].transform.localScale = new Vector3(1, heights[i] * 0.20f, 1);
             items[i].transform.localPosition = new Vector3(items[i].transform.localPosition.x, heights[i] * 0.10f, 0);
             SetColor(items[i], defaultColor);
         }
+        if (firstTime) { 
+            saveHeights = new int[heights.Length];
+            Array.Copy(heights, saveHeights, heights.Length);
+            firstTime = false;
+        }
+        
 
     }
 
