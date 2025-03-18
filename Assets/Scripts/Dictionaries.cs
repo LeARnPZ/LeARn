@@ -18,8 +18,8 @@ public class Dictionaries : MonoBehaviour
         if (!algorithms.ContainsKey("QueueStruct")) algorithms.Add("QueueStruct", 4);
         if (!algorithms.ContainsKey("ListStruct")) algorithms.Add("ListStruct", 5);
         if (!algorithms.ContainsKey("MergeSort")) algorithms.Add("MergeSort", 6);
-        if (!algorithms.ContainsKey("MergeSort")) algorithms.Add("BFS", 7);
-        if (!algorithms.ContainsKey("MergeSort")) algorithms.Add("DFS", 8);
+        if (!algorithms.ContainsKey("BFS")) algorithms.Add("BFS", 7);
+        if (!algorithms.ContainsKey("DFS")) algorithms.Add("DFS", 8);
 
         // Add descriptions for indices
         if (!descriptions.ContainsKey(0)) descriptions.Add(0, "Stalin sort (znany równie¿ jako „dictator sort”) to absurdalny algorytm sortowania, w którym ka¿dy element, który nie znajduje siê we w³aœciwej kolejnoœci, jest po prostu usuwany z listy. W efekcie, na koniec faktycznie dostajemy posortowan¹ listê, jednak czêœæ danych zostaje utracona.");
