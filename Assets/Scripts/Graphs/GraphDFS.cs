@@ -15,6 +15,7 @@ public class DFS : Graphs
         Stack<int> stack = new();
         stack.Push(startingNode);
         graphStack.PushVisual(startingNode);
+        addText(startingNode.ToString());
         StartCoroutine(ChangeColor(nodesList[startingNode], Color.yellow));
         yield return new WaitForSeconds(timeout);
         List<int> visited = new();
@@ -50,6 +51,7 @@ public class DFS : Graphs
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
                     stack.Push(nb);
                     graphStack.PushVisual(nb);
+                    addText(nb.ToString());
                 }
             }
             yield return new WaitForSeconds(timeout);

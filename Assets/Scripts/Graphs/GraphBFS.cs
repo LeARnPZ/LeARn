@@ -16,6 +16,7 @@ public class BFS : Graphs
         // Dodajemy wêze³ pocz¹tkowy zarówno do logiki jak i wizualizacji
         queue.Enqueue(startingNode);
         graphQueue.EnqueueVisual(startingNode);
+        addText(startingNode.ToString());
         StartCoroutine(ChangeColor(nodesList[startingNode], Color.yellow));
         yield return new WaitForSeconds(timeout);
 
@@ -52,6 +53,7 @@ public class BFS : Graphs
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
                     queue.Enqueue(nb);
                     graphQueue.EnqueueVisual(nb);
+                    addText(nb.ToString());
                 }
             }
             yield return new WaitForSeconds(timeout);

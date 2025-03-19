@@ -22,6 +22,8 @@ public abstract class Graphs : MonoBehaviour
     protected GameObject nodes;
     [SerializeField]
     protected GameObject edges;
+    [SerializeField]
+    protected GameObject QueueTravel;
 
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
@@ -177,6 +179,21 @@ public abstract class Graphs : MonoBehaviour
         Time.timeScale = isPaused ? 0f : 1f;
     }
 
+    public void addText(string text)
+    {
+
+        if (QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text.Equals("no."))
+        {
+            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text = text;
+            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[1].text = text;
+        }
+        else
+        {
+            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text += ", " + text.ToString();
+            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[1].text += ", " + text.ToString();
+        }
+    }
+
     protected void Start()
     {
         CreateMatrix();
@@ -192,6 +209,9 @@ public abstract class Graphs : MonoBehaviour
 
         // Utworzenie krawêdzi ³¹cz¹cych odpowiednie wêz³y i dodanie ich do listy
         DrawEdges();
+
+        isPaused = false;
+        Time.timeScale = 1f;
 
         // Uruchomienie animacji
         StartCoroutine(SearchGraph());
