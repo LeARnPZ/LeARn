@@ -15,7 +15,7 @@ public abstract class Sortings : MonoBehaviour
     protected float timeout;
 
     protected List<GameObject> items = new();
-    private List<int> values = new();
+    protected List<int> values = new();
 
     protected bool isPaused;
 
@@ -81,7 +81,7 @@ public abstract class Sortings : MonoBehaviour
 
     protected abstract IEnumerator Sort();
 
-    protected void Start()
+    protected virtual void Start()
     {
         Vector3 startPosition = new(-numberOfItems / 2 + 1, 0f, 0);
         for (int i = 0; i < numberOfItems; i++)
