@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class DFS : Graphs
 {
-    public VisualStack visualStack;
+    public GraphStack graphStack;
     protected override IEnumerator SearchGraph()
     {
         yield return new WaitForSeconds(timeout);
 
         Stack<int> stack = new();
         stack.Push(startingNode);
-        visualStack.pushVisual(startingNode);
-        yield return new WaitForSeconds(timeout*2);
+        graphStack.PushVisual(startingNode);
+        StartCoroutine(ChangeColor(nodesList[startingNode], Color.yellow));
+        yield return new WaitForSeconds(timeout);
         List<int> visited = new();
 
         while (stack.Count > 0)
         {
             // Przejœcie do kolejnego wêz³a
             int n = stack.Pop();
-            visualStack.popVisual();
+            graphStack.PopVisual();
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
@@ -46,7 +47,7 @@ public class DFS : Graphs
                 {
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
                     stack.Push(nb);
-                    visualStack.pushVisual(nb);
+                    graphStack.PushVisual(nb);
                 }
             }
             yield return new WaitForSeconds(timeout);

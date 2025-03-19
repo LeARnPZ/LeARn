@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class VisualStack : StackStruct
+public class GraphStack : StackStruct
 {
     protected override void Start()
     {
-        SetDirection();
+        base.SetDirection();
         iterator = 0;
-
     }
-    public void pushVisual(int value)
+
+    public void PushVisual(int value)
     {
         iterator = items.Count;
         GameObject newItem = Instantiate(prefab, this.transform);
@@ -29,11 +29,8 @@ public class VisualStack : StackStruct
         newItem.transform.GetChild(1).GetComponent<TextMeshPro>().text = value.ToString();
     }
 
-    public void popVisual()
+    public void PopVisual()
     {
-        if (items.Count > 0)
-        {
-            PopItem();
-        }
+        base.PopItem();
     }
 }

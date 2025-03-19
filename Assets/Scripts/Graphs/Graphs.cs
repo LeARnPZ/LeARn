@@ -132,7 +132,7 @@ public abstract class Graphs : MonoBehaviour
                     LineRenderer lr = line.GetComponent<LineRenderer>();
                     lr.SetPosition(0, from);
                     lr.SetPosition(1, to);
-                    lr.startWidth = lr.endWidth = 0.1f;
+                    lr.startWidth = lr.endWidth = 0.1f * this.transform.localScale.x;
                     lr.material.color = Color.white;
                     lr.material.SetFloat("_Glossiness", 0);
 
