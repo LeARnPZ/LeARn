@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1911951770478805317}
   - component: {fileID: 4559449175214481138}
   m_Layer: 0
-  m_Name: BFS
+  m_Name: GraphBFS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

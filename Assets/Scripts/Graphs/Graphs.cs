@@ -29,6 +29,8 @@ public abstract class Graphs : MonoBehaviour
     protected List<GameObject> nodesList = new();
     protected List<GameObject> edgesList = new();
 
+    protected bool isPaused;
+
     protected abstract IEnumerator SearchGraph();
 
     protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
@@ -140,6 +142,39 @@ public abstract class Graphs : MonoBehaviour
                 }
             }
         }
+    }
+
+    public virtual void Restart()
+    {
+ 
+        StopAllCoroutines();
+        foreach (GameObject node in nodesList)
+        {
+            node.transform.localScale = Vector3.one; 
+            node.GetComponent<Renderer>().material.color = Color.white;
+        }
+
+        foreach (GameObject edge in edgesList)
+        {
+            Destroy(edge);
+        }
+        edgesList.Clear();
+
+        matrix.Clear();
+        neighborsList.Clear();
+
+        Start();
+    }
+
+    public bool getPaused()
+    {
+        return isPaused;
+    }
+
+    public void Pause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
     }
 
     protected void Start()
