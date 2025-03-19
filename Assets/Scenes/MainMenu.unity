@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 11287469}
   m_Layer: 5
   m_Name: ListStruct
-  m_TagString: Untagged
+  m_TagString: struktury
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 225545586}
   m_Layer: 5
   m_Name: BFS
-  m_TagString: Untagged
+  m_TagString: grafy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1270,7 +1270,7 @@ GameObject:
   - component: {fileID: 372733030}
   m_Layer: 5
   m_Name: BucketSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1881,7 +1881,7 @@ GameObject:
   - component: {fileID: 574609157}
   m_Layer: 5
   m_Name: QueueStruct
-  m_TagString: Untagged
+  m_TagString: struktury
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2027,7 +2027,7 @@ GameObject:
   - component: {fileID: 588812236}
   m_Layer: 5
   m_Name: DijkstraAlgo
-  m_TagString: Untagged
+  m_TagString: grafy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2821,7 +2821,7 @@ GameObject:
   - component: {fileID: 804619795}
   m_Layer: 5
   m_Name: GrahamAlgo
-  m_TagString: Untagged
+  m_TagString: grafy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3161,7 +3161,7 @@ GameObject:
   - component: {fileID: 897693449}
   m_Layer: 5
   m_Name: StackStruct
-  m_TagString: Untagged
+  m_TagString: struktury
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 945201422}
   m_Layer: 5
   m_Name: SelectSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4356,7 +4356,7 @@ GameObject:
   - component: {fileID: 1745958656}
   m_Layer: 5
   m_Name: BubbleSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4656,7 +4656,7 @@ GameObject:
   - component: {fileID: 1787025344}
   m_Layer: 5
   m_Name: QuickSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4802,7 +4802,7 @@ GameObject:
   - component: {fileID: 1797391271}
   m_Layer: 5
   m_Name: DFS
-  m_TagString: Untagged
+  m_TagString: grafy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5024,7 +5024,7 @@ GameObject:
   - component: {fileID: 1872503885}
   m_Layer: 5
   m_Name: InsertionSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5341,7 +5341,7 @@ GameObject:
   - component: {fileID: 1951057469}
   m_Layer: 5
   m_Name: MergeSort
-  m_TagString: Untagged
+  m_TagString: sortowania
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
