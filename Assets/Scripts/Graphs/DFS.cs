@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class DFS : Graphs
 {
-    public GraphStack graphStack;
+    [SerializeField]
+    private GraphStack graphStack;
+
     protected override IEnumerator SearchGraph()
     {
         yield return new WaitForSeconds(timeout);

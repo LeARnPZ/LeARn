@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class VisualQueue : QueueStruct
+public class GraphQueue : QueueStruct
 {
     protected override void Start()
     {
-        SetDirection();
+        base.SetDirection();
         iterator = 0;
-        
     }
+
     public void EnqueueVisual(int value)
     {
         iterator = items.Count;
@@ -31,10 +31,7 @@ public class VisualQueue : QueueStruct
 
     public void DequeueVisual()
     {
-        if (items.Count > 0)
-        {
-            PopItem();
-        }
+        base.PopItem();
     }
 
 }
