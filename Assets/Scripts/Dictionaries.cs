@@ -7,10 +7,9 @@ public class Dictionaries : MonoBehaviour
     public static Dictionary<string, int> algorithms = new Dictionary<string, int>();
     public static Dictionary<int, string> descriptions = new Dictionary<int, string>();
 
-    // Start is called before the first frame update
     private void Awake()
     {
-        // Add indices for algorithms
+        // Dodanie indeksów do nazw algorytmów
         if (!algorithms.ContainsKey("StalinSort")) algorithms.Add("StalinSort", 0);
         if (!algorithms.ContainsKey("SelectionSort")) algorithms.Add("SelectionSort", 1);
         if (!algorithms.ContainsKey("BubbleSort")) algorithms.Add("BubbleSort", 2);
@@ -18,10 +17,10 @@ public class Dictionaries : MonoBehaviour
         if (!algorithms.ContainsKey("QueueStruct")) algorithms.Add("QueueStruct", 4);
         if (!algorithms.ContainsKey("ListStruct")) algorithms.Add("ListStruct", 5);
         if (!algorithms.ContainsKey("MergeSort")) algorithms.Add("MergeSort", 6);
-        if (!algorithms.ContainsKey("BFS")) algorithms.Add("BFS", 7);
-        if (!algorithms.ContainsKey("DFS")) algorithms.Add("DFS", 8);
+        if (!algorithms.ContainsKey("BFSGraph")) algorithms.Add("BFSGraph", 7);
+        if (!algorithms.ContainsKey("DFSGraph")) algorithms.Add("DFSGraph", 8);
 
-        // Add descriptions for indices
+        // Dodanie opisów do indeksów
         if (!descriptions.ContainsKey(0)) descriptions.Add(0, "Stalin sort (znany równie¿ jako „dictator sort”) to absurdalny algorytm sortowania, w którym ka¿dy element, który nie znajduje siê we w³aœciwej kolejnoœci, jest po prostu usuwany z listy. W efekcie, na koniec faktycznie dostajemy posortowan¹ listê, jednak czêœæ danych zostaje utracona.");
         if (!descriptions.ContainsKey(1)) descriptions.Add(1, "Sortowanie przez wybór to prosty algorytm sortowania, w którym za ka¿dym razem wybierany jest najmniejszy element i zamieniany z kolejnym w kolejnoœci, a¿ lista stanie siê ca³kowicie uporz¹dkowana.");
         if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie b¹belkowe to algorytm sortowania, w którym s¹siednie elementy s¹ wielokrotnie porównywane i zamieniane miejscami, a¿ najwiêksze wartoœci „wyp³yn¹” na koniec listy. Proces ten jest powtarzany tak d³ugo, a¿ lista stanie siê posortowana.");

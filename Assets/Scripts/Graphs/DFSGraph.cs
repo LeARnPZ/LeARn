@@ -3,39 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BFS : Graphs
+public class DFSGraph : Graphs
 {
     [SerializeField]
-    private GraphQueue graphQueue;
+    private GraphStack graphStack;
 
     protected override IEnumerator SearchGraph()
     {
         yield return new WaitForSeconds(timeout);
 
-        Queue<int> queue = new();
-        // Dodajemy wêze³ pocz¹tkowy zarówno do logiki jak i wizualizacji
-        queue.Enqueue(startingNode);
-        graphQueue.EnqueueVisual(startingNode);
-        addText(startingNode.ToString());
+        Stack<int> stack = new();
+        stack.Push(startingNode);
+        graphStack.PushVisual(startingNode);
         StartCoroutine(ChangeColor(nodesList[startingNode], Color.yellow));
         yield return new WaitForSeconds(timeout);
-
         List<int> visited = new();
-        while (queue.Count > 0)
-        {
-            // Pobieramy element z kolejki i wizualnie go usuwamy
-            int n = queue.Dequeue();
-            graphQueue.DequeueVisual();
 
-            // Wizualizacja aktualnego wêz³a
+        while (stack.Count > 0)
+        {
+            // Przejœcie do kolejnego wêz³a
+            int n = stack.Pop();
+            graphStack.PopVisual();
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
+            // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
             StartCoroutine(ChangeColor(nodesList[n], Color.green));
+            addText(n.ToString());
             yield return new WaitForSeconds(timeout);
 
-            // Zaznaczamy krawêdzie powi¹zane z wêz³em
+            // Przeszukanie s¹siadów wêz³a
             foreach (GameObject edge in edgesList)
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
@@ -44,21 +42,19 @@ public class BFS : Graphs
                 }
             }
             yield return new WaitForSeconds(timeout);
-
-            // Przetwarzamy s¹siadów wêz³a
+            
+            // Dodanie nieodwiedzonych s¹siadów do stosu
             foreach (int nb in neighborsList[n])
-            {
-                if (!visited.Contains(nb) && !queue.Contains(nb))
+            { 
+                if (!visited.Contains(nb) && !stack.Contains(nb))
                 {
                     StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
-                    queue.Enqueue(nb);
-                    graphQueue.EnqueueVisual(nb);
-                    addText(nb.ToString());
+                    stack.Push(nb);
+                    graphStack.PushVisual(nb);
                 }
             }
             yield return new WaitForSeconds(timeout);
 
-            // Przywracamy domyœlny kolor krawêdzi
             foreach (GameObject edge in edgesList)
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
@@ -71,5 +67,4 @@ public class BFS : Graphs
             yield return new WaitForSeconds(timeout);
         }
     }
-
 }

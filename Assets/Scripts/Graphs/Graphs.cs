@@ -23,7 +23,7 @@ public abstract class Graphs : MonoBehaviour
     [SerializeField]
     protected GameObject edges;
     [SerializeField]
-    protected GameObject QueueTravel;
+    protected GameObject queueTravel;
 
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
@@ -182,15 +182,15 @@ public abstract class Graphs : MonoBehaviour
     public void addText(string text)
     {
 
-        if (QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text.Equals("no."))
+        if (queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text.Equals(""))
         {
-            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text = text;
-            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[1].text = text;
+            queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text = text;
+            queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text = text;
         }
         else
         {
-            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[0].text += ", " + text.ToString();
-            QueueTravel.transform.GetComponentsInChildren<TMP_Text>()[1].text += ", " + text.ToString();
+            queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text += $", {text}";
+            queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text += $", {text}";
         }
     }
 
@@ -212,6 +212,8 @@ public abstract class Graphs : MonoBehaviour
 
         isPaused = false;
         Time.timeScale = 1f;
+        queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
+        queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
 
         // Uruchomienie animacji
         StartCoroutine(SearchGraph());
