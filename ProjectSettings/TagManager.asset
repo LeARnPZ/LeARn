@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - sortowania
-  - struktury
-  - grafy
+  - Sortings
+  - Structures
+  - Graphs
+  - Empty
   layers:
   - Default
   - TransparentFX
