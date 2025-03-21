@@ -43,6 +43,8 @@ public class PlaceObject : MonoBehaviour
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
+        if (placed) return; // Prevent multiple spawns
+
         GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
 
         if (prefab == null)
@@ -52,16 +54,12 @@ public class PlaceObject : MonoBehaviour
         }
 
         Camera arCamera = Camera.main;
-        Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1f;
+        Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1f; 
 
-        if (spawnedObject == null)
-        {
-            spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
-        }
-        else
-        {
-            spawnedObject.transform.position = spawnPosition;
-        }
+        Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
+
+        placed = true;
     }
+
 
 }
