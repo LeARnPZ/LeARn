@@ -39,40 +39,29 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Disable();
     }
 
+    private GameObject spawnedObject;
+
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (finger.index != 0 || placed) return;
+        GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
 
-        GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
-
-        if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        if (prefab == null)
         {
-            //foreach (ARRaycastHit hit in hits)
-            //{
-            //    Pose pose = hit.pose;
-            //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}
-            Pose pose = hits[0].pose;
-                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            placed = true;
-
-            string algorithm = PlayerPrefs.GetString("algorithm");
-            if (algorithm.Contains("Sort"))
-            {
-                GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
-
-            }
-               
-
-            else if (algorithm.Contains("Struct"))
-            {
-                GameObject.Find("BottomButtons/StructButtons/AddItemButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("BottomButtons/StructButtons/PopItemButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("BottomButtons/StructButtons/PeekItemButton").GetComponent<Button>().interactable = true;
-
-            }
+            Debug.LogError($"Prefab for {algorithmName} not found!");
+            return;
         }
 
+        Camera arCamera = Camera.main;
+        Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1f;
+
+        if (spawnedObject == null)
+        {
+            spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
+        }
+        else
+        {
+            spawnedObject.transform.position = spawnPosition;
+        }
     }
+
 }
