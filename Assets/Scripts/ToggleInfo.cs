@@ -30,6 +30,8 @@ public class ToggleInfo : MonoBehaviour
     private void Start()
     {
         algorithmNo = Dictionaries.algorithms.GetValueOrDefault(PlayerPrefs.GetString("algorithm"));
-        info.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+        //info.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+        info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+
     }
 }
