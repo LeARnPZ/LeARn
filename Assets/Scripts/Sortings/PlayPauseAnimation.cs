@@ -18,27 +18,44 @@ public class PlayPauseAnimation : MonoBehaviour
 
     public void onButtonClick()
     {
+        string algorithm = PlayerPrefs.GetString("algorithm");
 
-        Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
-        bool isPaused = sort.getPaused();
-
- 
-        sort.Pause();
-
-        if (sort.getPaused())
+        if (algorithm.Contains("Sort"))
         {
-            pauseImage.gameObject.SetActive(false);
-            playImage.gameObject.SetActive(true);
+            Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+            bool isPaused = sort.getPaused();
+            sort.Pause();
+            isPaused = sort.getPaused();
 
+            if (isPaused)
+            {
+                pauseImage.gameObject.SetActive(false);
+                playImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                playImage.gameObject.SetActive(false);
+                pauseImage.gameObject.SetActive(true);
+            }
         }
-        else
+        else if (algorithm.Contains("Graph"))
         {
-            playImage.gameObject.SetActive(false);
-            pauseImage.gameObject.SetActive(true);
-        }
-        
+            Graphs graph = animationObject.transform.GetChild(0).GetComponent<Graphs>();
+            bool isPaused = graph.getPaused();
+            graph.Pause();
+            isPaused = graph.getPaused();
 
-        //Debug.Log("Przycisk Play/Pause klikniêty. Bool pauza = " + isPaused);
+            if (isPaused)
+            {
+                pauseImage.gameObject.SetActive(false);
+                playImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                playImage.gameObject.SetActive(false);
+                pauseImage.gameObject.SetActive(true);
+            }
+        }
     }
 
     public void resetButtonText()
@@ -54,6 +71,8 @@ public class PlayPauseAnimation : MonoBehaviour
         pauseImage = playPauseButton.transform.Find("PauseImage");
 
         if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
+            gameObject.SetActive(true);
+        else if(PlayerPrefs.GetString("algorithm").Contains("Graph"))
             gameObject.SetActive(true);
         else
             gameObject.SetActive(false);

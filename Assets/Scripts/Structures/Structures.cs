@@ -89,6 +89,22 @@ public abstract class Structures : MonoBehaviour
         rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
     }
 
+
+    public void Restart()
+    {
+        StopAllCoroutines();
+
+
+        foreach (GameObject item in items)
+        {
+            Destroy(item);
+        }
+        items.Clear();
+        values.Clear();
+
+        iterator = 0;
+    }
+
     protected virtual void Start()
     {
         SetDirection();
