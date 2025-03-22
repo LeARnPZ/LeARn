@@ -25,10 +25,6 @@ public class FilterCategories : MonoBehaviour
         if (defaultToggle == null) return;
         defaultToggle.isOn = true;
 
-        FilterObjects();
-        StartCoroutine(FadeInAnimation());
-
-
         
     }
 
