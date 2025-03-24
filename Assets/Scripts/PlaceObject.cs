@@ -41,11 +41,10 @@ public class PlaceObject : MonoBehaviour
 
     private GameObject spawnedObject;
 
-    private void FingerDown(EnhancedTouch.Finger finger)
+   private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (spawnedObject != null) return; // Only place once
+        if (placed) return;
 
-        // Load the prefab dynamically from Resources folder
         GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
 
         if (prefab == null)
@@ -55,19 +54,11 @@ public class PlaceObject : MonoBehaviour
         }
 
         Camera arCamera = Camera.main;
-        Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1.5f;
+        Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1.0f;
 
         spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
-    }
 
-    private void FixedUpdate()
-    {
-        //
-        if (spawnedObject != null)
-        {
-            Camera arCamera = Camera.main;
-            spawnedObject.transform.position = arCamera.transform.position + arCamera.transform.forward * 1.5f;
-        }
+        placed = true;
     }
 
 
