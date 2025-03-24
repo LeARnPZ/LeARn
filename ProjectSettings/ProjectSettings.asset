@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: LeARn
-  productName: LeARn alpha
+  productName: LeARn
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13962269, g: 0.13962269, b: 0.13962269, a: 1}
@@ -142,7 +142,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.11.13-alpha
+  bundleVersion: 0.11.14
   preloadedAssets:
   - {fileID: 11400000, guid: bcce92f90e092b349a6fe58cadfd7cd8, type: 2}
   - {fileID: -8256455837201874754, guid: 80781d191a118f449b8a747ba06dfa8d, type: 2}
@@ -295,7 +295,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 11606296852195342aad965f3f052f76, type: 3}
+      m_Icon: {fileID: 2800000, guid: b84067cf387525349b2370a2bd007108, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
