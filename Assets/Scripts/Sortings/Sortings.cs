@@ -84,13 +84,17 @@ public abstract class Sortings : MonoBehaviour
     protected virtual void Start()
     {
         Vector3 startPosition = new(-numberOfItems / 2 + 1, 0f, 0);
+
+        string selectedAlgorithm = PlayerPrefs.GetString("algorithm", "Default");
+        int maxRange = selectedAlgorithm == "BucketSort" ? 30 : 100;
+
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
             items[i].name = $"Ball{i}";
             items[i].transform.localPosition = startPosition + 1.2f * i * Vector3.right;
             if (values.Count < numberOfItems)
-                values.Add((int)(Random.value * 100));
+                values.Add(Random.Range(0, maxRange + 1));
             items[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[i].ToString();
             items[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[i].ToString();
         }

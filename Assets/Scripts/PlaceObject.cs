@@ -51,13 +51,13 @@ public class PlaceObject : MonoBehaviour
             //{
             //    Pose pose = hit.pose;
             //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}
+            //}S
             Pose pose = hits[0].pose;
                 Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
             placed = true;
 
             string algorithm = PlayerPrefs.GetString("algorithm");
-            if (algorithm.Contains("Sort"))
+            if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
