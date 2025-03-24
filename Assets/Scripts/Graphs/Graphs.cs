@@ -184,8 +184,8 @@ public abstract class Graphs : MonoBehaviour
         }
 
         edgesList.Clear();
-        matrix.Clear();
-        neighborsList.Clear();
+        //matrix.Clear();
+        //neighborsList.Clear();
 
         Start();
     }
@@ -216,9 +216,10 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    protected void Start()
+    protected void Awake()
     {
-        int graphVersion = (int)(Random.value * 10) % 2; // <-- po znaku modulo musi byæ liczba stworzonych wersji grafu
+        // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
+        int graphVersion = (int)(Random.value * 10) % 2; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
         CreateMatrix(graphVersion);
         CreateNeighborsList();
 
@@ -226,7 +227,10 @@ public abstract class Graphs : MonoBehaviour
         graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
         nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
         edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
+    }
 
+    protected void Start()
+    {
         // Dodanie wêz³ów do listy i nadanie etykiet
         for (int i = 0; i < numberOfNodes; i++)
         {

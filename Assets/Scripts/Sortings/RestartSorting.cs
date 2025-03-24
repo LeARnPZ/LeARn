@@ -18,7 +18,7 @@ public class RestartSorting : MonoBehaviour
             else if (PlayerPrefs.GetString("algorithm").Contains("Graph"))
             {
                 anim.transform.GetChild(0).GetComponent<Graphs>().Restart();
-                anim.transform.GetChild(0).GetChild(2).GetComponent<Structures>().Restart();
+                anim.transform.GetChild(0).GetChild(1).GetComponent<Structures>().Restart();
                
             }  
         playPauseButton.GetComponent<PlayPauseAnimation>().resetButtonText();
