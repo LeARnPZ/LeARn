@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Graphs : MonoBehaviour
 {
     [Header("Ustawienia animacji")]
-    [SerializeField]
+    //[SerializeField]
     protected int numberOfNodes;
     [SerializeField]
     protected int startingNode;
@@ -18,16 +18,20 @@ public abstract class Graphs : MonoBehaviour
     protected float animDuration;
 
     [Header("Obiekty-rodzice")]
+    //[SerializeField]
+    //protected GameObject nodes;
+    //[SerializeField]
+    //protected GameObject edges;
     [SerializeField]
-    protected GameObject nodes;
-    [SerializeField]
-    protected GameObject edges;
+    protected GameObject graphVersions;
     [SerializeField]
     protected GameObject queueTravel;
 
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
 
+    protected GameObject nodes;
+    protected GameObject edges;
     protected List<GameObject> nodesList = new();
     protected List<GameObject> edgesList = new();
 
@@ -68,8 +72,7 @@ public abstract class Graphs : MonoBehaviour
         gameObject.transform.localScale = newScale;
     }
 
-    /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
-    private void CreateMatrix()
+    private void InitializeMatrix()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -79,28 +82,47 @@ public abstract class Graphs : MonoBehaviour
                 matrix[i].Add(false);
             }
         }
-
-        matrix[0][1] = true;
-        matrix[1][0] = true;
-        matrix[0][4] = true;
-        matrix[4][0] = true;
-        matrix[1][2] = true;
-        matrix[2][1] = true;
-        matrix[2][3] = true;
-        matrix[3][2] = true;
-        matrix[2][4] = true;
-        matrix[4][2] = true;
-        matrix[3][7] = true;
-        matrix[7][3] = true;
-        matrix[4][5] = true;
-        matrix[5][4] = true;
-        matrix[4][7] = true;
-        matrix[7][4] = true;
-        matrix[5][6] = true;
-        matrix[6][5] = true;
-        matrix[7][8] = true;
-        matrix[8][7] = true;
     }
+
+    /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
+    private void CreateMatrix(int version = 0)
+    {
+        switch (version)
+        {
+            case 0:
+                numberOfNodes = 9; // <-- liczba wierzcho³ków w grafie
+                InitializeMatrix(); // <-- utworzenie macierzy wype³nionej false'ami
+                matrix[0][1] = true; matrix[1][0] = true;
+                matrix[0][4] = true; matrix[4][0] = true;
+                matrix[1][2] = true; matrix[2][1] = true;
+                matrix[2][3] = true; matrix[3][2] = true;
+                matrix[2][4] = true; matrix[4][2] = true;
+                matrix[3][7] = true; matrix[7][3] = true;
+                matrix[4][5] = true; matrix[5][4] = true;
+                matrix[4][7] = true; matrix[7][4] = true;
+                matrix[5][6] = true; matrix[6][5] = true;
+                matrix[7][8] = true; matrix[8][7] = true;
+                break;
+
+            case 1:
+                numberOfNodes = 8;
+                InitializeMatrix();
+                matrix[0][1] = true; matrix[1][0] = true;
+                matrix[0][2] = true; matrix[2][0] = true;
+                matrix[1][2] = true; matrix[2][1] = true;
+                matrix[2][3] = true; matrix[3][2] = true;
+                matrix[2][4] = true; matrix[4][2] = true;
+                matrix[2][5] = true; matrix[5][2] = true;
+                matrix[2][7] = true; matrix[7][2] = true;
+                matrix[3][7] = true; matrix[7][3] = true;
+                matrix[4][6] = true; matrix[6][4] = true;
+                matrix[5][6] = true; matrix[6][5] = true;
+                matrix[5][7] = true; matrix[7][5] = true;
+                matrix[6][7] = true; matrix[7][6] = true;
+                break;
+        }
+    }
+    
 
     private void CreateNeighborsList()
     {
@@ -146,10 +168,10 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    public virtual void Restart()
+    public void Restart()
     {
- 
         StopAllCoroutines();
+
         foreach (GameObject node in nodesList)
         {
             node.transform.localScale = Vector3.one; 
@@ -160,8 +182,8 @@ public abstract class Graphs : MonoBehaviour
         {
             Destroy(edge);
         }
-        edgesList.Clear();
 
+        edgesList.Clear();
         matrix.Clear();
         neighborsList.Clear();
 
@@ -196,8 +218,14 @@ public abstract class Graphs : MonoBehaviour
 
     protected void Start()
     {
-        CreateMatrix();
+        int graphVersion = (int)(Random.value * 10) % 2; // <-- po znaku modulo musi byæ liczba stworzonych wersji grafu
+        CreateMatrix(graphVersion);
         CreateNeighborsList();
+
+        // Uaktywnienie odpowiedniej wersji grafu oraz pobranie jego wêz³ów i krawêdzi
+        graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
+        nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
+        edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
 
         // Dodanie wêz³ów do listy i nadanie etykiet
         for (int i = 0; i < numberOfNodes; i++)
