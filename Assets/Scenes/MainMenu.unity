@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 225545587}
   - component: {fileID: 225545586}
   m_Layer: 5
-  m_Name: BFS
+  m_Name: BFSGraph
   m_TagString: Graphs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5049,7 +5049,7 @@ GameObject:
   - component: {fileID: 1797391272}
   - component: {fileID: 1797391271}
   m_Layer: 5
-  m_Name: DFS
+  m_Name: DFSGraph
   m_TagString: Graphs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
