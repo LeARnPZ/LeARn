@@ -120,6 +120,37 @@ public abstract class Graphs : MonoBehaviour
                 matrix[5][7] = true; matrix[7][5] = true;
                 matrix[6][7] = true; matrix[7][6] = true;
                 break;
+
+            case 2:
+                
+                numberOfNodes = 7; 
+                InitializeMatrix(); 
+                matrix[0][1] = true; matrix[1][0] = true;
+                matrix[0][2] = true; matrix[2][0] = true;
+                matrix[1][3] = true; matrix[3][1] = true;
+                matrix[1][4] = true; matrix[4][1] = true;
+                matrix[2][5] = true; matrix[5][2] = true;
+                matrix[2][6] = true; matrix[6][2] = true;
+                break;
+            case 3:
+                numberOfNodes = 7;
+                InitializeMatrix();
+                matrix[0][1] = true; matrix[1][0] = true;  
+                matrix[0][2] = true; matrix[2][0] = true;
+                matrix[0][3] = true; matrix[3][0] = true;
+                matrix[0][4] = true; matrix[4][0] = true;
+                matrix[0][5] = true; matrix[5][0] = true;
+                matrix[0][6] = true; matrix[6][0] = true;
+                matrix[0][6] = true; matrix[6][0] = true;
+                matrix[1][5] = true; matrix[5][1] = true;
+                matrix[1][3] = true; matrix[3][1] = true;
+                matrix[3][4] = true; matrix[4][3] = true;
+                matrix[4][2] = true; matrix[2][4] = true;
+                matrix[2][6] = true; matrix[6][2] = true;
+                matrix[6][5] = true; matrix[5][6] = true;
+                
+                
+                break;
         }
     }
     
@@ -219,10 +250,11 @@ public abstract class Graphs : MonoBehaviour
     protected void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
-        int graphVersion = (int)(Random.value * 10) % 2; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
+
+        int graphVersion = (int)(Random.value * 10) % 4; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
         CreateMatrix(graphVersion);
         CreateNeighborsList();
-
+        
         // Uaktywnienie odpowiedniej wersji grafu oraz pobranie jego wêz³ów i krawêdzi
         graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
         nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
