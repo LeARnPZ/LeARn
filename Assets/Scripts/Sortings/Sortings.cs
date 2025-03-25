@@ -24,6 +24,19 @@ public abstract class Sortings : MonoBehaviour
         return int.Parse(gameObject.transform.GetChild(0).GetComponent<TextMeshPro>().text);
     }
 
+    protected (int min, int max) GetSortingRange()
+    {
+        switch (PlayerPrefs.GetString("algorithm", "Default"))
+        {
+            case "BucketSort":
+                return (0, 30);
+            case "QuickSort":
+                return (2, 80);
+            default:
+                return (0, 100);
+        }
+    }
+
     protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
     {
         Renderer renderer = gameObject.GetComponent<Renderer>();
@@ -84,9 +97,7 @@ public abstract class Sortings : MonoBehaviour
     protected virtual void Start()
     {
         Vector3 startPosition = new(-numberOfItems / 2 + 1, 0f, 0);
-
-        string selectedAlgorithm = PlayerPrefs.GetString("algorithm", "Default");
-        int maxRange = selectedAlgorithm == "BucketSort" ? 30 : 100;
+        (int min, int max) range = GetSortingRange();
 
         for (int i = 0; i < numberOfItems; i++)
         {
@@ -94,7 +105,7 @@ public abstract class Sortings : MonoBehaviour
             items[i].name = $"Ball{i}";
             items[i].transform.localPosition = startPosition + 1.2f * i * Vector3.right;
             if (values.Count < numberOfItems)
-                values.Add(Random.Range(0, maxRange + 1));
+                values.Add(Random.Range(range.min, range.max + 1));
             items[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[i].ToString();
             items[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[i].ToString();
         }
