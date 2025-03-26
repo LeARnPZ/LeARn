@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class Dictionaries
 {
@@ -56,10 +55,28 @@ public static class Dictionaries
         descriptions.Add(12, "Algorytm Grahama - brak opisu.");
     }
 
+    private static void AddStepBySteps()
+    {
+        /// Dodanie opisów krok-po-kroku do indeksów
+        stepBySteps.Add(0, "");
+        stepBySteps.Add(1, "");
+        stepBySteps.Add(2, "");
+        stepBySteps.Add(3, "");
+        stepBySteps.Add(4, "");
+        stepBySteps.Add(5, "");
+        stepBySteps.Add(6, "");
+        stepBySteps.Add(7, "");
+        stepBySteps.Add(8, "");
+        stepBySteps.Add(9, "");
+        stepBySteps.Add(10, "");
+        stepBySteps.Add(11, "");
+        stepBySteps.Add(12, "");
+    }
+
     static Dictionaries()
     {
         AddIndices();
         AddDescriptions();
-        
+        AddStepBySteps();
     }
 }
