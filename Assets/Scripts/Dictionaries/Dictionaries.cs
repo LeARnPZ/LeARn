@@ -9,9 +9,9 @@ public static class Dictionaries
     public static readonly Dictionary<int, string> descriptions = new();
     public static readonly Dictionary<int, string> stepBySteps = new();
 
+    /// Dodanie indeksów do nazw algorytmów
     private static void AddIndices()
     {
-        /// Dodanie indeksów do nazw algorytmów
         algorithms.Add("BubbleSort", 0);
         algorithms.Add("QuickSort", 1);
         algorithms.Add("MergeSort", 2);
@@ -27,9 +27,9 @@ public static class Dictionaries
         algorithms.Add("GrahamAlgo", 12);
     }
 
+    /// Dodanie opisów algorytmów
     private static void AddDescriptions()
     {
-        /// Dodanie opisów do indeksów
         StreamReader sr = new("Assets/Scripts/Dictionaries/descriptions.txt");
         int i = 0;
         while (!sr.EndOfStream)
@@ -41,22 +41,33 @@ public static class Dictionaries
         sr.Close();
     }
 
+    /// Dodanie opisów krok-po-kroku
     private static void AddStepBySteps()
     {
-        /// Dodanie opisów krok-po-kroku do indeksów
-        stepBySteps.Add(0, "");
-        stepBySteps.Add(1, "");
-        stepBySteps.Add(2, "");
-        stepBySteps.Add(3, "");
-        stepBySteps.Add(4, "");
-        stepBySteps.Add(5, "");
-        stepBySteps.Add(6, "");
-        stepBySteps.Add(7, "");
-        stepBySteps.Add(8, "");
-        stepBySteps.Add(9, "");
-        stepBySteps.Add(10, "");
-        stepBySteps.Add(11, "");
-        stepBySteps.Add(12, "");
+        StreamReader sr = new("Assets/Scripts/Dictionaries/steps.txt");
+        int i = -1;
+        string text = "";
+        while (!sr.EndOfStream)
+        {
+            string line = sr.ReadLine();
+            if (line.Contains("###"))
+            {
+                if (i < 0)
+                {
+                    i++;
+                    continue;
+                }
+
+                stepBySteps.Add(i, text);
+                text = "";
+                i++;
+            }
+            else
+            {
+                text += line + '\n';
+            }
+        }
+        sr.Close();
     }
 
     static Dictionaries()
