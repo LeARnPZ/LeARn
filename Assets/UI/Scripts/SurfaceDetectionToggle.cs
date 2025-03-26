@@ -7,26 +7,58 @@ public class ARSurfaceVisibilityController : MonoBehaviour
 {
     public ARPlaneManager arPlaneManager;
     public Slider visibilitySlider;
-    private bool isVisible = true;
+    private bool isVisible;
 
     void Start()
     {
         if (arPlaneManager == null) return;
 
-        SetARPlaneVisibility(isVisible);
-
-        if (visibilitySlider != null)
+        if (PlayerPrefs.HasKey("PlaneVisibility"))
         {
-            visibilitySlider.onValueChanged.AddListener(OnSliderValueChanged);
-            visibilitySlider.value = 1;
+            if(PlayerPrefs.GetInt("PlaneVisibility") == 1)
+            {
+                isVisible = true;
+            }
+            else if(PlayerPrefs.GetInt("PlaneVisibility") == 0)
+            {
+                isVisible = false;
+            }
         }
+        else
+        {
+            isVisible = true;
+            PlayerPrefs.SetInt("PlaneVisibility", 1);
+            PlayerPrefs.Save();
+        }
+
+
+        if (isVisible)
+        {
+            visibilitySlider.value = 1f;
+        }
+        else
+        {
+            visibilitySlider.value = 0f;
+        }
+
         arPlaneManager.planesChanged += OnPlanesChanged;
+        SetARPlaneVisibility(isVisible);
     }
 
-    private void OnSliderValueChanged(float value)
+    public void OnSliderValueChanged(float value)
     {
-        isVisible = value == 1;
+        if(value == 1f)
+        {
+            isVisible = true;
+        }
+        else
+        {
+            isVisible = false;
+        }
+
         SetARPlaneVisibility(isVisible);
+        PlayerPrefs.SetInt("PlaneVisibility", isVisible ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     private void SetARPlaneVisibility(bool visible)
