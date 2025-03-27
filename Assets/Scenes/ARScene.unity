@@ -471,7 +471,6 @@ GameObject:
   m_Component:
   - component: {fileID: 297358052}
   - component: {fileID: 297358053}
-  - component: {fileID: 297358054}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -551,19 +550,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &297358054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 297358051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8fb1e43561fccd4984879a8f9083700, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls:
+      - m_Target: {fileID: 845617272}
+        m_TargetAssemblyTypeName: ARSurfaceVisibilityController, Assembly-CSharp
+        m_MethodName: OnSliderValueChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &316702493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1892,7 @@ GameObject:
   - component: {fileID: 845617267}
   - component: {fileID: 845617266}
   - component: {fileID: 845617265}
+  - component: {fileID: 845617272}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -1924,7 +1924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 1585201990951412, guid: f0b0bdd6c95ff4440920e41bc7d83c01, type: 3}
+  m_PlanePrefab: {fileID: 7170032464335611433, guid: f02bbbecd02b2964c9afbff04f2fef47, type: 3}
   m_DetectionMode: 1
 --- !u!114 &845617267
 MonoBehaviour:
@@ -1998,6 +1998,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &845617272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845617264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da41fb454240b2d42b24509b29cfb582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arPlaneManager: {fileID: 845617266}
+  visibilitySlider: {fileID: 297358053}
 --- !u!1 &868377074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,6 +2755,7 @@ GameObject:
   - component: {fileID: 1155714698}
   - component: {fileID: 1155714700}
   - component: {fileID: 1155714699}
+  - component: {fileID: 1155714701}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -2788,8 +2803,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 8dbc6767414ac494dbd908fc137171f1, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
+  m_Type: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2805,6 +2820,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155714697}
   m_CullTransparentMesh: 1
+--- !u!114 &1155714701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155714697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda9af53e49cea64587cb6cbde9914c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 297358053}
 --- !u!1 &1179631052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3233,7 +3261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.07611084, y: 1.7199097}
+  m_AnchoredPosition: {x: -0.076171875, y: 1.7199097}
   m_SizeDelta: {x: -0.1521, y: -48.1038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1352532687
