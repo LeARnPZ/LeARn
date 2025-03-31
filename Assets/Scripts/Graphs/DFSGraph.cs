@@ -42,9 +42,11 @@ public class DFSGraph : Graphs
                 }
             }
             yield return new WaitForSeconds(timeout);
-            
+
             // Dodanie nieodwiedzonych s¹siadów do stosu
-            foreach (int nb in neighborsList[n])
+            List<int> tmpList = neighborsList[n];
+            tmpList.Reverse();
+            foreach (int nb in tmpList)
             { 
                 if (!visited.Contains(nb) && !stack.Contains(nb))
                 {
