@@ -7,6 +7,10 @@ public class ToggleInfo : MonoBehaviour
 {
     [SerializeField]
     private GameObject info;
+
+    [SerializeField]
+    private GameObject infoStructs;
+
     private int algorithmNo;
     private bool isShowingSteps = false;
    
@@ -57,6 +61,10 @@ public class ToggleInfo : MonoBehaviour
     {
         algorithmNo = Dictionaries.algorithms.GetValueOrDefault(PlayerPrefs.GetString("algorithm"));
         info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+
+        if (PlayerPrefs.GetString("algorithm").Contains("Struct")){
+            info = infoStructs;
+        }
 
     }
 }
