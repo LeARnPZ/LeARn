@@ -16,12 +16,64 @@
 6) Zakończenie działania algorytmu w momencie, w którym podczas pełnego przejścia po liście nie dokonano żadnej zmiany. Lista jest posortowana. 
 
 ### QuickSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### MergeSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### BucketSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### InsertionSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### SelectSort
 1) Przechodzimy przez całą listę i szukamy najmniejszego elementu. 
@@ -39,8 +91,34 @@
 ### ListStruct – bez listy kroków
 
 ### DFSGraph
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### BFSGraph
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
 
 ### DijkstraAlgo
 
