@@ -27,29 +27,12 @@ public static class Dictionaries
         algorithms.Add("GrahamAlgo", 12);
     }
 
-    /// Dodanie opisów algorytmów
-    private static void AddDescriptions()
+    private static void ContentToDictionary(string[] content, Dictionary<int, string> dictionary)
     {
-        StreamReader sr = new("Assets/Scripts/Dictionaries/descriptions.txt");
-        int i = 0;
-        while (!sr.EndOfStream)
-        {
-            descriptions.Add(i, sr.ReadLine());
-            sr.ReadLine();
-            i++;
-        }
-        sr.Close();
-    }
-
-    /// Dodanie opisów krok-po-kroku
-    private static void AddStepBySteps()
-    {
-        StreamReader sr = new("Assets/Scripts/Dictionaries/steps.txt");
         int i = -1;
         string text = "";
-        while (!sr.EndOfStream)
+        foreach (string line in content)
         {
-            string line = sr.ReadLine();
             if (line.Contains("###"))
             {
                 if (i < 0)
@@ -58,7 +41,7 @@ public static class Dictionaries
                     continue;
                 }
 
-                stepBySteps.Add(i, text);
+                dictionary.Add(i, text);
                 text = "";
                 i++;
             }
@@ -67,7 +50,22 @@ public static class Dictionaries
                 text += line + '\n';
             }
         }
-        sr.Close();
+    }
+
+    /// Dodanie opisów algorytmów
+    private static void AddDescriptions()
+    {
+        TextAsset file = (TextAsset)Resources.Load("Dictionaries/descriptions");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, descriptions);
+    }
+
+    /// Dodanie opisów krok-po-kroku
+    private static void AddStepBySteps()
+    {
+        TextAsset file = (TextAsset) Resources.Load("Dictionaries/steps");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, stepBySteps);
     }
 
     static Dictionaries()
