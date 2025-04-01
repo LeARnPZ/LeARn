@@ -10,6 +10,8 @@ public class ToggleInfo : MonoBehaviour
 
     [SerializeField]
     private GameObject infoStructs;
+    [SerializeField]
+    private GameObject optionsImage;
 
     private int algorithmNo;
     private bool isShowingSteps = false;
@@ -24,10 +26,17 @@ public class ToggleInfo : MonoBehaviour
         if (isShowingSteps)
         {
             info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.stepBySteps.GetValueOrDefault(algorithmNo).ToString();
+            //info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
+            info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().lineSpacing = 25f;
         }
         else
         {
             info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+        }
+
+        if (optionsImage.activeSelf)
+        {
+            optionsImage.SetActive(false);
         }
 
         info.SetActive(true);
