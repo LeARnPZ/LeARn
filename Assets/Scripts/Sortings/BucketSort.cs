@@ -105,11 +105,11 @@ public class BucketSort : Sortings
             }
         }
     }
-
+    //+index - do góry; -index do dołu
     private void CreateBucketContainer(int index)
     {
         GameObject bucketObj = new GameObject("BucketContainer" + index);
-        bucketObj.transform.position = new Vector3(-5, bucketYOffset - index * bucketSpacing, 0);
+        bucketObj.transform.position = new Vector3(-5, bucketYOffset + index * bucketSpacing, 0);
         bucketContainers[index] = bucketObj.transform;
     }
 }
