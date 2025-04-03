@@ -96,7 +96,7 @@ public abstract class Sortings : MonoBehaviour
 
     protected virtual void Start()
     {
-        Vector3 startPosition = new(-numberOfItems / 2 + 1, 0.5f, 0);
+        Vector3 startPosition = new(-numberOfItems / 2 + 1, 1f, 0);
         (int min, int max) range = GetSortingRange();
 
         for (int i = 0; i < numberOfItems; i++)
