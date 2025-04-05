@@ -29,13 +29,17 @@ public class DijkstraAlgo : Graphs
 
         for (int i = 0; i < numberOfNodes; i++)
         {
-            List<int> tmp = new();
+            int v = -1;
+            int minCost = int.MaxValue;
             for (int j = 0; j < numberOfNodes; j++)
             {
-                if (!visited[j])
-                    tmp.Add(arriveCosts[j]);
+                if (!visited[j] && arriveCosts[j] < minCost)
+                {
+                    minCost = arriveCosts[j];
+                    v = j;
+                }
             }
-            int v = arriveCosts.IndexOf(tmp.Min());
+            if (v == -1) yield break;
             visited[v] = true;
 
             foreach (int w in neighborsList[v])
@@ -50,10 +54,10 @@ public class DijkstraAlgo : Graphs
             }
         }
 
-        Debug.Log("ARRIVE COSTS:");
-        arriveCosts.ForEach(x => Debug.Log(x));
-        Debug.Log("PREVS:");
-        prevs.ForEach(x => Debug.Log(x));
+        //Debug.Log("ARRIVE COSTS:");
+        //arriveCosts.ForEach(x => Debug.Log(x));
+        //Debug.Log("PREVS:");
+        //prevs.ForEach(x => Debug.Log(x));
 
         yield return null;
     }
