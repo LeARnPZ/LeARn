@@ -5,6 +5,29 @@ using UnityEngine;
 
 public class DijkstraAlgo : Graphs
 {
+    protected IEnumerator Dijkstra()
+    {
+        List<bool> visited = new();
+        for (int i = 0; i < numberOfNodes; i++)
+        {
+            visited.Add(false);
+        }
+
+        List<int> arriveCosts = new();
+        for(int i = 0; i < numberOfNodes; i++)
+        {
+            arriveCosts.Add(int.MaxValue);
+        }
+
+        List<int> prevs = new();
+        for (int i = 0; i < numberOfNodes; i++)
+        {
+            prevs.Add(-1);
+        }
+
+        yield return null;
+    }
+
     protected override void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
@@ -35,6 +58,6 @@ public class DijkstraAlgo : Graphs
         Time.timeScale = 1f;
 
         // Uruchomienie animacji
-        
+        Dijkstra();
     }
 }

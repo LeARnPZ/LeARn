@@ -72,6 +72,11 @@ public abstract class Graphs : MonoBehaviour
         gameObject.transform.localScale = newScale;
     }
 
+    protected int GetEdgeWeight(GameObject edge)
+    {
+        return int.Parse(edge.transform.GetChild(0).GetComponent<TextMeshPro>().text);
+    }
+
     protected void InitializeMatrix()
     {
         for (int i = 0; i < numberOfNodes; i++)
