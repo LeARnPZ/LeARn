@@ -218,7 +218,7 @@ public abstract class Graphs : MonoBehaviour
 
                         weight.AddComponent<TextMeshPro>();
                         TextMeshPro tmpro = weight.GetComponent<TextMeshPro>();
-                        tmpro.text = Random.Range(1, 6).ToString();
+                        tmpro.text = Random.Range(1, 10).ToString();
                         tmpro.autoSizeTextContainer = true;
                         tmpro.fontSize = 5;
                     }

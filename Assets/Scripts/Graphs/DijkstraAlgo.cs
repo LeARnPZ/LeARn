@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class DijkstraAlgo : Graphs
         {
             arriveCosts.Add(int.MaxValue);
         }
+        arriveCosts[startingNode] = 0;
 
         List<int> prevs = new();
         for (int i = 0; i < numberOfNodes; i++)
@@ -25,13 +27,41 @@ public class DijkstraAlgo : Graphs
             prevs.Add(-1);
         }
 
+        for (int i = 0; i < numberOfNodes; i++)
+        {
+            List<int> tmp = new();
+            for (int j = 0; j < numberOfNodes; j++)
+            {
+                if (!visited[j])
+                    tmp.Add(arriveCosts[j]);
+            }
+            int v = arriveCosts.IndexOf(tmp.Min());
+            visited[v] = true;
+
+            foreach (int w in neighborsList[v])
+            {
+                if (visited[w]) continue;
+
+                if (arriveCosts[w] > arriveCosts[v] + GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}")))
+                {
+                    arriveCosts[w] = arriveCosts[v] + GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}"));
+                    prevs[w] = v;
+                }
+            }
+        }
+
+        Debug.Log("ARRIVE COSTS:");
+        arriveCosts.ForEach(x => Debug.Log(x));
+        Debug.Log("PREVS:");
+        prevs.ForEach(x => Debug.Log(x));
+
         yield return null;
     }
 
     protected override void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
-        int graphVersion = 0; //(int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
+        int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
         CreateMatrix(graphVersion);
         CreateNeighborsList();
 
@@ -58,6 +88,6 @@ public class DijkstraAlgo : Graphs
         Time.timeScale = 1f;
 
         // Uruchomienie animacji
-        Dijkstra();
+        StartCoroutine(Dijkstra());
     }
 }
