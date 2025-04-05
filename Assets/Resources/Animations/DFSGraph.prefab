@@ -1655,18 +1655,6 @@ PrefabInstance:
       value: Node7
       objectReference: {fileID: 0}
     - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
       objectReference: {fileID: 0}
@@ -1705,10 +1693,6 @@ PrefabInstance:
     - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8199774858657280696, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2038,10 +2022,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2774651112394685976}
     m_Modifications:
-    - target: {fileID: 4730710598126621672, guid: 402e0aab7c79f064ebf2ecf578963261, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7128660277406152121, guid: 402e0aab7c79f064ebf2ecf578963261, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2085,10 +2065,6 @@ PrefabInstance:
     - target: {fileID: 7330828157124615930, guid: 402e0aab7c79f064ebf2ecf578963261, type: 3}
       propertyPath: m_Name
       value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 7652606349576916700, guid: 402e0aab7c79f064ebf2ecf578963261, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
