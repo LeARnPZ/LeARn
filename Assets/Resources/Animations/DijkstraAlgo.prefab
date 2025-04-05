@@ -558,6 +558,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 517699826706658483}
+  - component: {fileID: 6199107711952683563}
   m_Layer: 0
   m_Name: DijkstraAlgo
   m_TagString: Untagged
@@ -581,6 +582,23 @@ Transform:
   - {fileID: 6831107362369717426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6199107711952683563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940635243353714345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca30b5e42c643d44193ed6b955a4fb37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingNode: 0
+  timeout: 1
+  animDuration: 0.5
+  graphVersions: {fileID: 4607476680447291408}
+  queueTravel: {fileID: 0}
 --- !u!1001 &270227629809604268
 PrefabInstance:
   m_ObjectHideFlags: 0

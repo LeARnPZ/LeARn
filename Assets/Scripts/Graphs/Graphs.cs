@@ -37,7 +37,7 @@ public abstract class Graphs : MonoBehaviour
 
     protected bool isPaused;
 
-    protected abstract IEnumerator SearchGraph();
+    protected virtual IEnumerator SearchGraph() { yield return null; }
 
     protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
     {
@@ -72,7 +72,7 @@ public abstract class Graphs : MonoBehaviour
         gameObject.transform.localScale = newScale;
     }
 
-    private void InitializeMatrix()
+    protected void InitializeMatrix()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -85,7 +85,7 @@ public abstract class Graphs : MonoBehaviour
     }
 
     /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
-    private void CreateMatrix(int version = 0)
+    protected void CreateMatrix(int version = 0)
     {
         switch (version)
         {
@@ -164,9 +164,9 @@ public abstract class Graphs : MonoBehaviour
                 break;
         }
     }
-    
 
-    private void CreateNeighborsList()
+
+    protected void CreateNeighborsList()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -181,17 +181,17 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    private void DrawEdges()
+    protected void DrawEdges(bool weights = false)
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
-            for (int j = 0; j < numberOfNodes; j++)
+            for (int j = i; j < numberOfNodes; j++)
             {
                 if (matrix[i][j])
                 {
-                    GameObject line = new();
+                    GameObject line = new($"{i}-{j}");
                     line.transform.parent = edges.transform;
-                    line.name = $"{i}-{j}";
+                    line.transform.localScale = Vector3.one;
 
                     Vector3 from = nodesList[i].transform.position;
                     Vector3 to = nodesList[j].transform.position;
@@ -203,6 +203,20 @@ public abstract class Graphs : MonoBehaviour
                     lr.startWidth = lr.endWidth = 0.1f * this.transform.localScale.x;
                     lr.material.color = Color.white;
                     lr.material.SetFloat("_Glossiness", 0);
+
+                    if (weights)
+                    {
+                        GameObject weight = new("EdgeWeight");
+                        weight.transform.parent = line.transform;
+                        weight.transform.localScale = Vector3.one;
+                        weight.transform.position = (from + to) / 2;
+
+                        weight.AddComponent<TextMeshPro>();
+                        TextMeshPro tmpro = weight.GetComponent<TextMeshPro>();
+                        tmpro.text = Random.Range(1, 6).ToString();
+                        tmpro.autoSizeTextContainer = true;
+                        tmpro.fontSize = 5;
+                    }
 
                     edgesList.Add(line);
                 }
@@ -258,7 +272,7 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
         int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
@@ -271,7 +285,7 @@ public abstract class Graphs : MonoBehaviour
         edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         // Dodanie wêz³ów do listy i nadanie etykiet
         for (int i = 0; i < numberOfNodes; i++)
