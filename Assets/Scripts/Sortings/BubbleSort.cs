@@ -14,7 +14,7 @@ public class BubbleSort : Sortings
             for (int j=0; j<numberOfItems-1-i; j++)
             {
                 StartCoroutine(ChangeColor(items[j], yellowColor));
-                StartCoroutine(ChangeColor(items[j+1], yellowColor));
+                StartCoroutine(ChangeColor(items[j + 1], yellowColor));
                 yield return new WaitForSeconds(timeout);
 
 
