@@ -53,11 +53,11 @@ public class BFSGraph : Graphs
             yield return new WaitForSeconds(timeout);
 
             // Przetwarzamy s¹siadów wêz³a
-            if (neighborsList[n].Any(nb => !visited.Contains(nb)))
+            if (neighborsList[n].Any(nb => !visited.Contains(nb) && !queue.Contains(nb)))
             {
                 foreach (int nb in neighborsList[n])
                 {
-                    if (!visited.Contains(nb))
+                    if (!visited.Contains(nb) && !queue.Contains(nb))
                     {
                         StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
                         queue.Enqueue(nb);
