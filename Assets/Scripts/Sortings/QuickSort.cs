@@ -6,6 +6,26 @@ using System;
 
 public class QuickSort : Sortings
 {
+    [SerializeField]
+    protected GameObject pivotIndicatorPrefab;
+
+    protected GameObject pivotIndicator = null;
+
+    void placePivotIndicator(int pivotIndex)
+    {
+        pivotIndicator = Instantiate(pivotIndicatorPrefab, this.transform);
+        Vector3 pivotPosition = new(-numberOfItems / 2 + 1, 0, 0);
+        pivotPosition = pivotPosition + 1.2f * pivotIndex * Vector3.right;
+
+        pivotIndicator.transform.localPosition = pivotPosition + Vector3.down;
+    }
+
+    void destroyPivotIndicator()
+    {
+        Destroy(pivotIndicator);
+        pivotIndicator = null;
+    }
+
     IEnumerator SwapObjects(int i, int j)
     {
         StartCoroutine(MoveObject(items[i], items[i].transform.localPosition + Vector3.back));
@@ -23,12 +43,13 @@ public class QuickSort : Sortings
 
     IEnumerator SortReccur(int low, int high)
     {
-        if (low == high) {
+        if (low == high) 
+        {
             StartCoroutine(ChangeColor(items[high], Color.green));
-        }
-        else if (low < high) {
+        } else if (low < high) {
             int pivot = GetValue(items[high]);
             StartCoroutine(ChangeColor(items[high], Color.magenta));
+            placePivotIndicator(high);
 
             yield return new WaitForSeconds(0.5f);
 
@@ -38,35 +59,53 @@ public class QuickSort : Sortings
             {
                 int jValue = GetValue(items[j]);
 
-                StartCoroutine(ChangeColor(items[j], Color.blue));
+                StartCoroutine(ChangeColor(items[j], Color.yellow));
 
                 yield return new WaitForSeconds(timeout);
 
                 if (jValue < pivot)
                 {
+                    if(i >= low)
+                    {
+                        yield return StartCoroutine(ChangeColor(items[i], Color.white));
+                    }
                     i++;
-                    StartCoroutine(ChangeColor(items[i], Color.cyan));
+                    yield return StartCoroutine(ChangeColor(items[i], Color.magenta));
 
-                    if (i != j)
+                    if (i != j) 
                     {
                         yield return StartCoroutine(SwapObjects(i, j)); 
                         (items[i], items[j]) = (items[j], items[i]);
-                        StartCoroutine(ChangeColor(items[i], Color.white));
+
+                        yield return StartCoroutine(ChangeColor(items[j], Color.white));
+                        yield return StartCoroutine(ChangeColor(items[i], Color.magenta));
+                    } else {
+                        //if (i != low)
+                        //{
+                        //    yield return StartCoroutine(ChangeColor(items[j], Color.white));
+                        //}
                     }
-                }
-                else {
-                    StartCoroutine(ChangeColor(items[j], Color.white));
+                } else {
+                    yield return StartCoroutine(ChangeColor(items[j], Color.white));
                 }
             }
 
-            if (i + 1 != high)
+            destroyPivotIndicator();
+
+            if (i + 1 != high) 
             {
-                yield return StartCoroutine(SwapObjects(i + 1, high)); 
+                if (i >= low)
+                {
+                    yield return StartCoroutine(ChangeColor(items[i], Color.white));
+                }
+                yield return StartCoroutine(ChangeColor(items[i + 1], Color.magenta));
+
+                yield return StartCoroutine(SwapObjects(i + 1, high));
+
                 (items[i + 1], items[high]) = (items[high], items[i + 1]);
 
                 StartCoroutine(ChangeColor(items[i + 1], Color.green));
-            }
-            else {
+            }  else {
                 StartCoroutine(ChangeColor(items[high], Color.green));                
             }
 
@@ -105,7 +144,7 @@ public class QuickSort : Sortings
             if (values.Count < numberOfItems)
                 values.Add(UnityEngine.Random.Range(range.min, range.max + 1));
 
-            float scale = (float)(0.75 * Math.Max(0.5, (float)(values[i] * 0.1)));
+            float scale = (float)(0.6 * Math.Max(0.5, (float)(values[i] * 0.1)));
 
             items[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[i].ToString();
             items[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[i].ToString();
@@ -115,7 +154,7 @@ public class QuickSort : Sortings
 
             items[i].transform.localScale = new Vector3(1, scale, 1);
             Vector3 position = items[i].transform.position;
-            items[i].transform.position = new Vector3(position.x, (float)(((scale - 1) / 2) * 0.08 - 0.5), position.z);
+            items[i].transform.localPosition = new Vector3(items[i].transform.localPosition.x, scale * 0.5f, 0);
         }
 
         foreach (var item in items)

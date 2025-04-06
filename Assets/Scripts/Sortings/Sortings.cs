@@ -31,7 +31,7 @@ public abstract class Sortings : MonoBehaviour
             case "BucketSort":
                 return (0, 30);
             case "QuickSort":
-                return (2, 80);
+                return (2, 60);
             default:
                 return (0, 100);
         }

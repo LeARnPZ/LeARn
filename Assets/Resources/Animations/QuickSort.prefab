@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f948d84114ac5db40ba712fbe358c199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5841902477260214115, guid: 390b64eef9b7d9540b873d9fe37cba4f, type: 3}
-  numberOfItems: 9
+  prefab: {fileID: 4228894225283086225, guid: 11d5d4ab822717e40aea2063ff02c8db, type: 3}
+  numberOfItems: 8
   animDuration: 0.75
   timeout: 1
+  pivotIndicatorPrefab: {fileID: 7312211236714243193, guid: e16c8ac1f9b96de42a8ef87f82bb4efb, type: 3}
