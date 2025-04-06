@@ -336,8 +336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingNode: 0
-  timeout: 1.5
-  animDuration: 1
+  timeout: 1
+  animDuration: 0.5
   graphVersions: {fileID: 3770300675854738798}
   queueTravel: {fileID: 3802494320519725663}
   graphStack: {fileID: 5456394684045285841}
