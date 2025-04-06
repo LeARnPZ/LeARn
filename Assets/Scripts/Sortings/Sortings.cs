@@ -19,6 +19,13 @@ public abstract class Sortings : MonoBehaviour
 
     protected bool isPaused;
 
+    protected Color blueColor = new Color(160 / 255f, 188 / 255f, 234 / 255f);
+    protected Color yellowColor = new Color(243 / 255f, 220 / 255f, 102 / 255f);
+    protected Color greenColor = new Color(157 / 255f, 214 / 255f, 126 / 255f);
+    protected Color violetColor = new Color(187 / 255f, 164 / 255f, 245 / 255f);
+    protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
+    protected Color pinkColor = new Color(216 / 255f, 148 / 255f, 198 / 255f);
+
     protected int GetValue(GameObject gameObject)
     {
         return int.Parse(gameObject.transform.GetChild(0).GetComponent<TextMeshPro>().text);
