@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DFSGraph : Graphs
@@ -27,6 +28,14 @@ public class DFSGraph : Graphs
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
+            // Pominiêcie, jeœli by³ ju¿ odwiedzony
+            if (visited.Contains(n))
+            {
+                StartCoroutine(ChangeSize(nodesList[n], Vector3.one));
+                yield return new WaitForSeconds(timeout);
+                continue;
+            }
+
             // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
             StartCoroutine(ChangeColor(nodesList[n], Color.green));
@@ -44,18 +53,21 @@ public class DFSGraph : Graphs
             yield return new WaitForSeconds(timeout);
 
             // Dodanie nieodwiedzonych s¹siadów do stosu
-            List<int> tmpList = neighborsList[n];
-            tmpList.Reverse();
-            foreach (int nb in tmpList)
-            { 
-                if (!visited.Contains(nb) && !stack.Contains(nb))
+            if (neighborsList[n].Any(nb => !visited.Contains(nb)))
+            {
+                List<int> tmpList = neighborsList[n];
+                tmpList.Reverse();
+                foreach (int nb in tmpList)
                 {
-                    StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
-                    stack.Push(nb);
-                    graphStack.PushVisual(nb);
+                    if (!visited.Contains(nb))
+                    {
+                        StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
+                        stack.Push(nb);
+                        graphStack.PushVisual(nb);
+                    }
                 }
+                yield return new WaitForSeconds(timeout);
             }
-            yield return new WaitForSeconds(timeout);
 
             foreach (GameObject edge in edgesList)
             {
