@@ -1,0 +1,167 @@
+### BubbleSort
+1) Rozpoczęcie iteracji od początku listy
+
+2) Porównanie pierwszego elementu z drugim
+   a. Jeśli pierwszy element jest większy niż drugi, zamieniamy je miejscami
+   b. Jeśli nie, przechodzimy do kolejnej pary
+
+3) Po pierwszym pełnym przejściu największy element znajduje się na końcu listy (“wypływa” na koniec)
+
+4) Przejście przez całą listę i wykonanie kroku drugiego dla kolejnych sąsiadujących ze sobą elementów
+
+5) Powtórzenie całego procesu porównywania elementów do momentu aż lista będzie w pełni posortowana. Z każdym kolejnym przejściem ignorowany jest ostatni posortowany element, a zakres elementów nieposortowanych zmniejsza się 
+
+6) Zakończenie działania algorytmu w momencie, w którym podczas pełnego przejścia po liście nie dokonano żadnej zmiany. Lista jest posortowana
+
+### QuickSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### MergeSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### BucketSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### InsertionSort
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### SelectSort
+1) Przechodzimy przez całą listę i szukamy najmniejszego elementu. 
+
+2) Zamieniamy znaleziony najmniejszy element z pierwszym elementem listy 
+
+3) Powtarzamy kroki 1-2 dla pozostałej części listy pomijając przy tym już posortowane elementy 
+
+4) Proces trwa, aż cała lista zostanie posortowana
+
+### StackStruct – bez listy kroków
+
+### QueueStruct – bez listy kroków
+
+### ListStruct – bez listy kroków
+
+### DFSGraph
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### BFSGraph
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### DijkstraAlgo
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+### GrahamAlgo
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+1) Krok nr 1
+
+2) Krok nr 2
+
+3) Krok nr 3
+
+...
+...
+...
+
+###
