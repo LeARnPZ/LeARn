@@ -61,10 +61,9 @@ public class PlaceObject : MonoBehaviour
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
 
             }
-               
-
             else if (algorithm.Contains("StackStruct"))
             {
                 GameObject.Find("BottomButtons/StructButtonsStack/AddItemButton").GetComponent<Button>().interactable = true;
