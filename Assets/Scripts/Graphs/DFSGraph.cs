@@ -55,7 +55,7 @@ public class DFSGraph : Graphs
             // Dodanie nieodwiedzonych s¹siadów do stosu
             if (neighborsList[n].Any(nb => !visited.Contains(nb)))
             {
-                List<int> tmpList = neighborsList[n];
+                List<int> tmpList = new(neighborsList[n]);
                 tmpList.Reverse();
                 foreach (int nb in tmpList)
                 {
