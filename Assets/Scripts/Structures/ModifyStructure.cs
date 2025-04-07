@@ -13,6 +13,13 @@ public class ModifyStructure : MonoBehaviour
     private float timeout;
     private bool isTimeout;
     private bool touchInput;
+    [SerializeField]
+    private GameObject stackButtonsObject;
+    [SerializeField]
+    private GameObject queueButtonsObject;
+    [SerializeField]
+    private GameObject listButtonsObject;
+
 
     [Header("Button objects")]
     [SerializeField]
@@ -65,9 +72,27 @@ public class ModifyStructure : MonoBehaviour
         touchInput = false;
         if (PlayerPrefs.GetString("algorithm").Contains("Struct"))
         {
-            gameObject.SetActive(true);
-            if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            if (PlayerPrefs.GetString("algorithm").Contains("Stack"))
+            {
+                stackButtonsObject.SetActive(true);
+                queueButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            } 
+            else if (PlayerPrefs.GetString("algorithm").Contains("Queue"))
+            {
+                queueButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            }
+            //gameObject.SetActive(true);
+            else if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            {
                 touchInput = true;
+                listButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                queueButtonsObject.SetActive(false);
+            }
+                
         }
         else
             gameObject.SetActive(false);
