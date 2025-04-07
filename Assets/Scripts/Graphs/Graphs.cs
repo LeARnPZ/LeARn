@@ -208,7 +208,7 @@ public abstract class Graphs : MonoBehaviour
                     lr.SetPosition(0, from);
                     lr.SetPosition(1, to);
                     lr.startWidth = lr.endWidth = 0.1f * this.transform.localScale.x;
-                    lr.material.color = Color.white;
+                    lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
                     edgesList.Add(line);

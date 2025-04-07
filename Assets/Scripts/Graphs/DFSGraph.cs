@@ -16,7 +16,7 @@ public class DFSGraph : Graphs
         Stack<int> stack = new();
         stack.Push(startingNode);
         graphStack.PushVisual(startingNode);
-        StartCoroutine(ChangeColor(nodesList[startingNode], Color.yellow));
+        StartCoroutine(ChangeColor(nodesList[startingNode], yellowColor));
         yield return new WaitForSeconds(timeout);
         List<int> visited = new();
 
@@ -38,7 +38,7 @@ public class DFSGraph : Graphs
 
             // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
-            StartCoroutine(ChangeColor(nodesList[n], Color.green));
+            StartCoroutine(ChangeColor(nodesList[n], greenColor));
             addText(n.ToString());
             yield return new WaitForSeconds(timeout);
 
@@ -47,7 +47,7 @@ public class DFSGraph : Graphs
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
                 {
-                    StartCoroutine(ChangeColor(edge, Color.red));
+                    StartCoroutine(ChangeColor(edge, orangeColor));
                 }
             }
             yield return new WaitForSeconds(timeout);
@@ -61,7 +61,7 @@ public class DFSGraph : Graphs
                 {
                     if (!visited.Contains(nb))
                     {
-                        StartCoroutine(ChangeColor(nodesList[nb], Color.yellow));
+                        StartCoroutine(ChangeColor(nodesList[nb], yellowColor));
                         stack.Push(nb);
                         graphStack.PushVisual(nb);
                     }
@@ -73,7 +73,7 @@ public class DFSGraph : Graphs
             {
                 if (edge.name.Contains($"{n}-") || edge.name.Contains($"-{n}"))
                 {
-                    StartCoroutine(ChangeColor(edge, Color.white));
+                    StartCoroutine(ChangeColor(edge, blueColor));
                 }
             }
 
