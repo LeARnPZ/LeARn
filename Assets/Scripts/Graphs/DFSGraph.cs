@@ -7,7 +7,7 @@ using UnityEngine;
 public class DFSGraph : Graphs
 {
     [SerializeField]
-    private GraphStack graphStack;
+    private GraphStack visualStack;
 
     protected override IEnumerator SearchGraph()
     {
@@ -15,7 +15,7 @@ public class DFSGraph : Graphs
 
         Stack<int> stack = new();
         stack.Push(startingNode);
-        graphStack.PushVisual(startingNode);
+        visualStack.VisualPush(startingNode);
         StartCoroutine(ChangeColor(nodesList[startingNode], yellowColor));
         yield return new WaitForSeconds(timeout);
         List<int> visited = new();
@@ -24,7 +24,7 @@ public class DFSGraph : Graphs
         {
             // Przejœcie do kolejnego wêz³a
             int n = stack.Pop();
-            graphStack.PopVisual();
+            visualStack.VisualPop();
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
@@ -39,7 +39,7 @@ public class DFSGraph : Graphs
             // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
             StartCoroutine(ChangeColor(nodesList[n], greenColor));
-            addText(n.ToString());
+            AddOrder(n);
             yield return new WaitForSeconds(timeout);
 
             // Przeszukanie s¹siadów wêz³a
@@ -63,7 +63,7 @@ public class DFSGraph : Graphs
                     {
                         StartCoroutine(ChangeColor(nodesList[nb], yellowColor));
                         stack.Push(nb);
-                        graphStack.PushVisual(nb);
+                        visualStack.VisualPush(nb);
                     }
                 }
                 yield return new WaitForSeconds(timeout);

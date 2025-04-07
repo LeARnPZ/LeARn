@@ -7,7 +7,7 @@ using UnityEngine;
 public class BFSGraph : Graphs
 {
     [SerializeField]
-    private GraphQueue graphQueue;
+    private GraphQueue visualQueue;
 
     protected override IEnumerator SearchGraph()
     {
@@ -15,7 +15,7 @@ public class BFSGraph : Graphs
 
         Queue<int> queue = new();
         queue.Enqueue(startingNode);
-        graphQueue.EnqueueVisual(startingNode);
+        visualQueue.VisualEnqueue(startingNode);
         StartCoroutine(ChangeColor(nodesList[startingNode], yellowColor));
         yield return new WaitForSeconds(timeout);
         List<int> visited = new();
@@ -24,7 +24,7 @@ public class BFSGraph : Graphs
         {
             // Pobieramy element z kolejki i wizualnie go usuwamy
             int n = queue.Dequeue();
-            graphQueue.DequeueVisual();
+            visualQueue.VisualDequeue();
             StartCoroutine(ChangeSize(nodesList[n], 1.5f * Vector3.one));
             yield return new WaitForSeconds(timeout);
 
@@ -39,7 +39,7 @@ public class BFSGraph : Graphs
             // Oznaczenie wêz³a jako odwiedzonego
             visited.Add(n);
             StartCoroutine(ChangeColor(nodesList[n], greenColor));
-            addText(n.ToString());
+            AddOrder(n);
             yield return new WaitForSeconds(timeout);
 
             // Zaznaczamy krawêdzie powi¹zane z wêz³em
@@ -61,7 +61,7 @@ public class BFSGraph : Graphs
                     {
                         StartCoroutine(ChangeColor(nodesList[nb], yellowColor));
                         queue.Enqueue(nb);
-                        graphQueue.EnqueueVisual(nb);
+                        visualQueue.VisualEnqueue(nb);
                     }
                 }
                 yield return new WaitForSeconds(timeout);

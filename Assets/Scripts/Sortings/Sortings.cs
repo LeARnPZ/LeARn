@@ -94,7 +94,7 @@ public abstract class Sortings : MonoBehaviour
         Start();
     }
 
-    public bool getPaused()
+    public bool IsPaused()
     {
         return isPaused;
     }
