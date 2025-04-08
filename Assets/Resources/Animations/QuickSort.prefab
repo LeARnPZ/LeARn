@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 4228894225283086225, guid: 11d5d4ab822717e40aea2063ff02c8db, type: 3}
-  numberOfItems: 8
-  animDuration: 0.75
-  timeout: 1
+  numberOfItems: 11
+  animDuration: 0.5
+  timeout: 0.75
   pivotIndicatorPrefab: {fileID: 7312211236714243193, guid: e16c8ac1f9b96de42a8ef87f82bb4efb, type: 3}

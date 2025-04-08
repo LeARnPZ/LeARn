@@ -25,6 +25,7 @@ public abstract class Sortings : MonoBehaviour
     protected Color violetColor = new Color(205 / 255f, 160 / 255f, 255 / 255f);
     protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
     protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
+    protected Color redColor = new Color(239 / 255f, 97 / 255f, 109 / 255f);
 
     protected int GetValue(GameObject gameObject)
     {
@@ -38,7 +39,7 @@ public abstract class Sortings : MonoBehaviour
             case "BucketSort":
                 return (0, 30);
             case "QuickSort":
-                return (2, 60);
+                return (2, 70);
             default:
                 return (0, 100);
         }

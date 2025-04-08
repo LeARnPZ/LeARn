@@ -14,21 +14,19 @@
 6) Zakończenie działania algorytmu w momencie, w którym podczas pełnego przejścia po liście nie dokonano żadnej zmiany. Lista jest posortowana
 
 ### QuickSort
-1) Krok nr 1
+1) Jeśli rozpatrywana lista ma jeden element, to jest już posortowana i algorytm dla tej listy jest skończony.
 
-2) Krok nr 2
+2) Wybierz jeden element jako pivot (w naszej aplikacji to ostatni element)
 
-3) Krok nr 3
+3) Znajdź pierwszy mniejszy od pivota element o indeksie i.
 
-1) Krok nr 1
+4) Znajdź pierwszy większy od pivota element o indeksie j mniejszym od i.
 
-2) Krok nr 2
+5) Jeśli taki istnieje, to zamień miejscami elementy i oraz j.
 
-3) Krok nr 3
+6) Powtarzamy od kroku 3) zaczynając szukać od indeksu i aż do ustawienia pivota.
 
-...
-...
-...
+7) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
 
 ### MergeSort
 1) Krok nr 1

@@ -26,18 +26,26 @@ public class QuickSort : Sortings
         pivotIndicator = null;
     }
 
-    IEnumerator SwapObjects(int i, int j)
+    IEnumerator SwapObjects(int i, int j, bool isPivot = false)
     {
-        StartCoroutine(MoveObject(items[i], items[i].transform.localPosition + Vector3.back));
+        StartCoroutine(MoveObject(items[i], items[i].transform.localPosition + Vector3.back));  
         StartCoroutine(MoveObject(items[j], items[j].transform.localPosition + Vector3.forward));
+        if (isPivot)
+            StartCoroutine(MoveObject(pivotIndicator, pivotIndicator.transform.localPosition + Vector3.forward));
         yield return new WaitForSeconds(timeout);
 
         StartCoroutine(MoveObject(items[i], items[i].transform.localPosition + 1.2f * (j - i) * Vector3.right));
         StartCoroutine(MoveObject(items[j], items[j].transform.localPosition + 1.2f * (j - i) * Vector3.left));
+        if (isPivot)
+            StartCoroutine(MoveObject(pivotIndicator, pivotIndicator.transform.localPosition + 1.2f * (j - i) * Vector3.left));
+
         yield return new WaitForSeconds(timeout);
 
         StartCoroutine(MoveObject(items[i], items[i].transform.localPosition + Vector3.forward));
         StartCoroutine(MoveObject(items[j], items[j].transform.localPosition + Vector3.back));
+        if (isPivot)
+            StartCoroutine(MoveObject(pivotIndicator, pivotIndicator.transform.localPosition + Vector3.back));
+
         yield return new WaitForSeconds(timeout);
     }
 
@@ -45,10 +53,10 @@ public class QuickSort : Sortings
     {
         if (low == high) 
         {
-            StartCoroutine(ChangeColor(items[high], Color.green));
+            StartCoroutine(ChangeColor(items[high], greenColor));
         } else if (low < high) {
             int pivot = GetValue(items[high]);
-            StartCoroutine(ChangeColor(items[high], Color.magenta));
+            StartCoroutine(ChangeColor(items[high], yellowColor));
             placePivotIndicator(high);
 
             yield return new WaitForSeconds(0.5f);
@@ -59,64 +67,47 @@ public class QuickSort : Sortings
             {
                 int jValue = GetValue(items[j]);
 
-                StartCoroutine(ChangeColor(items[j], Color.yellow));
+                StartCoroutine(ChangeColor(items[j], yellowColor));
 
                 yield return new WaitForSeconds(timeout);
 
-                if (jValue < pivot)
+                if (jValue <= pivot)
                 {
-                    if(i >= low)
-                    {
-                        yield return StartCoroutine(ChangeColor(items[i], Color.white));
-                    }
                     i++;
-                    yield return StartCoroutine(ChangeColor(items[i], Color.magenta));
+                    yield return StartCoroutine(ChangeColor(items[j], redColor));
 
                     if (i != j) 
                     {
                         yield return StartCoroutine(SwapObjects(i, j)); 
                         (items[i], items[j]) = (items[j], items[i]);
-
-                        yield return StartCoroutine(ChangeColor(items[j], Color.white));
-                        yield return StartCoroutine(ChangeColor(items[i], Color.magenta));
-                    } else {
-                        //if (i != low)
-                        //{
-                        //    yield return StartCoroutine(ChangeColor(items[j], Color.white));
-                        //}
+                        yield return StartCoroutine(ChangeColor(items[i], redColor));
                     }
+
                 } else {
-                    yield return StartCoroutine(ChangeColor(items[j], Color.white));
+                    yield return StartCoroutine(ChangeColor(items[j], orangeColor));
                 }
             }
-
-            destroyPivotIndicator();
 
             if (i + 1 != high) 
             {
-                if (i >= low)
-                {
-                    yield return StartCoroutine(ChangeColor(items[i], Color.white));
-                }
-                yield return StartCoroutine(ChangeColor(items[i + 1], Color.magenta));
-
-                yield return StartCoroutine(SwapObjects(i + 1, high));
+                yield return StartCoroutine(SwapObjects(i + 1, high, true));
 
                 (items[i + 1], items[high]) = (items[high], items[i + 1]);
 
-                StartCoroutine(ChangeColor(items[i + 1], Color.green));
+                StartCoroutine(ChangeColor(items[i + 1], greenColor));
             }  else {
-                StartCoroutine(ChangeColor(items[high], Color.green));                
+                StartCoroutine(ChangeColor(items[high], greenColor));
             }
+            destroyPivotIndicator();
 
             for (int k = low; k < i + 1; k++)
             {
-                StartCoroutine(ChangeColor(items[k], Color.white));
+                StartCoroutine(ChangeColor(items[k], violetColor));
             }
 
             for (int l = i + 2; l <= high; l++)
             {
-                StartCoroutine(ChangeColor(items[l], Color.white));
+                StartCoroutine(ChangeColor(items[l], violetColor));
             }
 
             yield return new WaitForSeconds(timeout/2);
@@ -135,13 +126,14 @@ public class QuickSort : Sortings
     {
         Vector3 startPosition = new(-numberOfItems / 2 + 1, 0, 0);
         (int min, int max) range = GetSortingRange();
-
+        //List<int> elementy = new List<int>(){ 16, 51, 48, 28, 33, 44, 20, 37 };
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
             items[i].name = $"Ball{i}";
             items[i].transform.localPosition = startPosition + 1.2f * i * Vector3.right;
             if (values.Count < numberOfItems)
+                //values.Add(elementy[i]);
                 values.Add(UnityEngine.Random.Range(range.min, range.max + 1));
 
             float scale = (float)(0.6 * Math.Max(0.5, (float)(values[i] * 0.1)));
@@ -155,11 +147,6 @@ public class QuickSort : Sortings
             items[i].transform.localScale = new Vector3(1, scale, 1);
             Vector3 position = items[i].transform.position;
             items[i].transform.localPosition = new Vector3(items[i].transform.localPosition.x, scale * 0.5f, 0);
-        }
-
-        foreach (var item in items)
-        {
-            StartCoroutine(ChangeColor(item, Color.white));
         }
 
         StartCoroutine(Sort());
