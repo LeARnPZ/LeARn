@@ -21,7 +21,7 @@ public class RestartSorting : MonoBehaviour
                 anim.transform.GetChild(0).GetChild(1).GetComponent<Structures>().Restart();
                
             }  
-        playPauseButton.GetComponent<PlayPauseAnimation>().resetButtonText();
+        playPauseButton.GetComponent<PlayPauseAnimation>().ResetButtonText();
     }
 
     private void Start()
