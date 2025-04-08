@@ -8,12 +8,14 @@ public class DijkstraAlgo : Graphs
 {
     protected IEnumerator Dijkstra()
     {
+        // Lista ze wskaŸnikami odwiedzenia wierzcho³ków
         List<bool> visited = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
             visited.Add(false);
         }
 
+        // Lista kosztów dotarcia do wierzcho³ków
         List<int> arriveCosts = new();
         for(int i = 0; i < numberOfNodes; i++)
         {
@@ -21,14 +23,17 @@ public class DijkstraAlgo : Graphs
         }
         arriveCosts[startingNode] = 0;
 
+        // Lista poprzedników wierzcho³ków
         List<int> prevs = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
             prevs.Add(-1);
         }
 
+        // Algorytm Dijkstry
         for (int i = 0; i < numberOfNodes; i++)
         {
+            // Znajdujemy nieodwiedzony wierzcho³ek o najni¿szym koszcie dotarcia
             int v = -1;
             int minCost = int.MaxValue;
             for (int j = 0; j < numberOfNodes; j++)
@@ -40,15 +45,22 @@ public class DijkstraAlgo : Graphs
                 }
             }
             if (v == -1) yield break;
+
+            // Ustawiamy wierzcho³ek jako odwiedzony
             visited[v] = true;
 
+            // Sprawdzamy s¹siadów wierzcho³ka
             foreach (int w in neighborsList[v])
             {
+                // Pomijamy odwiedzonych s¹siadów
                 if (visited[w]) continue;
 
-                if (arriveCosts[w] > arriveCosts[v] + GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}")))
+                // Jeœli do s¹siada lepiej jest dotrzeæ przez aktualny wierzcho³ek, ni¿ dotychczas znalezion¹ drog¹...
+                int currentEdge = GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}"));
+                if (arriveCosts[w] > arriveCosts[v] + currentEdge)
                 {
-                    arriveCosts[w] = arriveCosts[v] + GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}"));
+                    // ...ustawiamy nowy koszt dotarcia oraz nowego poprzednika
+                    arriveCosts[w] = arriveCosts[v] + currentEdge;
                     prevs[w] = v;
                 }
             }
