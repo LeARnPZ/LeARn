@@ -13,8 +13,8 @@ public class BubbleSort : Sortings
         {
             for (int j=0; j<numberOfItems-1-i; j++)
             {
-                StartCoroutine(ChangeColor(items[j], Color.yellow));
-                StartCoroutine(ChangeColor(items[j+1], Color.yellow));
+                StartCoroutine(ChangeColor(items[j], yellowColor));
+                StartCoroutine(ChangeColor(items[j + 1], yellowColor));
                 yield return new WaitForSeconds(timeout);
 
 
@@ -46,13 +46,13 @@ public class BubbleSort : Sortings
                     (items[j], items[j+1]) = (items[j+1], items[j]);
                 }
 
-                StartCoroutine(ChangeColor(items[j], Color.white));
-                StartCoroutine(ChangeColor(items[j+1], Color.white));
+                StartCoroutine(ChangeColor(items[j], blueColor));
+                StartCoroutine(ChangeColor(items[j+1], blueColor));
                 yield return new WaitForSeconds(timeout);
 
             }
 
-            StartCoroutine(ChangeColor(items[items.Count - i - 1], Color.green));
+            StartCoroutine(ChangeColor(items[items.Count - i - 1], greenColor));
             yield return new WaitForSeconds(timeout);
 
         }

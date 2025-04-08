@@ -37,6 +37,13 @@ public abstract class Graphs : MonoBehaviour
 
     protected bool isPaused;
 
+    protected Color blueColor = new Color(146 / 255f, 212 / 255f, 255 / 255f);
+    protected Color yellowColor = new Color(243 / 255f, 220 / 255f, 102 / 255f);
+    protected Color greenColor = new Color(150 / 255f, 236 / 255f, 174 / 255f);
+    protected Color violetColor = new Color(205 / 255f, 160 / 255f, 255 / 255f);
+    protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
+    protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
+
     protected virtual IEnumerator SearchGraph() { yield return null; }
 
     protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
