@@ -11,6 +11,8 @@ public abstract class Structures : MonoBehaviour
     protected int maxCount;
     [SerializeField]
     protected float offset;
+    [SerializeField]
+    private float animDuration;
     private LimitWarning warning;
 
     protected Vector3 direction;
@@ -27,6 +29,30 @@ public abstract class Structures : MonoBehaviour
     protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
 
     protected abstract void SetDirection();
+
+    protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
+    {
+        Renderer renderer = gameObject.GetComponent<Renderer>();
+        Color currentColor = renderer.material.color;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < animDuration)
+        {
+            renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        renderer.material.color = newColor;
+    }
+
+    protected IEnumerator Blink(GameObject gameObject, Color color)
+    {
+        Color originalColor = gameObject.GetComponent<Renderer>().material.color;
+        yield return StartCoroutine(ChangeColor(gameObject, color));
+        yield return StartCoroutine(ChangeColor(gameObject, originalColor));
+    }
 
     public int GetCount()
     {
@@ -62,6 +88,8 @@ public abstract class Structures : MonoBehaviour
         values.Insert(iterator, (int)(Random.value * 100));
         items[iterator].transform.GetChild(0).GetComponent<TextMeshPro>().text = values[iterator].ToString();
         items[iterator].transform.GetChild(1).GetComponent<TextMeshPro>().text = values[iterator].ToString();
+
+        StartCoroutine(Blink(items[iterator], greenColor));
     }
 
     public virtual void PopItem()
@@ -76,7 +104,9 @@ public abstract class Structures : MonoBehaviour
         Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddRelativeForce(2 * Vector3.up + 0.5f * Vector3.forward + 0.5f * Vector3.right, ForceMode.Impulse);
-        
+
+        StartCoroutine(Blink(items[iterator], orangeColor));
+
         Destroy(items[iterator], 1f);
 
         items.RemoveAt(iterator);
@@ -94,6 +124,8 @@ public abstract class Structures : MonoBehaviour
 
         Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
         rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
+
+        StartCoroutine(Blink(items[iterator], yellowColor));
     }
 
 

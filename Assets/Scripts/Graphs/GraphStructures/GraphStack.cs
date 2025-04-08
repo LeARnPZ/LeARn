@@ -11,7 +11,7 @@ public class GraphStack : StackStruct
         iterator = 0;
     }
 
-    public void PushVisual(int value)
+    public void VisualPush(int value)
     {
         iterator = items.Count;
         GameObject newItem = Instantiate(prefab, this.transform);
@@ -29,7 +29,7 @@ public class GraphStack : StackStruct
         newItem.transform.GetChild(1).GetComponent<TextMeshPro>().text = value.ToString();
     }
 
-    public void PopVisual()
+    public void VisualPop()
     {
         base.PopItem();
     }

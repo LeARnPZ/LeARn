@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ModifyStructure : MonoBehaviour
@@ -105,12 +106,15 @@ public class ModifyStructure : MonoBehaviour
     {
         if (touchInput && anim.transform.childCount > 0 && Input.touchCount > 0 && !isTimeout)
         {
+            Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            
             int screenWidth = Screen.width;
             int screenHeight = Screen.height;
-            Touch touch = Input.GetTouch(0);
             ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();
 
-            if (touch.position.y > 0.15 * screenHeight && touch.position.y < 0.85 * screenHeight)
+            if (touch.position.y > 0.2 * screenHeight && touch.position.y < 0.8 * screenHeight)
             {
                 if (touch.position.x > 0.7 * screenWidth)
                 {
