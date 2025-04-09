@@ -177,7 +177,6 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-
     protected void CreateNeighborsList()
     {
         for (int i = 0; i < numberOfNodes; i++)
@@ -278,8 +277,8 @@ public abstract class Graphs : MonoBehaviour
         }
         else
         {
-            frontText.text += $", {n.ToString()}";
-            backText.text += $", {n.ToString()}";
+            frontText.text += $", {n}";
+            backText.text += $", {n}";
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -6,24 +6,46 @@ using UnityEngine;
 
 public class DijkstraAlgo : Graphs
 {
+    private readonly string INF = "âˆž";
+    private List<GameObject> arriveCostTexts = new();
+
+    private void CreateArriveCostText(int n)
+    {
+        GameObject gameObject = new($"ArriveCost{n}");
+        gameObject.transform.parent = nodesList[n].transform;
+        gameObject.transform.localPosition = new Vector3(0, 1, 0);
+        gameObject.transform.localScale = Vector3.one;
+
+        gameObject.AddComponent<TextMeshPro>();
+        gameObject.GetComponent<TextMeshPro>().text = INF;
+        gameObject.GetComponent<TextMeshPro>().fontSize = 6;
+        gameObject.GetComponent<TextMeshPro>().color = Color.red;
+        gameObject.GetComponent<TextMeshPro>().alignment = TextAlignmentOptions.Center;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
+        
+        arriveCostTexts.Add(gameObject);
+    }
+
     protected IEnumerator Dijkstra()
     {
-        // Lista ze wskaŸnikami odwiedzenia wierzcho³ków
+        // Lista ze wskaÅºnikami odwiedzenia wierzchoÅ‚kÃ³w
         List<bool> visited = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
             visited.Add(false);
         }
 
-        // Lista kosztów dotarcia do wierzcho³ków
+        // Lista kosztÃ³w dotarcia do wierzchoÅ‚kÃ³w
         List<int> arriveCosts = new();
         for(int i = 0; i < numberOfNodes; i++)
         {
             arriveCosts.Add(int.MaxValue);
+            CreateArriveCostText(i);
         }
         arriveCosts[startingNode] = 0;
+        arriveCostTexts[startingNode].GetComponent<TextMeshPro>().text = "0";
 
-        // Lista poprzedników wierzcho³ków
+        // Lista poprzednikÃ³w wierzchoÅ‚kÃ³w
         List<int> prevs = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -33,7 +55,7 @@ public class DijkstraAlgo : Graphs
         // Algorytm Dijkstry
         for (int i = 0; i < numberOfNodes; i++)
         {
-            // Znajdujemy nieodwiedzony wierzcho³ek o najni¿szym koszcie dotarcia
+            // Znajdujemy nieodwiedzony wierzchoÅ‚ek o najniÅ¼szym koszcie dotarcia
             int v = -1;
             int minCost = int.MaxValue;
             for (int j = 0; j < numberOfNodes; j++)
@@ -45,17 +67,32 @@ public class DijkstraAlgo : Graphs
                 }
             }
             if (v == -1) yield break;
+            StartCoroutine(ChangeSize(nodesList[v], 1.5f * Vector3.one));
+            StartCoroutine(ChangeColor(nodesList[v], yellowColor));
+            yield return new WaitForSeconds(timeout);
 
-            // Ustawiamy wierzcho³ek jako odwiedzony
+            // Ustawiamy wierzchoÅ‚ek jako odwiedzony
             visited[v] = true;
+            StartCoroutine(ChangeColor(nodesList[v], greenColor));
+            yield return new WaitForSeconds(timeout);
 
-            // Sprawdzamy s¹siadów wierzcho³ka
+            // Sprawdzamy sÄ…siadÃ³w wierzchoÅ‚ka
             foreach (int w in neighborsList[v])
             {
-                // Pomijamy odwiedzonych s¹siadów
-                if (visited[w]) continue;
+                GameObject edge = edgesList.Find(e => e.name == $"{v}-{w}" || e.name == $"{w}-{v}");
+                StartCoroutine(ChangeColor(edge, orangeColor));
+                yield return new WaitForSeconds(timeout);
 
-                // Jeœli do s¹siada lepiej jest dotrzeæ przez aktualny wierzcho³ek, ni¿ dotychczas znalezion¹ drog¹...
+                // Pomijamy odwiedzonych sÄ…siadÃ³w
+                if (visited[w])
+                {
+                    StartCoroutine(ChangeColor(edge, blueColor));
+                    continue;
+                }
+                StartCoroutine(ChangeColor(nodesList[w], yellowColor));
+                yield return new WaitForSeconds(timeout);
+
+                // JeÅ›li do sÄ…siada lepiej jest dotrzeÄ‡ przez aktualny wierzchoÅ‚ek, niÅ¼ dotychczas znalezionÄ… drogÄ…...
                 int currentEdge = GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}"));
                 if (arriveCosts[w] > arriveCosts[v] + currentEdge)
                 {
@@ -63,7 +100,12 @@ public class DijkstraAlgo : Graphs
                     arriveCosts[w] = arriveCosts[v] + currentEdge;
                     prevs[w] = v;
                 }
+
+                StartCoroutine(ChangeColor(edge, blueColor));
+                StartCoroutine(ChangeColor(nodesList[w], originalColor));
             }
+            
+            StartCoroutine(ChangeSize(nodesList[v], Vector3.one));
         }
 
         //Debug.Log("ARRIVE COSTS:");
@@ -76,20 +118,21 @@ public class DijkstraAlgo : Graphs
 
     protected override void Awake()
     {
-        // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
-        int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
+        // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list sÄ…siedztwa
+        int graphVersion = 0;// (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byÄ‡ liczba dostÄ™pnych wersji grafu
         CreateMatrix(graphVersion);
         CreateNeighborsList();
 
-        // Uaktywnienie odpowiedniej wersji grafu oraz pobranie jego wêz³ów i krawêdzi
+        // Uaktywnienie odpowiedniej wersji grafu oraz pobranie jego wÄ™zÅ‚Ã³w i krawÄ™dzi
         graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
         nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
         edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
+        originalColor = nodes.transform.GetChild(0).GetComponent<Renderer>().material.color;
     }
 
     protected override void Start()
     {
-        // Dodanie wêz³ów do listy i nadanie etykiet
+        // Dodanie wÄ™zÅ‚Ã³w do listy i nadanie etykiet
         for (int i = 0; i < numberOfNodes; i++)
         {
             nodesList.Add(nodes.transform.GetChild(i).gameObject);
@@ -97,7 +140,7 @@ public class DijkstraAlgo : Graphs
             nodesList[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = i.ToString();
         }
 
-        // Utworzenie krawêdzi ³¹cz¹cych odpowiednie wêz³y i dodanie ich do listy
+        // Utworzenie krawÄ™dzi Å‚Ä…czÄ…cych odpowiednie wÄ™zÅ‚y i dodanie ich do listy
         DrawEdges(true);
 
         isPaused = false;
