@@ -17,11 +17,14 @@ public class DijkstraAlgo : Graphs
         gameObject.transform.localScale = new Vector3(-1, 1, 1);
 
         gameObject.AddComponent<TextMeshPro>();
-        gameObject.GetComponent<TextMeshPro>().text = INF;
-        gameObject.GetComponent<TextMeshPro>().fontSize = 6;
-        gameObject.GetComponent<TextMeshPro>().color = Color.red;
-        gameObject.GetComponent<TextMeshPro>().alignment = TextAlignmentOptions.Center;
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
+
+        TextMeshPro tmpro = gameObject.GetComponent<TextMeshPro>();
+        tmpro.text = INF;
+        tmpro.fontSize = 6;
+        tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF");
+        tmpro.color = Color.red;
+        tmpro.alignment = TextAlignmentOptions.Center;
         
         arriveCostTexts.Add(gameObject);
     }

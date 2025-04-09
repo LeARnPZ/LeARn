@@ -246,6 +246,7 @@ public abstract class Graphs : MonoBehaviour
                         tmpro.text = Random.Range(1, 10).ToString();
                         tmpro.autoSizeTextContainer = true;
                         tmpro.fontSize = 5;
+                        tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF");
                     }
 
                     edgesList.Add(line);
