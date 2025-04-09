@@ -14,7 +14,7 @@ public class DijkstraAlgo : Graphs
         GameObject gameObject = new($"ArriveCost{n}");
         gameObject.transform.parent = nodesList[n].transform;
         gameObject.transform.localPosition = new Vector3(0, 1, 0);
-        gameObject.transform.localScale = Vector3.one;
+        gameObject.transform.localScale = new Vector3(-1, 1, 1);
 
         gameObject.AddComponent<TextMeshPro>();
         gameObject.GetComponent<TextMeshPro>().text = INF;
@@ -29,6 +29,13 @@ public class DijkstraAlgo : Graphs
     private void SetArriveCostText(int n, int val)
     {
         arriveCostTexts[n].GetComponent<TextMeshPro>().text = val.ToString();
+    }
+
+    private void ChangeTextColorDuringComparison(int v, int w, GameObject edge, Color color)
+    {
+        StartCoroutine(ChangeColor(arriveCostTexts[v], color, true));
+        StartCoroutine(ChangeColor(arriveCostTexts[w], color, true));
+        if (edge != null) StartCoroutine(ChangeColor(edge.transform.GetChild(0).gameObject, color, true));
     }
 
     protected IEnumerator Dijkstra()
@@ -84,30 +91,27 @@ public class DijkstraAlgo : Graphs
             // Sprawdzamy sąsiadów wierzchołka
             foreach (int w in neighborsList[v])
             {
-                GameObject edge = edgesList.Find(e => e.name == $"{v}-{w}" || e.name == $"{w}-{v}");
-                StartCoroutine(ChangeColor(edge, orangeColor));
+                GameObject currentEdge = edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}");
+                StartCoroutine(ChangeColor(currentEdge, orangeColor));
                 yield return new WaitForSeconds(timeout);
 
                 // Pomijamy odwiedzonych sąsiadów
                 if (visited[w])
                 {
-                    StartCoroutine(ChangeColor(edge, blueColor));
+                    StartCoroutine(ChangeColor(currentEdge, blueColor));
+                    yield return new WaitForSeconds(timeout);
                     continue;
                 }
                 StartCoroutine(ChangeColor(nodesList[w], yellowColor));
                 yield return new WaitForSeconds(timeout);
 
                 // Jeśli do sąsiada lepiej jest dotrzeć przez aktualny wierzchołek, niż dotychczas znalezioną drogą...
-                GameObject currentEdge = edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}");
-                StartCoroutine(ChangeColor(arriveCostTexts[v], Color.blue, true));
-                StartCoroutine(ChangeColor(arriveCostTexts[w], Color.blue, true));
-                StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.blue, true));
+                ChangeTextColorDuringComparison(v, w, currentEdge, Color.blue);
                 yield return new WaitForSeconds(timeout);
+
                 if (arriveCosts[w] > arriveCosts[v] + GetEdgeWeight(currentEdge))
                 {
-                    StartCoroutine(ChangeColor(arriveCostTexts[v], Color.green, true));
-                    StartCoroutine(ChangeColor(arriveCostTexts[w], Color.green, true));
-                    StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.green, true));
+                    ChangeTextColorDuringComparison(v, w, currentEdge, Color.green);
                     yield return new WaitForSeconds(timeout);
 
                     // ...ustawiamy nowy koszt dotarcia oraz nowego poprzednika
@@ -116,10 +120,10 @@ public class DijkstraAlgo : Graphs
                     prevs[w] = v;
                     yield return new WaitForSeconds(timeout);
                 }
-                StartCoroutine(ChangeColor(arriveCostTexts[v], Color.red, true));
-                StartCoroutine(ChangeColor(arriveCostTexts[w], Color.red, true));
+                ChangeTextColorDuringComparison(v, w, null, Color.red);
                 StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.white, true));
-                StartCoroutine(ChangeColor(edge, blueColor));
+
+                StartCoroutine(ChangeColor(currentEdge, blueColor));
                 StartCoroutine(ChangeColor(nodesList[w], originalColor));
                 yield return new WaitForSeconds(timeout);
             }
@@ -138,7 +142,7 @@ public class DijkstraAlgo : Graphs
     protected override void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list sąsiedztwa
-        int graphVersion = 0;// (int)(Random.value * 10) % 5; // <-- po znaku modulo musi być liczba dostępnych wersji grafu
+        int graphVersion = 1;// (int)(Random.value * 10) % 5; // <-- po znaku modulo musi być liczba dostępnych wersji grafu
         CreateMatrix(graphVersion);
         CreateNeighborsList();
 
@@ -167,5 +171,14 @@ public class DijkstraAlgo : Graphs
 
         // Uruchomienie animacji
         StartCoroutine(Dijkstra());
+    }
+
+    private void Update()
+    {
+        foreach (GameObject edge in edgesList)
+            edge.transform.GetChild(0).transform.LookAt(Camera.main.transform);
+
+        foreach (GameObject arriveText in arriveCostTexts)
+            arriveText.transform.LookAt(Camera.main.transform);
     }
 }

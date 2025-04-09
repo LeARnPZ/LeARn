@@ -238,7 +238,7 @@ public abstract class Graphs : MonoBehaviour
                     {
                         GameObject weight = new("EdgeWeight");
                         weight.transform.parent = line.transform;
-                        weight.transform.localScale = Vector3.one;
+                        weight.transform.localScale = new Vector3(-1, 1, 1);
                         weight.transform.position = (from + to) / 2;
 
                         weight.AddComponent<TextMeshPro>();

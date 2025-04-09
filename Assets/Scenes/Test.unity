@@ -262,10 +262,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4287966169609206163, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8940635243353714345, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
       propertyPath: m_Name
       value: DijkstraAlgo
@@ -273,7 +269,61 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5054499945505194404, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 678686970883758570, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 1286680617082280781, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 6815401902310032131, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2776912191859795865, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7622215044690280407, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4696773929268324218, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 1035922330032635700, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8033236289459210990, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2320997612504322720, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 6876688913854359906, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 1162200274257850668, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4428769415738797707, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8230390502715717317, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 642861666933698401, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 5162806980647827247, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 3769821328292030929, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 8871816773480903071, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: d3d828cdd76587d46ad7bbe62f66492e, type: 3}
 --- !u!1 &1044014300
 GameObject:
