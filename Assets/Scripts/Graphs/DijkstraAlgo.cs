@@ -26,6 +26,11 @@ public class DijkstraAlgo : Graphs
         arriveCostTexts.Add(gameObject);
     }
 
+    private void SetArriveCostText(int n, int val)
+    {
+        arriveCostTexts[n].GetComponent<TextMeshPro>().text = val.ToString();
+    }
+
     protected IEnumerator Dijkstra()
     {
         // Lista ze wskaźnikami odwiedzenia wierzchołków
@@ -93,16 +98,30 @@ public class DijkstraAlgo : Graphs
                 yield return new WaitForSeconds(timeout);
 
                 // Jeśli do sąsiada lepiej jest dotrzeć przez aktualny wierzchołek, niż dotychczas znalezioną drogą...
-                int currentEdge = GetEdgeWeight(edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}"));
-                if (arriveCosts[w] > arriveCosts[v] + currentEdge)
+                GameObject currentEdge = edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}");
+                StartCoroutine(ChangeColor(arriveCostTexts[v], Color.blue, true));
+                StartCoroutine(ChangeColor(arriveCostTexts[w], Color.blue, true));
+                StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.blue, true));
+                yield return new WaitForSeconds(timeout);
+                if (arriveCosts[w] > arriveCosts[v] + GetEdgeWeight(currentEdge))
                 {
-                    // ...ustawiamy nowy koszt dotarcia oraz nowego poprzednika
-                    arriveCosts[w] = arriveCosts[v] + currentEdge;
-                    prevs[w] = v;
-                }
+                    StartCoroutine(ChangeColor(arriveCostTexts[v], Color.green, true));
+                    StartCoroutine(ChangeColor(arriveCostTexts[w], Color.green, true));
+                    StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.green, true));
+                    yield return new WaitForSeconds(timeout);
 
+                    // ...ustawiamy nowy koszt dotarcia oraz nowego poprzednika
+                    arriveCosts[w] = arriveCosts[v] + GetEdgeWeight(currentEdge);
+                    SetArriveCostText(w, arriveCosts[w]);
+                    prevs[w] = v;
+                    yield return new WaitForSeconds(timeout);
+                }
+                StartCoroutine(ChangeColor(arriveCostTexts[v], Color.red, true));
+                StartCoroutine(ChangeColor(arriveCostTexts[w], Color.red, true));
+                StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.white, true));
                 StartCoroutine(ChangeColor(edge, blueColor));
                 StartCoroutine(ChangeColor(nodesList[w], originalColor));
+                yield return new WaitForSeconds(timeout);
             }
             
             StartCoroutine(ChangeSize(nodesList[v], Vector3.one));

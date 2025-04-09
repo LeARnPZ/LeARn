@@ -46,21 +46,40 @@ public abstract class Graphs : MonoBehaviour
 
     protected virtual IEnumerator SearchGraph() { yield return null; }
 
-    protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
+    protected IEnumerator ChangeColor(GameObject gameObject, Color newColor, bool isText = false)
     {
-        Renderer renderer = gameObject.GetComponent<Renderer>();
-        Color currentColor = renderer.material.color;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < animDuration)
+        if (isText)
         {
-            renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+            TextMeshPro tmpro = gameObject.GetComponent<TextMeshPro>();
+            Color currentColor = tmpro.color;
 
-        renderer.material.color = newColor;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < animDuration)
+            {
+                tmpro.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            tmpro.color = newColor;
+        }
+        else
+        {
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Color currentColor = renderer.material.color;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < animDuration)
+            {
+                renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            renderer.material.color = newColor;
+        }
     }
 
     protected IEnumerator ChangeSize(GameObject gameObject, Vector3 newScale)
