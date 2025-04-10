@@ -239,13 +239,23 @@ public abstract class Graphs : MonoBehaviour
                         GameObject weight = new("EdgeWeight");
                         weight.transform.parent = line.transform;
                         weight.transform.localScale = new Vector3(-1, 1, 1);
-                        weight.transform.position = (from + to) / 2;
+
+                        Vector3 middle = (from + to) / 2f;
+                        Vector3 direction = (to - from).normalized;
+                        Vector3 up = Vector3.Cross(direction, Vector3.forward);
+                        Vector3 position = middle + up * 0.25f * transform.localScale.x;
+                        if (position.y < middle.y)
+                        {
+                            up = -up;
+                            position = middle + up * 0.25f * transform.localScale.x;
+                        }
+                        weight.transform.position = position;
 
                         weight.AddComponent<TextMeshPro>();
                         TextMeshPro tmpro = weight.GetComponent<TextMeshPro>();
                         tmpro.text = Random.Range(1, 10).ToString();
                         tmpro.autoSizeTextContainer = true;
-                        tmpro.fontSize = 5;
+                        tmpro.fontSize = 4;
                         tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF");
                     }
 
