@@ -13,19 +13,19 @@ public class DijkstraAlgo : Graphs
     {
         GameObject gameObject = new($"ArriveCost{n}");
         gameObject.transform.parent = nodesList[n].transform;
-        gameObject.transform.localPosition = new Vector3(0, 1, 0);
+        gameObject.transform.localPosition = new Vector3(0, 0.75f, 0);
         gameObject.transform.localScale = new Vector3(-1, 1, 1);
 
         gameObject.AddComponent<TextMeshPro>();
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
 
         TextMeshPro tmpro = gameObject.GetComponent<TextMeshPro>();
-        tmpro.text = INF;
+        tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF Variant");
         tmpro.fontSize = 6;
-        tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF");
         tmpro.color = Color.red;
         tmpro.alignment = TextAlignmentOptions.Center;
-        
+        tmpro.text = INF;
+
         arriveCostTexts.Add(gameObject);
     }
 
