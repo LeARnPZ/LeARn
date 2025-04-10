@@ -94,17 +94,15 @@ public class DijkstraAlgo : Graphs
             // Sprawdzamy sąsiadów wierzchołka
             foreach (int w in neighborsList[v])
             {
+                // Pomijamy odwiedzonych sąsiadów
+                if (visited[w]) continue;
+
+                // Zaznaczenie krawędzi
                 GameObject currentEdge = edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}");
                 StartCoroutine(ChangeColor(currentEdge, orangeColor));
                 yield return new WaitForSeconds(timeout);
 
-                // Pomijamy odwiedzonych sąsiadów
-                if (visited[w])
-                {
-                    StartCoroutine(ChangeColor(currentEdge, blueColor));
-                    yield return new WaitForSeconds(timeout);
-                    continue;
-                }
+                // Zaznaczenie wierzchołka
                 StartCoroutine(ChangeColor(nodesList[w], yellowColor));
                 yield return new WaitForSeconds(timeout);
 
@@ -123,9 +121,10 @@ public class DijkstraAlgo : Graphs
                     prevs[w] = v;
                     yield return new WaitForSeconds(timeout);
                 }
+
+                // Przywrócenie kolorów
                 ChangeTextColorDuringComparison(v, w, null, Color.red);
                 StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.white, true));
-
                 StartCoroutine(ChangeColor(currentEdge, blueColor));
                 StartCoroutine(ChangeColor(nodesList[w], originalColor));
                 yield return new WaitForSeconds(timeout);
