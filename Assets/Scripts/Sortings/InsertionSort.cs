@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class InsertionSort : Sortings
 {
+
+    public override void Restart()
+    {
+        StopAllCoroutines();
+        
+        isPaused = false;
+        Time.timeScale = 1f;
+        
+        values.Clear();
+        
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        items.Clear();
+        
+        Start();
+    }
+
     protected override IEnumerator Sort()
     {
         yield return new WaitForSeconds(1);
@@ -28,7 +48,7 @@ public class InsertionSort : Sortings
             {
                 yield return StartCoroutine(ChangeColor(items[j], Color.yellow));
                 //yield return StartCoroutine(ChangeColor(keyItem, Color.blue));
-                yield return new WaitForSeconds(timeout);
+                // yield return new WaitForSeconds(timeout);
 
                 finalPosition = items[j].transform.localPosition;
                 Vector3 moveRightPos = items[j].transform.localPosition + Vector3.right * 1.2f; 
