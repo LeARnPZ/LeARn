@@ -48,6 +48,7 @@ MonoBehaviour:
   prefab: {fileID: 185193376915255039, guid: 215b947ca3cb8cb4b984454346d0f47c, type: 3}
   maxCount: 10
   offset: 1.5
+  animDuration: 0.25
 --- !u!1 &8132882296070092401
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,8 @@ using UnityEngine;
 public abstract class Graphs : MonoBehaviour
 {
     [Header("Ustawienia animacji")]
-    //[SerializeField]
     protected int numberOfNodes;
+    protected Color originalColor;
     [SerializeField]
     protected int startingNode;
 
@@ -18,20 +18,20 @@ public abstract class Graphs : MonoBehaviour
     protected float animDuration;
 
     [Header("Obiekty-rodzice")]
-    //[SerializeField]
-    //protected GameObject nodes;
-    //[SerializeField]
-    //protected GameObject edges;
     [SerializeField]
     protected GameObject graphVersions;
     [SerializeField]
-    protected GameObject queueTravel;
+    protected GameObject searchOrder;
 
+    // Przechowywanie grafu
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
 
+    // Kontenery wêz³ów i krawêdzi, których obiekty-dzieci bêd¹ wrzucone do list
     protected GameObject nodes;
     protected GameObject edges;
+
+    // Listy obiektów wêz³ów i krawêdzi
     protected List<GameObject> nodesList = new();
     protected List<GameObject> edgesList = new();
 
@@ -171,7 +171,6 @@ public abstract class Graphs : MonoBehaviour
                 break;
         }
     }
-    
 
     private void CreateNeighborsList()
     {
@@ -208,7 +207,7 @@ public abstract class Graphs : MonoBehaviour
                     lr.SetPosition(0, from);
                     lr.SetPosition(1, to);
                     lr.startWidth = lr.endWidth = 0.1f * this.transform.localScale.x;
-                    lr.material.color = Color.white;
+                    lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
                     edgesList.Add(line);
@@ -224,7 +223,7 @@ public abstract class Graphs : MonoBehaviour
         foreach (GameObject node in nodesList)
         {
             node.transform.localScale = Vector3.one; 
-            node.GetComponent<Renderer>().material.color = Color.white;
+            node.GetComponent<Renderer>().material.color = originalColor;
         }
 
         foreach (GameObject edge in edgesList)
@@ -233,13 +232,10 @@ public abstract class Graphs : MonoBehaviour
         }
 
         edgesList.Clear();
-        //matrix.Clear();
-        //neighborsList.Clear();
-
         Start();
     }
 
-    public bool getPaused()
+    public bool IsPaused()
     {
         return isPaused;
     }
@@ -250,18 +246,20 @@ public abstract class Graphs : MonoBehaviour
         Time.timeScale = isPaused ? 0f : 1f;
     }
 
-    public void addText(string text)
+    public void AddOrder(int n)
     {
+        TextMeshPro frontText = searchOrder.transform.GetChild(0).GetComponent<TextMeshPro>();
+        TextMeshPro backText = searchOrder.transform.GetChild(1).GetComponent<TextMeshPro>();
 
-        if (queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text.Equals(""))
+        if (frontText.text.Equals(""))
         {
-            queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text = text;
-            queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text = text;
+            frontText.text = n.ToString();
+            backText.text = n.ToString();
         }
         else
         {
-            queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text += $", {text}";
-            queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text += $", {text}";
+            frontText.text += $", {n.ToString()}";
+            backText.text += $", {n.ToString()}";
         }
     }
 
@@ -276,6 +274,7 @@ public abstract class Graphs : MonoBehaviour
         graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
         nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
         edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
+        originalColor = nodes.transform.GetChild(0).GetComponent<Renderer>().material.color;
     }
 
     protected void Start()
@@ -293,8 +292,8 @@ public abstract class Graphs : MonoBehaviour
 
         isPaused = false;
         Time.timeScale = 1f;
-        queueTravel.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
-        queueTravel.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
+        searchOrder.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
+        searchOrder.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
 
         // Uruchomienie animacji
         StartCoroutine(SearchGraph());

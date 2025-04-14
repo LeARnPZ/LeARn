@@ -11,7 +11,7 @@ public class GraphQueue : QueueStruct
         iterator = 0;
     }
 
-    public void EnqueueVisual(int value)
+    public void VisualEnqueue(int value)
     {
         iterator = items.Count;
         GameObject newItem = Instantiate(prefab, this.transform);
@@ -27,9 +27,11 @@ public class GraphQueue : QueueStruct
 
         newItem.transform.GetChild(0).GetComponent<TextMeshPro>().text = value.ToString();
         newItem.transform.GetChild(1).GetComponent<TextMeshPro>().text = value.ToString();
+
+        StartCoroutine(Blink(items[iterator], greenColor));
     }
 
-    public void DequeueVisual()
+    public void VisualDequeue()
     {
         base.PopItem();
     }
