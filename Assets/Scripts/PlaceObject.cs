@@ -96,30 +96,27 @@ public class PlaceObject : MonoBehaviour
 
         if (placementMode == 1)
         {
-            if (placed) return;
+            if (finger.index != 0 || placed) return;
 
-            // Load the prefab dynamically from Resources folder
             GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
-            
+
             if (prefab == null)
             {
                 Debug.LogError($"Prefab for {algorithmName} not found!");
                 return;
             }
 
-            // Get AR Camera position and forward direction
             Camera arCamera = Camera.main;
-            Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1f; // 0.5 meters in front of the camera
+            Vector2 screenPosition = finger.currentTouch.screenPosition;
 
-            // Instantiate the prefab in front of the camera
+            Ray ray = arCamera.ScreenPointToRay(screenPosition);
+            Vector3 spawnPosition = ray.GetPoint(1f);
+
             GameObject spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
-            
-            // Make the object face the camera
             // spawnedObject.transform.LookAt(arCamera.transform);
-            
+
             placed = true;
 
-            // Enable relevant UI buttons
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
@@ -148,6 +145,7 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
+
     }
 
 }
