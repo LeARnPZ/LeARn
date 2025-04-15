@@ -4382,7 +4382,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000061035156}
-  m_SizeDelta: {x: -0.00012207, y: 129.24}
+  m_SizeDelta: {x: -0.00012207, y: 1284.03}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1143472802
 MonoBehaviour:
@@ -4404,7 +4404,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '*description of an algorithm*'
+  m_text: "Algorytm DFS to algorytm przeszukiwania grafu w g\u0142\u0105b (Depth-First
+    Search). Rozpoczyna eksploracj\u0119 od danego wierzcho\u0142ka i przechodzi
+    do jego s\u0105siad\xF3w, dop\xF3ki to mo\u017Cliwe, a nast\u0119pnie cofa si\u0119.
+    U\u017Cywany do wykrywania cykli, analizy sp\xF3jno\u015Bci grafu i znajdowania
+    \u015Bcie\u017Cek. Jego z\u0142o\u017Cono\u015B\u0107 wynosi O(V + E), gdzie
+    V to liczba wierzcho\u0142k\xF3w, a E liczba kraw\u0119dzi.\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e191b2d124543b4c8d4b17458a71ca3, type: 2}
   m_sharedMaterial: {fileID: 875932162747529123, guid: 7e191b2d124543b4c8d4b17458a71ca3, type: 2}
@@ -4438,11 +4443,11 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 1.05
+  m_characterSpacing: 4.4
+  m_wordSpacing: 0
   m_lineSpacing: 5
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
@@ -6885,7 +6890,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000061035156}
-  m_SizeDelta: {x: -0.00012207, y: 129.24}
+  m_SizeDelta: {x: -0.00012207, y: 1284.03}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1782202776
 MonoBehaviour:
@@ -6921,7 +6926,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '*description of an algorithm*'
+  m_text: "Algorytm DFS to algorytm przeszukiwania grafu w g\u0142\u0105b (Depth-First
+    Search). Rozpoczyna eksploracj\u0119 od danego wierzcho\u0142ka i przechodzi
+    do jego s\u0105siad\xF3w, dop\xF3ki to mo\u017Cliwe, a nast\u0119pnie cofa si\u0119.
+    U\u017Cywany do wykrywania cykli, analizy sp\xF3jno\u015Bci grafu i znajdowania
+    \u015Bcie\u017Cek. Jego z\u0142o\u017Cono\u015B\u0107 wynosi O(V + E), gdzie
+    V to liczba wierzcho\u0142k\xF3w, a E liczba kraw\u0119dzi.\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e191b2d124543b4c8d4b17458a71ca3, type: 2}
   m_sharedMaterial: {fileID: 875932162747529123, guid: 7e191b2d124543b4c8d4b17458a71ca3, type: 2}
@@ -6955,11 +6965,11 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 1.05
+  m_characterSpacing: 5
+  m_wordSpacing: 1.53
   m_lineSpacing: 5
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
