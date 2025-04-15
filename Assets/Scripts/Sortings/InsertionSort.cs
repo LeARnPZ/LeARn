@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class InsertionSort : Sortings
 {
+
+    public override void Restart()
+    {
+        StopAllCoroutines();
+        
+        isPaused = false;
+        Time.timeScale = 1f;
+        
+        values.Clear();
+        
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        items.Clear();
+        
+        Start();
+    }
+
     protected override IEnumerator Sort()
     {
         yield return new WaitForSeconds(1);
@@ -12,9 +32,9 @@ public class InsertionSort : Sortings
         {
             GameObject keyItem = items[i];
             int keyValue = GetValue(keyItem);
-            int j = i-1;
+            int j = i - 1;
 
-            StartCoroutine(ChangeColor(keyItem, Color.yellow));
+            yield return StartCoroutine(ChangeColor(keyItem, Color.yellow));
             yield return new WaitForSeconds(timeout);
 
             Vector3 originalPos = keyItem.transform.localPosition;
@@ -22,20 +42,22 @@ public class InsertionSort : Sortings
             yield return StartCoroutine(MoveObject(keyItem, moveUpPos)); 
 
             Vector3 finalPosition = originalPos; 
+            List<GameObject> movedItems = new List<GameObject>(); 
+            
             while (j >= 0 && GetValue(items[j]) > keyValue)
             {
+                yield return StartCoroutine(ChangeColor(items[j], Color.yellow));
+                //yield return StartCoroutine(ChangeColor(keyItem, Color.blue));
+                // yield return new WaitForSeconds(timeout);
 
-                StartCoroutine(ChangeColor(items[j], Color.blue));
-                StartCoroutine(ChangeColor(items[i], Color.blue));
-                yield return new WaitForSeconds(timeout);
                 finalPosition = items[j].transform.localPosition;
                 Vector3 moveRightPos = items[j].transform.localPosition + Vector3.right * 1.2f; 
-                
+
                 yield return StartCoroutine(MoveObject(items[j], moveRightPos));
                 
-                StartCoroutine(ChangeColor(items[j], Color.green));
-                items[j + 1] = items[j];
+                movedItems.Add(items[j]); 
                 
+                items[j + 1] = items[j];  
                 j--;
             }
 
@@ -45,12 +67,22 @@ public class InsertionSort : Sortings
             Vector3 finalPos = new Vector3(moveLeftPos.x, originalPos.y, originalPos.z);
             yield return StartCoroutine(MoveObject(keyItem, finalPos));
 
+
             items[j + 1] = keyItem;
-            StartCoroutine(ChangeColor(keyItem, Color.green));
+
+            foreach (GameObject item in movedItems)
+            {
+                yield return StartCoroutine(ChangeColor(item, Color.white));
+            }
+
+            yield return StartCoroutine(ChangeColor(keyItem, Color.white));
+            
             yield return new WaitForSeconds(timeout);
         }
 
-        Debug.Log("Insertion Sort finished.");
+        for ( int z = 0; z < items.Count; z++)
+        {
+            yield return StartCoroutine(ChangeColor(items[z], Color.green));
+        }
     }
 }
-
