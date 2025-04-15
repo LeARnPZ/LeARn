@@ -1,7 +1,7 @@
 ### BubbleSort
 1) Rozpoczęcie iteracji od początku listy
 
-2) Porównanie pierwszego elementu z drugim
+2) Porównanie pierwszego elementu z drugim:
    a. Jeśli pierwszy element jest większy niż drugi, zamieniamy je miejscami
    b. Jeśli nie, przechodzimy do kolejnej pary
 
@@ -11,7 +11,7 @@
 
 5) Powtórzenie całego procesu porównywania elementów do momentu aż lista będzie w pełni posortowana. Z każdym kolejnym przejściem ignorowany jest ostatni posortowany element, a zakres elementów nieposortowanych zmniejsza się 
 
-6) Zakończenie działania algorytmu w momencie, w którym podczas pełnego przejścia po liście nie dokonano żadnej zmiany. Lista jest posortowana
+6) Zakończenie działania algorytmu w momencie, w którym podczas pełnego przejścia po liście nie dokonano żadnej zmiany. Lista jest posortowana.
 
 ### QuickSort
 1) Jeśli rozpatrywana lista ma jeden element, to jest już posortowana i algorytm dla tej listy jest skończony.
@@ -29,64 +29,50 @@
 7) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
 
 ### MergeSort
-1) Krok nr 1
+1) Sprawdzamy, czy lista elementów ma więcej niż jeden element:
+   TAK: Dzielimy ją na dwie równe (lub prawie równe) części i przechodzimy do kroku 2.
+   NIE: Kończymy algorytm z posortowaną już listą
 
-2) Krok nr 2
+2) Powtarzamy krok 1. dla każdej z dwóch podlist, aż każda podlista będzie miała tylko jeden element
 
-3) Krok nr 3
+3) Scalanie podlist - Pobieramy dwie posortowane podlisty i łączymy je w jedną posortowaną listę: 
+   1. Porównujemy pierwszy element z każdej podlisty, mniejszy z nich przenosimy do nowej listy wynikowej
+   2. Przesuwamy wskaźnik do następnego elementu w podliście, z której zabraliśmy element i powtarzamy proces, aż jedna podlista zostanie pusta
+   3. Przenosimy pozostałe elementy drugiej podlisty do listy wynikowej (są już posortowane)
 
-1) Krok nr 1
+4) Po scaleniu najmniejszych podlist zaczynamy scalać coraz większe listy, aż dojdziemy do pełnej posortowanej listy
 
-2) Krok nr 2
-
-3) Krok nr 3
-
-...
-...
-...
+5) Gdy wszystkie elementy zostaną scalone, lista jest w pełni posortowana.
 
 ### BucketSort
-1) Krok nr 1
+1) Decydujemy ile kubełków chcemy użyć - wybór tej liczby zależy od tego jak duża jest lista do posortowania
 
-2) Krok nr 2
+2) Rozdzielamy wszystkie elementy z listy do różnych kubełków. W każdym kubełku będą znajdować się elementy, które mieszczą się w określonym zakresie wartości 
+   Przykład: jeśli mamy listę liczb od 1 do 100, możemy podzielić te liczby na 10 kubełków (np. kubełek 1: 1-10, kubełek 2: 11-20, itd.) 
 
-3) Krok nr 3
+3) Każdy kubełek traktujemy osobno i sortujemy w nim elementy. Możemy użyć do tego prostych algorytmów sortowania takich jak sortowanie bąbelkowe, ponieważ zazwyczaj kubełek zawiera małą ilość elementów 
 
-1) Krok nr 1
-
-2) Krok nr 2
-
-3) Krok nr 3
-
-...
-...
-...
+4) Po posortowaniu elementów w każdym z kubełków, zaczynamy je łączyć w jedną dużą listę. Elementy z pierwszego kubełka będą na początku, potem z drugiego kubełka, itd. W ten sposób tworzymy jedną posortowaną listę. 
 
 ### InsertionSort
-1) Krok nr 1
+1) Pierwszy element uznajemy za już posortowany
 
-2) Krok nr 2
+2) Bierzemy kolejny element (klucz) i porównujemy go z wcześniejszymi
 
-3) Krok nr 3
+3) Jeśli któryś z wcześniejszych elementów jest większy, przesuwamy go w prawo, robiąc miejsce dla klucza
 
-1) Krok nr 1
+4) Wstawiamy klucz w odpowiednie miejsce
 
-2) Krok nr 2
-
-3) Krok nr 3
-
-...
-...
-...
+5) Powtarzamy to samo dla każdego kolejnego elementu, aż do końca listy.
 
 ### SelectSort
-1) Przechodzimy przez całą listę i szukamy najmniejszego elementu. 
+1) Przechodzimy przez całą listę zaczynając od drugiego indeksu i szukamy najmniejszego elementu. 
 
-2) Zamieniamy znaleziony najmniejszy element z pierwszym elementem listy 
+2) Znaleziony najmniejszy element zamieniamy miejscami z pierwszym elementem listy. Liczba znajduje się teraz na docelowej pozycji.
 
-3) Powtarzamy kroki 1-2 dla pozostałej części listy pomijając przy tym już posortowane elementy 
+3) Przechodzimy do następnego elementu powtarzając proces z kroku 1. i 2. Zakres przeszukiwanych pozycji zmniejsza się po każdym przeszukaniu.
 
-4) Proces trwa, aż cała lista zostanie posortowana
+4) Proces trwa aż dojdziemy do ostatniej liczby. Lista jest posortowana.
 
 ### StackStruct – bez listy kroków
 
@@ -95,38 +81,24 @@
 ### ListStruct – bez listy kroków
 
 ### DFSGraph
-1) Krok nr 1
+1) Wybieramy węzeł początkowy i dodajemy go do stosu
 
-2) Krok nr 2
+2) Dopóki stos nie jest pusty, wykonujemy kroki:
+   1. Zdejmujemy węzeł ze stosu
+   2. Odwiedzamy zdjęty węzeł
+   3. Dodajemy nieodwiedzonych sąsiadów węzła do stosu
 
-3) Krok nr 3
-
-1) Krok nr 1
-
-2) Krok nr 2
-
-3) Krok nr 3
-
-...
-...
-...
+3) Jeśli po zakończeniu algorytmu pozostały jeszcze nieodwiedzone węzły, uruchamiamy algorytm jeszcze raz z dowolnego nieodwiedzonego węzła.
 
 ### BFSGraph
-1) Krok nr 1
+1) Wybieramy węzeł początkowy i dodajemy go do kolejki
 
-2) Krok nr 2
+2) Dopóki kolejka nie jest pusta, wykonujemy kroki:
+   1. Zdejmujemy węzeł z kolejki
+   2. Odwiedzamy zdjęty węzeł
+   3. Dodajemy nieodwiedzonych sąsiadów węzła do kolejki
 
-3) Krok nr 3
-
-1) Krok nr 1
-
-2) Krok nr 2
-
-3) Krok nr 3
-
-...
-...
-...
+3) Jeśli po zakończeniu algorytmu pozostały jeszcze nieodwiedzone węzły, uruchamiamy algorytm jeszcze raz z dowolnego nieodwiedzonego węzła.
 
 ### DijkstraAlgo
 1) Krok nr 1
@@ -146,18 +118,6 @@
 ...
 
 ### GrahamAlgo
-1) Krok nr 1
-
-2) Krok nr 2
-
-3) Krok nr 3
-
-1) Krok nr 1
-
-2) Krok nr 2
-
-3) Krok nr 3
-
 ...
 ...
 ...
