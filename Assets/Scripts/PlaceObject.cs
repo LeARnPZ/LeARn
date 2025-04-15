@@ -41,21 +41,85 @@ public class PlaceObject : MonoBehaviour
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        if (finger.index != 0 || placed) return;
+        
+        int placementMode = PlayerPrefs.GetInt("placement", 0);
 
-        GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
-
-        if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        if (placementMode == 0)
+        
         {
-            //foreach (ARRaycastHit hit in hits)
-            //{
-            //    Pose pose = hit.pose;
-            //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}S
-            Pose pose = hits[0].pose;
-                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+        
+            if (finger.index != 0 || placed) return;
+
+            GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
+
+            if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+            {
+                //foreach (ARRaycastHit hit in hits)
+                //{
+                //    Pose pose = hit.pose;
+                //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+                //}S
+                Pose pose = hits[0].pose;
+                    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+                placed = true;
+
+                string algorithm = PlayerPrefs.GetString("algorithm");
+                if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
+                {
+                    GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
+
+                }
+                else if (algorithm.Contains("StackStruct"))
+                {
+                    GameObject.Find("BottomButtons/StructButtonsStack/AddItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsStack/PopItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsStack/PeekItemButton").GetComponent<Button>().interactable = true;
+
+                }
+                else if (algorithm.Contains("QueueStruct"))
+                {
+                    GameObject.Find("BottomButtons/StructButtonsQueue/AddItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsQueue/PopItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsQueue/PeekItemButton").GetComponent<Button>().interactable = true;
+                }
+                else if (algorithm.Contains("ListStruct"))
+                {
+                    GameObject.Find("BottomButtons/StructButtonsList/AddItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsList/PopItemButton").GetComponent<Button>().interactable = true;
+                    GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
+                }
+            }
+
+        }
+
+        if (placementMode == 1)
+        {
+            if (placed) return;
+
+            // Load the prefab dynamically from Resources folder
+            GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
+            
+            if (prefab == null)
+            {
+                Debug.LogError($"Prefab for {algorithmName} not found!");
+                return;
+            }
+
+            // Get AR Camera position and forward direction
+            Camera arCamera = Camera.main;
+            Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1f; // 0.5 meters in front of the camera
+
+            // Instantiate the prefab in front of the camera
+            GameObject spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
+            
+            // Make the object face the camera
+            // spawnedObject.transform.LookAt(arCamera.transform);
+            
             placed = true;
 
+            // Enable relevant UI buttons
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
@@ -84,6 +148,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
-
     }
+
 }
