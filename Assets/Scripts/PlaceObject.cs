@@ -110,10 +110,16 @@ public class PlaceObject : MonoBehaviour
             Vector2 screenPosition = finger.currentTouch.screenPosition;
 
             Ray ray = arCamera.ScreenPointToRay(screenPosition);
-            Vector3 spawnPosition = ray.GetPoint(1f);
+
+            float maxDistance = 1.5f;
+            Vector3 spawnPosition = ray.GetPoint(maxDistance);
+
+            if (spawnPosition.magnitude > maxDistance)
+            {
+                spawnPosition = arCamera.transform.position + arCamera.transform.forward * maxDistance;
+            }
 
             GameObject spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
-            // spawnedObject.transform.LookAt(arCamera.transform);
 
             placed = true;
 
@@ -123,14 +129,12 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
-
             }
             else if (algorithm.Contains("StackStruct"))
             {
                 GameObject.Find("BottomButtons/StructButtonsStack/AddItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("BottomButtons/StructButtonsStack/PopItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("BottomButtons/StructButtonsStack/PeekItemButton").GetComponent<Button>().interactable = true;
-
             }
             else if (algorithm.Contains("QueueStruct"))
             {
@@ -145,6 +149,7 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
+
 
     }
 
