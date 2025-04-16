@@ -100,7 +100,7 @@
 
 3) Jeśli po zakończeniu algorytmu pozostały jeszcze nieodwiedzone węzły, uruchamiamy algorytm jeszcze raz z dowolnego nieodwiedzonego węzła.
 
-### DijkstraAlgo
+### DijkstraGraph
 1) Krok nr 1
 
 2) Krok nr 2

@@ -43,6 +43,11 @@ public abstract class Graphs : MonoBehaviour
     protected Color violetColor = new Color(205 / 255f, 160 / 255f, 255 / 255f);
     protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
     protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
+    protected Color redColor = new Color(239 / 255f, 97 / 255f, 109 / 255f);
+
+    protected Color redTextColor = new(210/255f, 16/255f, 30/255f);
+    protected Color blueTextColor = new(18/255f, 64/255f, 97/255f);
+    protected Color greenTextColor = new(44/255f, 167/255f, 58/255f);
 
     protected virtual IEnumerator SearchGraph() { yield return null; }
 
@@ -265,7 +270,7 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    public void Restart()
+    public virtual void Restart()
     {
         StopAllCoroutines();
 

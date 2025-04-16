@@ -2036,7 +2036,7 @@ GameObject:
   - component: {fileID: 588812237}
   - component: {fileID: 588812236}
   m_Layer: 5
-  m_Name: DijkstraAlgo
+  m_Name: DijkstraGraph
   m_TagString: Graphs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

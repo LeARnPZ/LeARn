@@ -27,7 +27,7 @@ public class DijkstraGraph : Graphs
         TextMeshPro tmpro = gameObject.GetComponent<TextMeshPro>();
         tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF Variant");
         tmpro.fontSize = 6;
-        tmpro.color = Color.red;
+        tmpro.color = redTextColor;
         tmpro.alignment = TextAlignmentOptions.Center;
         tmpro.text = INF;
 
@@ -101,7 +101,7 @@ public class DijkstraGraph : Graphs
 
                 // Zaznaczenie krawędzi
                 GameObject currentEdge = edgesList.Find(edge => edge.name == $"{v}-{w}" || edge.name == $"{w}-{v}");
-                StartCoroutine(ChangeColor(currentEdge, orangeColor));
+                StartCoroutine(ChangeColor(currentEdge, redColor));
                 yield return new WaitForSeconds(timeout);
 
                 // Zaznaczenie wierzchołka
@@ -109,12 +109,12 @@ public class DijkstraGraph : Graphs
                 yield return new WaitForSeconds(timeout);
 
                 // Jeśli do sąsiada lepiej jest dotrzeć przez aktualny wierzchołek, niż dotychczas znalezioną drogą...
-                ChangeTextColorDuringComparison(v, w, currentEdge, Color.blue);
+                ChangeTextColorDuringComparison(v, w, currentEdge, blueTextColor);
                 yield return new WaitForSeconds(timeout);
 
                 if (arriveCosts[w] > arriveCosts[v] + GetEdgeWeight(currentEdge))
                 {
-                    ChangeTextColorDuringComparison(v, w, currentEdge, Color.green);
+                    ChangeTextColorDuringComparison(v, w, currentEdge, greenTextColor);
                     yield return new WaitForSeconds(timeout);
 
                     // ...ustawiamy nowy koszt dotarcia oraz nowego poprzednika
@@ -125,7 +125,7 @@ public class DijkstraGraph : Graphs
                 }
 
                 // Przywrócenie kolorów
-                ChangeTextColorDuringComparison(v, w, null, Color.red);
+                ChangeTextColorDuringComparison(v, w, null, redTextColor);
                 StartCoroutine(ChangeColor(currentEdge.transform.GetChild(0).gameObject, Color.white, true));
                 StartCoroutine(ChangeColor(currentEdge, blueColor));
                 StartCoroutine(ChangeColor(nodesList[w], originalColor));
@@ -155,6 +155,19 @@ public class DijkstraGraph : Graphs
             StartCoroutine(ChangeColor(edge, orangeColor));
             current = prev;
         }
+    }
+
+    public override void Restart()
+    {
+        foreach (GameObject obj in arriveCostTexts)
+            Destroy(obj);
+
+        arriveCostTexts.Clear();
+        visited.Clear();
+        prevs.Clear();
+        arriveCosts.Clear();
+
+        base.Restart();
     }
 
     protected override void Start()
