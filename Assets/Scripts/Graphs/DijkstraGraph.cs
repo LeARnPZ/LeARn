@@ -4,10 +4,15 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class DijkstraAlgo : Graphs
+public class DijkstraGraph : Graphs
 {
     private readonly string INF = "∞";
     private List<GameObject> arriveCostTexts = new();
+    private bool isFinished = false;
+
+    List<bool> visited = new();
+    List<int> arriveCosts = new();
+    private List<int> prevs = new();
 
     private void CreateArriveCostText(int n)
     {
@@ -44,14 +49,12 @@ public class DijkstraAlgo : Graphs
     protected IEnumerator Dijkstra()
     {
         // Lista ze wskaźnikami odwiedzenia wierzchołków
-        List<bool> visited = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
             visited.Add(false);
         }
 
         // Lista kosztów dotarcia do wierzchołków
-        List<int> arriveCosts = new();
         for(int i = 0; i < numberOfNodes; i++)
         {
             arriveCosts.Add(int.MaxValue);
@@ -61,7 +64,6 @@ public class DijkstraAlgo : Graphs
         arriveCostTexts[startingNode].GetComponent<TextMeshPro>().text = "0";
 
         // Lista poprzedników wierzchołków
-        List<int> prevs = new();
         for (int i = 0; i < numberOfNodes; i++)
         {
             prevs.Add(-1);
@@ -139,6 +141,25 @@ public class DijkstraAlgo : Graphs
         //prevs.ForEach(x => Debug.Log(x));
 
         yield return null;
+        isFinished = true;
+    }
+
+    protected void MarkPath(int destination)
+    {
+        if (destination >= numberOfNodes || !isFinished)
+            return;
+
+        foreach (GameObject edge in edgesList)
+            StartCoroutine(ChangeColor(edge, blueColor));
+
+        int current = destination;
+        while (current != startingNode)
+        {
+            int prev = prevs[current];
+            GameObject edge = edgesList.Find(e => e.name == $"{current}-{prev}" || e.name == $"{prev}-{current}");
+            StartCoroutine(ChangeColor(edge, orangeColor));
+            current = prev;
+        }
     }
 
     protected override void Awake()
@@ -182,5 +203,35 @@ public class DijkstraAlgo : Graphs
 
         foreach (GameObject arriveText in arriveCostTexts)
             arriveText.transform.LookAt(Camera.main.transform);
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            MarkPath(0);
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            MarkPath(1);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            MarkPath(2);
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            MarkPath(3);
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            MarkPath(4);
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            MarkPath(5);
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            MarkPath(6);
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            MarkPath(7);
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            MarkPath(8);
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            MarkPath(9);
     }
 }

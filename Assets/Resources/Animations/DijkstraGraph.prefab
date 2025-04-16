@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 517699826706658483}
   - component: {fileID: 6199107711952683563}
   m_Layer: 0
-  m_Name: DijkstraAlgo
+  m_Name: DijkstraGraph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
