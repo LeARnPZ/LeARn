@@ -6,8 +6,6 @@ using UnityEngine;
 public abstract class Graphs : MonoBehaviour
 {
     [Header("Ustawienia animacji")]
-    protected int numberOfNodes;
-    protected Color originalColor;
     [SerializeField]
     protected int startingNode;
 
@@ -23,6 +21,10 @@ public abstract class Graphs : MonoBehaviour
     [SerializeField]
     protected GameObject searchOrder;
 
+    protected int numberOfNodes;
+    protected Color originalColor;
+    protected bool isPaused;
+
     // Przechowywanie grafu
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
@@ -34,8 +36,6 @@ public abstract class Graphs : MonoBehaviour
     // Listy obiektów wêz³ów i krawêdzi
     protected List<GameObject> nodesList = new();
     protected List<GameObject> edgesList = new();
-
-    protected bool isPaused;
 
     protected Color blueColor = new Color(146 / 255f, 212 / 255f, 255 / 255f);
     protected Color yellowColor = new Color(243 / 255f, 220 / 255f, 102 / 255f);
@@ -211,7 +211,7 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    protected void DrawEdges(bool weights = false)
+    protected void DrawEdges()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -234,7 +234,7 @@ public abstract class Graphs : MonoBehaviour
                     lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
-                    if (weights)
+                    if (this.name.Contains("Dijkstra"))
                     {
                         GameObject weight = new("EdgeWeight");
                         weight.transform.parent = line.transform;
@@ -339,12 +339,8 @@ public abstract class Graphs : MonoBehaviour
         // Utworzenie krawêdzi ³¹cz¹cych odpowiednie wêz³y i dodanie ich do listy
         DrawEdges();
 
+        // Odpauzowanie animacji po restarcie
         isPaused = false;
         Time.timeScale = 1f;
-        searchOrder.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
-        searchOrder.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
-
-        // Uruchomienie animacji
-        StartCoroutine(SearchGraph());
     }
 }

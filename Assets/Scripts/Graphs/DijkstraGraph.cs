@@ -135,11 +135,6 @@ public class DijkstraGraph : Graphs
             StartCoroutine(ChangeSize(nodesList[v], Vector3.one));
         }
 
-        //Debug.Log("ARRIVE COSTS:");
-        //arriveCosts.ForEach(x => Debug.Log(x));
-        //Debug.Log("PREVS:");
-        //prevs.ForEach(x => Debug.Log(x));
-
         yield return null;
         isFinished = true;
     }
@@ -162,35 +157,10 @@ public class DijkstraGraph : Graphs
         }
     }
 
-    protected override void Awake()
-    {
-        // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list sąsiedztwa
-        int graphVersion = 1;// (int)(Random.value * 10) % 5; // <-- po znaku modulo musi być liczba dostępnych wersji grafu
-        CreateMatrix(graphVersion);
-        CreateNeighborsList();
-
-        // Uaktywnienie odpowiedniej wersji grafu oraz pobranie jego węzłów i krawędzi
-        graphVersions.transform.GetChild(graphVersion).gameObject.SetActive(true);
-        nodes = graphVersions.transform.GetChild(graphVersion).GetChild(0).gameObject;
-        edges = graphVersions.transform.GetChild(graphVersion).GetChild(1).gameObject;
-        originalColor = nodes.transform.GetChild(0).GetComponent<Renderer>().material.color;
-    }
-
     protected override void Start()
     {
-        // Dodanie węzłów do listy i nadanie etykiet
-        for (int i = 0; i < numberOfNodes; i++)
-        {
-            nodesList.Add(nodes.transform.GetChild(i).gameObject);
-            nodesList[i].transform.GetChild(0).GetComponent<TextMeshPro>().text = i.ToString();
-            nodesList[i].transform.GetChild(1).GetComponent<TextMeshPro>().text = i.ToString();
-        }
-
-        // Utworzenie krawędzi łączących odpowiednie węzły i dodanie ich do listy
-        DrawEdges(true);
-
-        isPaused = false;
-        Time.timeScale = 1f;
+        // Wywołanie Start() z klasy nadrzędnej
+        base.Start();
 
         // Uruchomienie animacji
         StartCoroutine(Dijkstra());
@@ -198,39 +168,32 @@ public class DijkstraGraph : Graphs
 
     private void Update()
     {
+        // Obracanie tekstu w kierunku kamery
         foreach (GameObject edge in edgesList)
             edge.transform.GetChild(0).transform.LookAt(Camera.main.transform);
 
         foreach (GameObject arriveText in arriveCostTexts)
             arriveText.transform.LookAt(Camera.main.transform);
 
+        /// DLA TESTÓW – DO USUNIĘCIA W DZIAŁAJĄCEJ APLIKACJI
         if (Input.GetKeyDown(KeyCode.Alpha0))
             MarkPath(0);
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
             MarkPath(1);
-
         if (Input.GetKeyDown(KeyCode.Alpha2))
             MarkPath(2);
-
         if (Input.GetKeyDown(KeyCode.Alpha3))
             MarkPath(3);
-
         if (Input.GetKeyDown(KeyCode.Alpha4))
             MarkPath(4);
-
         if (Input.GetKeyDown(KeyCode.Alpha5))
             MarkPath(5);
-
         if (Input.GetKeyDown(KeyCode.Alpha6))
             MarkPath(6);
-
         if (Input.GetKeyDown(KeyCode.Alpha7))
             MarkPath(7);
-
         if (Input.GetKeyDown(KeyCode.Alpha8))
             MarkPath(8);
-
         if (Input.GetKeyDown(KeyCode.Alpha9))
             MarkPath(9);
     }

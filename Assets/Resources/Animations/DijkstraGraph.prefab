@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingNode: 0
-  timeout: 1
+  timeout: 0.75
   animDuration: 0.5
   graphVersions: {fileID: 4607476680447291408}
   searchOrder: {fileID: 0}
