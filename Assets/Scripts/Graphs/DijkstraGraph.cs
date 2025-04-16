@@ -139,7 +139,7 @@ public class DijkstraGraph : Graphs
         isFinished = true;
     }
 
-    protected void MarkPath(int destination)
+    public void MarkPath(int destination)
     {
         if (destination >= numberOfNodes || !isFinished)
             return;
@@ -152,9 +152,14 @@ public class DijkstraGraph : Graphs
         {
             int prev = prevs[current];
             GameObject edge = edgesList.Find(e => e.name == $"{current}-{prev}" || e.name == $"{prev}-{current}");
-            StartCoroutine(ChangeColor(edge, orangeColor));
+            StartCoroutine(ChangeColor(edge, redColor));
             current = prev;
         }
+    }
+
+    public bool IsFinished()
+    {
+        return isFinished;
     }
 
     public override void Restart()

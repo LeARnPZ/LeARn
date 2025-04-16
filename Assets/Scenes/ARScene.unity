@@ -859,6 +859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0cfe05208532b4a82b5235bcb42922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropdown: {fileID: 540951965}
+  anim: {fileID: 566207622}
 --- !u!1 &162965074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2482,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 144165765}
+        m_TargetAssemblyTypeName: DijkstraDropdownController, Assembly-CSharp
+        m_MethodName: OnValueChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &540951968
 MonoBehaviour:

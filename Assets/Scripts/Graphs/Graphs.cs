@@ -120,6 +120,11 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
+    public int GetNumberOfNodes()
+    {
+        return numberOfNodes;
+    }
+
     /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
     protected void CreateMatrix(int version = 0)
     {
