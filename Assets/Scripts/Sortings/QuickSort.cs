@@ -143,7 +143,7 @@ public class QuickSort : Sortings
     public override void Restart()
     {
         destroyPivotIndicator();
-        base.Restart();
+        base.Restart();        
     }
 
     protected override void Start()
@@ -157,7 +157,6 @@ public class QuickSort : Sortings
         for (int i = 0; i < numberOfItems; i++)
         {
             items.Add(Instantiate(prefab, this.transform));
-            StartCoroutine(ChangeColor(items[i], blueColor));
             items[i].name = $"Ball{i}";
             items[i].transform.localPosition = startPosition + 1.2f * i * Vector3.right;
             if (values.Count < numberOfItems)
@@ -175,6 +174,9 @@ public class QuickSort : Sortings
             Vector3 position = items[i].transform.position;
             items[i].transform.localPosition = new Vector3(items[i].transform.localPosition.x, 0.1f + scale * 0.5f, 0);
         }
+
+        isPaused = false;
+        Time.timeScale = 1f;
 
         StartCoroutine(Sort());
     }
