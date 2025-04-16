@@ -1,40 +1,27 @@
 ### BubbleSort
 Sortowanie bąbelkowe to algorytm sortowania działający na zasadzie wielokrotnego przechodzenia przez listę i porównywania sąsiednich elementów. Jeśli są w złej kolejności, zamienia je miejscami. Proces powtarza się do momentu, aż cała lista będzie posortowana. Ma złożoność czasową O(n²) w najgorszym przypadku.
-
 ### QuickSort
 Sortowanie szybkie to algorytm sortowania oparty na metodzie "dziel i zwyciężaj". Wybiera element jako pivot, dzieli tablicę na dwie części: mniejsze od pivota i większe od pivota, a następnie sortuje je rekurencyjnie. W optymalnym przypadku działa w czasie O(n log n), ale w najgorszym O(n²).
-
 ### MergeSort
 Sortowanie przez scalanie to stabilny algorytm sortowania oparty na metodzie "dziel i zwyciężaj". Dzieli tablicę na dwie równe części, sortuje je rekurencyjnie, a następnie scala w jedną posortowaną listę. Ma stałą złożoność O(n log n), niezależnie od rozkładu danych.
-
 ### BucketSort
 Sortowanie kubełkowe to algorytm sortowania, który rozdziela elementy na kilka grup (kubełków), sortuje każdy kubełek oddzielnie (za pomocą innego algorytmu), a następnie łączy wyniki. Jest efektywny dla danych o równomiernym rozkładzie i działa w czasie O(n) w najlepszym przypadku.
-
 ### InsertionSort
 Sortowanie przez wstawianie to prosty algorytm sortowania, który iteracyjnie wybiera kolejne elementy z tablicy i wstawia je w odpowiednie miejsce w posortowanej części listy. Działa dobrze dla małych zbiorów i prawie posortowanych danych, ale ma złożoność O(n²) w najgorszym przypadku.
-
 ### SelectSort
 Sortowanie przez wybór to algorytm sortowania, który w każdej iteracji znajduje najmniejszy element w nieposortowanej części listy i zamienia go z pierwszym elementem tej części. Jest prosty, ale ma złożoność O(n²), co czyni go nieefektywnym dla dużych zbiorów.
-
 ### StackStruct
 Stos to struktura danych działająca na zasadzie LIFO (Last In, First Out), czyli ostatni dodany element jest zdejmowany jako pierwszy. Stos obsługuje dwie główne operacje: push (dodanie elementu) i pop (usunięcie elementu). Jest szeroko stosowany w algorytmach rekurencyjnych i przetwarzaniu wyrażeń arytmetycznych.
-
 ### QueueStruct
 Kolejka to struktura danych działająca na zasadzie FIFO (First In, First Out), gdzie pierwszy dodany element jest zdejmowany jako pierwszy. Obsługuje operacje enqueue (dodanie do kolejki) i dequeue (usunięcie z kolejki). Stosowana w systemach kolejkowania zadań oraz algorytmach BFS.
-
 ### ListStruct
 Lista to struktura danych reprezentująca dynamiczną listę, umożliwiająca efektywne dodawanie, usuwanie i przeglądanie elementów. Może być zaimplementowana jako lista jednokierunkowa, dwukierunkowa lub cykliczna, w zależności od potrzeb.
-
 ### DFSGraph
 Algorytm DFS to algorytm przeszukiwania grafu w głąb (Depth-First Search). Rozpoczyna eksplorację od danego wierzchołka i przechodzi do jego sąsiadów, dopóki to możliwe, a następnie cofa się. Używany do wykrywania cykli, analizy spójności grafu i znajdowania ścieżek. Jego złożoność wynosi O(V + E), gdzie V to liczba wierzchołków, a E liczba krawędzi.
-
 ### BFSGraph
 Algorytm BFS to algorytm przeszukiwania grafu wszerz (Breadth-First Search). Przeszukuje graf poziomami, eksplorując wszystkie sąsiednie wierzchołki danego poziomu przed przejściem do głębszych warstw. Wykorzystywany w znajdowaniu najkrótszej ścieżki w grafach nieskierowanych. Ma złożoność O(V + E).
-
 ### DijkstraAlgo
 Algorytm Dijkstry to algorytm służący do znajdowania najkrótszej ścieżki w grafie z pojedynczym źródłem i krawędziami o nieujemnych wagach. Używa kolejki priorytetowej do wyboru wierzchołków o najmniejszym koszcie dojścia. Jego złożoność wynosi O((V + E) log V) przy zastosowaniu kopca Fibonacciego.
-
 ### GrahamAlgo
 Algorytm Grahama to algorytm służący do znajdowania otoczki wypukłej zbioru punktów na płaszczyźnie. Najpierw wybiera punkt o najmniejszej współrzędnej Y, sortuje pozostałe według kąta względem niego, a następnie używa stosu do budowy otoczki. Jego złożoność to O(n log n).
-
 ###
