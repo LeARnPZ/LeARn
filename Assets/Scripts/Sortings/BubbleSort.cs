@@ -15,7 +15,7 @@ public class BubbleSort : Sortings
             {
                 StartCoroutine(ChangeColor(items[j], yellowColor));
                 StartCoroutine(ChangeColor(items[j + 1], yellowColor));
-                yield return new WaitForSeconds(timeout);
+                yield return new WaitForSeconds(timeout/1.2f);
 
 
                 if (GetValue(items[j]) > GetValue(items[j + 1]))
