@@ -115,7 +115,7 @@ public class SelectSort : Sortings
                 float time = 0;
                 
 
-                while (time < animDuration)
+                while (time < animDuration) // wysuniêcie
                 {
                     items[aktMin].transform.localPosition = Vector3.Lerp(PointFirst, PointFirst + new Vector3(0, 0, 1), time / animDuration);
                     items[i].transform.localPosition = Vector3.Lerp(PointSecond, PointSecond + new Vector3(0, 0, -1), time / animDuration);
@@ -128,7 +128,7 @@ public class SelectSort : Sortings
                 PointFirst.y = 0;
                 PointSecond.y = 0;
                 time = 0;
-                while (time < animDuration)
+                while (time < animDuration) //zmiana miejsc
                 {
 
                     items[aktMin].transform.localPosition = Vector3.Lerp(PointFirst2, PointSecond2, time / animDuration);
@@ -145,21 +145,22 @@ public class SelectSort : Sortings
                 PointSecond2 = items[i].transform.localPosition;
                 time = 0;
 
-                while (time < animDuration)
+                PointSecond.y = (items[aktMin].transform.localScale.y / 2);
+                PointFirst.y = (items[i].transform.localScale.y / 2);
+
+                PointSecond.z = (items[aktMin].transform.localScale.z - 1);
+                PointFirst.z = (items[i].transform.localScale.z -1);
+
+                while (time < animDuration) // wsuniêcie 
                 {
-                    items[aktMin].transform.localPosition = Vector3.Lerp(PointFirst2, PointFirst2 + new Vector3(0, 0, -1), time / animDuration);
-                    items[i].transform.localPosition = Vector3.Lerp(PointSecond2, PointSecond2 + new Vector3(0, 0, 1), time / animDuration);
+                    
+                    items[aktMin].transform.localPosition = Vector3.Lerp(PointFirst2, PointSecond, time / animDuration);
+                    items[i].transform.localPosition = Vector3.Lerp(PointSecond2, PointFirst, time / animDuration);
+
                     time += Time.deltaTime;
                     yield return null;
                 }
                 yield return new WaitForSeconds(timeout/5);
-
-                // Korekcja po Lerp, [opcjonalne] 
-                //PointSecond.y = (items[aktMin].transform.localScale.y / 2);
-                //items[aktMin].transform.localPosition = PointSecond;
-                //PointFirst.y = (items[i].transform.localScale.y / 2);
-                //items[i].transform.localPosition = PointFirst;
-
 
                 SetColor(items[i], Color.green);
                 yield return new WaitForSeconds(timeout);
@@ -168,7 +169,6 @@ public class SelectSort : Sortings
             
         }
         SetColor(items[numberOfItems - 1], Color.green);
-        items[numberOfItems - 1].transform.localPosition = new Vector3(items[numberOfItems - 1].transform.localPosition.x, (items[numberOfItems - 1 ].transform.localScale.y / 2) , 0);
     }
     void SetColor(GameObject cube, Color color)
     {
