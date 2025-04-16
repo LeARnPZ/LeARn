@@ -27,6 +27,8 @@ public class GraphQueue : QueueStruct
 
         newItem.transform.GetChild(0).GetComponent<TextMeshPro>().text = value.ToString();
         newItem.transform.GetChild(1).GetComponent<TextMeshPro>().text = value.ToString();
+
+        StartCoroutine(Blink(items[iterator], greenColor));
     }
 
     public void VisualDequeue()
