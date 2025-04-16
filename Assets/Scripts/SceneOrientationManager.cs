@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneOrientationManager : MonoBehaviour
 {
+
+    public GameObject portraitCanvas;
+    public GameObject landscapeCanvas;
+
     void Awake()
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
