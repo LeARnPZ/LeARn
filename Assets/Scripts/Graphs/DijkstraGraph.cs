@@ -13,6 +13,7 @@ public class DijkstraGraph : Graphs
     List<bool> visited = new();
     List<int> arriveCosts = new();
     private List<int> prevs = new();
+    private GameObject dropdown;
 
     private void CreateArriveCostText(int n)
     {
@@ -137,6 +138,8 @@ public class DijkstraGraph : Graphs
 
         yield return null;
         isFinished = true;
+        dropdown.transform.GetChild(1).GetComponent<TMP_Dropdown>().interactable = true;
+        MarkPath(1);
     }
 
     public void MarkPath(int destination)
@@ -157,11 +160,6 @@ public class DijkstraGraph : Graphs
         }
     }
 
-    public bool IsFinished()
-    {
-        return isFinished;
-    }
-
     public override void Restart()
     {
         foreach (GameObject obj in arriveCostTexts)
@@ -171,6 +169,8 @@ public class DijkstraGraph : Graphs
         visited.Clear();
         prevs.Clear();
         arriveCosts.Clear();
+
+        dropdown.transform.GetChild(1).GetComponent<TMP_Dropdown>().SetValueWithoutNotify(0);
 
         base.Restart();
     }
@@ -182,6 +182,9 @@ public class DijkstraGraph : Graphs
 
         // Uruchomienie animacji
         StartCoroutine(Dijkstra());
+
+        dropdown = GameObject.Find("DijkstraDropdownContainer");
+        dropdown.transform.GetChild(1).GetComponent<TMP_Dropdown>().interactable = false;
     }
 
     private void Update()
@@ -192,27 +195,5 @@ public class DijkstraGraph : Graphs
 
         foreach (GameObject arriveText in arriveCostTexts)
             arriveText.transform.LookAt(Camera.main.transform);
-
-        /// DLA TESTÓW – DO USUNIĘCIA W DZIAŁAJĄCEJ APLIKACJI
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            MarkPath(0);
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            MarkPath(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            MarkPath(2);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            MarkPath(3);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            MarkPath(4);
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            MarkPath(5);
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-            MarkPath(6);
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-            MarkPath(7);
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-            MarkPath(8);
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-            MarkPath(9);
     }
 }

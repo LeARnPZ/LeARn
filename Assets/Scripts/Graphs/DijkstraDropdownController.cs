@@ -14,12 +14,11 @@ public class DijkstraDropdownController : MonoBehaviour
 
     private int numberOfNodes;
     private DijkstraGraph dijkstra;
-    private bool isSet = false;
 
     public void OnValueChange()
     {
         int value = dropdown.GetComponent<TMP_Dropdown>().value;
-        dijkstra.MarkPath(value);
+        dijkstra.MarkPath(value+1);
     }
 
     private void Start()
@@ -46,18 +45,5 @@ public class DijkstraDropdownController : MonoBehaviour
         for (int i = 1; i < numberOfNodes; i++)
             options.Add(i.ToString());
         dropdown.GetComponent<TMP_Dropdown>().AddOptions(options);
-
-        isSet = true;
-    }
-
-    private void Update()
-    {
-        if (isSet)
-        {
-            if (dijkstra.IsFinished())
-                dropdown.GetComponent<TMP_Dropdown>().interactable = true;
-            else
-                dropdown.GetComponent<TMP_Dropdown>().interactable = false;
-        }
     }
 }
