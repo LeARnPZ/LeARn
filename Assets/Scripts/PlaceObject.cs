@@ -5,6 +5,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
@@ -42,6 +43,8 @@ public class PlaceObject : MonoBehaviour
     private void FingerDown(EnhancedTouch.Finger finger)
     {
         if (finger.index != 0 || placed) return;
+
+        if (IsTouchOverUI(finger.currentTouch.screenPosition)) return;
 
         GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
 
@@ -86,4 +89,16 @@ public class PlaceObject : MonoBehaviour
         }
 
     }
+
+    private bool IsTouchOverUI(Vector2 touchPosition)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = touchPosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        return results.Count > 0;
+    }
+
 }
