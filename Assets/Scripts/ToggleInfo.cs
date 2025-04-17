@@ -1,7 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToggleInfo : MonoBehaviour
 {
@@ -12,9 +13,13 @@ public class ToggleInfo : MonoBehaviour
     private GameObject infoStructs;
     [SerializeField]
     private GameObject optionsImage;
+    [SerializeField]
+    private Image complexityImage;
+    private Sprite complexitySprite;
 
     private int algorithmNo;
     private bool isShowingSteps = false;
+    private bool isStruct = false;
    
     private void HideInfo()
     {
@@ -26,12 +31,43 @@ public class ToggleInfo : MonoBehaviour
         if (isShowingSteps)
         {
             info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.stepBySteps.GetValueOrDefault(algorithmNo).ToString();
-            //info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Left;
-            info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().lineSpacing = 25f;
+            info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().lineSpacing = 15f;
         }
         else
         {
             info.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Dictionaries.descriptions.GetValueOrDefault(algorithmNo).ToString();
+
+            if (!isStruct)
+            {
+                string complexityText = Dictionaries.complexityValues.GetValueOrDefault(algorithmNo).ToString().Trim();
+
+                info.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = complexityText;
+                switch (complexityText)
+                {
+                    case "Θ(V + E)":
+                    case "Θ(n)":
+                        complexitySprite = Resources.Load<Sprite>("Sprites/" + "complexity_bar_bright-green");
+                        break;
+
+                    case "Θ(n log n)":
+                        complexitySprite = Resources.Load<Sprite>("Sprites/" + "complexity_bar_yellow");
+                        break;
+
+                    case "Θ(n²)":
+                    case "Θ(V²)":
+                        complexitySprite = Resources.Load<Sprite>("Sprites/" + "complexity_bar_orange");
+                        break;
+                }
+
+                if(complexitySprite != null)
+                {
+                    complexityImage.sprite = complexitySprite;
+                }
+                else
+                {
+                    Debug.LogWarning("Sprite nie został znaleziony!");
+                }
+            }
         }
 
         if (optionsImage.activeSelf)
@@ -73,6 +109,11 @@ public class ToggleInfo : MonoBehaviour
 
         if (PlayerPrefs.GetString("algorithm").Contains("Struct")){
             info = infoStructs;
+            isStruct = true;
+        }
+        else
+        {
+            info.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = Dictionaries.complexityValues.GetValueOrDefault(algorithmNo).ToString();
         }
 
     }
