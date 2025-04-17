@@ -21,6 +21,17 @@ public class SpeedButton : MonoBehaviour
         }
     }
 
+    public void SpeedButtonRestart()
+    {
+        currentSpeedIndex = 0;
+        Time.timeScale = speeds[currentSpeedIndex];
+
+        if (speedText != null)
+        {
+            speedText.text = $"{speeds[currentSpeedIndex]}x";
+        }
+    }
+
     void Start()
     {
         string algorithm = PlayerPrefs.GetString("algorithm");
