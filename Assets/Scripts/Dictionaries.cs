@@ -8,6 +8,7 @@ public static class Dictionaries
     public static readonly Dictionary<string, int> algorithms = new();
     public static readonly Dictionary<int, string> descriptions = new();
     public static readonly Dictionary<int, string> stepBySteps = new();
+    public static readonly Dictionary<int, string> complexityValues = new();
 
     /// Dodanie indeksów do nazw algorytmów
     private static void AddIndices()
@@ -68,10 +69,19 @@ public static class Dictionaries
         ContentToDictionary(content, stepBySteps);
     }
 
+    /// Dodanie z³o¿onoœci
+    private static void AddComplexityValues()
+    {
+        TextAsset file = (TextAsset)Resources.Load("Dictionaries/complexity");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, complexityValues);
+    }
+
     static Dictionaries()
     {
         AddIndices();
         AddDescriptions();
         AddStepBySteps();
+        AddComplexityValues();
     }
 }

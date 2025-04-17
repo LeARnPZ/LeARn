@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5678352577494420287, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
   numberOfItems: 7
-  animDuration: 0.75
-  timeout: 1
+  animDuration: 0.6
+  timeout: 0.9
