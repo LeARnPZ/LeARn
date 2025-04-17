@@ -8,6 +8,6 @@ public class ShowVersionNumber : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<TextMeshProUGUI>().text = "wersja: " + Application.version;
+        GetComponent<TextMeshProUGUI>().text = "Wersja: " + Application.version;
     }
 }
