@@ -48,6 +48,8 @@ public class SpeedButton : MonoBehaviour
             {
                 speedText.text = $"{speeds[currentSpeedIndex]}x";
             }
+
+            GetComponent<Button>().interactable = false;
         }
         else
         {
