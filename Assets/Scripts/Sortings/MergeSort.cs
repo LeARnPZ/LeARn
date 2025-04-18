@@ -73,10 +73,10 @@ public class MergeSort : Sortings
 
 
             yield return StartCoroutine(BounceObject(leftObj));
-            StartCoroutine(ChangeColor(leftObj, Color.yellow));
+            StartCoroutine(ChangeColor(leftObj, yellowColor));
 
             yield return StartCoroutine(BounceObject(rightObj));
-            StartCoroutine(ChangeColor(rightObj, Color.yellow));
+            StartCoroutine(ChangeColor(rightObj, yellowColor));
 
             yield return new WaitForSeconds(timeout);
 
@@ -92,15 +92,12 @@ public class MergeSort : Sortings
 
             // Ustawiamy docelow¹ pozycjê w nowym zbiorze
             resultPositions.Add(new Vector3(startX + resultIndex * stepX, startY, 0));
-            //yield return StartCoroutine(MoveObject(result[resultIndex], resultPositions[resultIndex]));
             resultIndex++;
 
 
             //Przywracamy pierwotny kolor po porównaniu
-            StartCoroutine(ChangeColor(leftObj, Color.white));
-            StartCoroutine(ChangeColor(rightObj, Color.white));
-            yield return StartCoroutine(ChangeColor(leftObj, Color.white));
-            yield return StartCoroutine(ChangeColor(rightObj, Color.white));
+            StartCoroutine(ChangeColor(leftObj, blueColor));
+            StartCoroutine(ChangeColor(rightObj, blueColor));
             yield return new WaitForSeconds(timeout);
 
             while (resultPositions.Count > 0 && result.Count > 0)
@@ -190,7 +187,7 @@ public class MergeSort : Sortings
         for (int i = 0; i < array.Count; i++)
         {
             // Zmieniamy kolor na zielony i podskakujemy
-            StartCoroutine(ChangeColor(array[i], Color.green));
+            StartCoroutine(ChangeColor(array[i], greenColor));
             StartCoroutine(BounceObject(array[i], bounceHeight));
 
             yield return new WaitForSeconds(waveDelay);
