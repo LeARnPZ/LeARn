@@ -41,25 +41,29 @@
 	d. Dołącz pozostałe elementy z niepustej podlisty do listy wynikowej.
 
 ### BucketSort
-1) Decydujemy ile kubełków chcemy użyć - wybór tej liczby zależy od tego jak duża jest lista do posortowania
+1) Decydujemy ile kubełków chcemy użyć - liczba ta zależy od rozmiaru listy i zakresu wartości. Kubełki obejmują równe przedziały wartości
 
-2) Rozdzielamy wszystkie elementy z listy do różnych kubełków. W każdym kubełku będą znajdować się elementy, które mieszczą się w określonym zakresie wartości 
-   Przykład: jeśli mamy listę liczb od 1 do 100, możemy podzielić te liczby na 10 kubełków (np. kubełek 1: 1-10, kubełek 2: 11-20, itd.) 
+2) Każdy element z listy przypisujemy do odpowiedniego kubełka na podstawie jego wartości. W jednym kubełku znajdą się elementy z tego samego zakresu 
+   <i>Przykład: Dla liczb od 1 do 100 można utworzyć 10 kubełków:
+    kubełek 1: 1–10 
+    kubełek 2: 11–20 
+    ...
+    kubełek 10: 91–100</i>
 
-3) Każdy kubełek traktujemy osobno i sortujemy w nim elementy. Możemy użyć do tego prostych algorytmów sortowania takich jak sortowanie bąbelkowe, ponieważ zazwyczaj kubełek zawiera małą ilość elementów 
+3) Każdy kubełek sortujemy osobno. Można tu zastosować prosty algorytm, np. sortowanie bąbelkowe, ponieważ każdy kubełek zazwyczaj zawiera niewiele elementów
 
-4) Po posortowaniu elementów w każdym z kubełków, zaczynamy je łączyć w jedną dużą listę. Elementy z pierwszego kubełka będą na początku, potem z drugiego kubełka, itd. W ten sposób tworzymy jedną posortowaną listę. 
+4)  Po posortowaniu łączymy zawartość wszystkich kubełków w jedną listę – zaczynając od pierwszego kubełka, kończąc na ostatnim. Otrzymujemy kompletną, posortowaną listę.
 
 ### InsertionSort
-1) Pierwszy element uznajemy za już posortowany
+1) Pierwszy element uznajemy za posortowany
 
-2) Bierzemy kolejny element (klucz) i porównujemy go z wcześniejszymi
+2) Bierzemy następny element (nazywany „kluczem”) i porównujemy go z wcześniejszymi elementami w liście
 
-3) Jeśli któryś z wcześniejszych elementów jest większy, przesuwamy go w prawo, robiąc miejsce dla klucza
+3) Jeśli któryś z wcześniejszych elementów jest większy od klucza, przesuwamy go o jedno miejsce w prawo, aby zrobić miejsce
 
-4) Wstawiamy klucz w odpowiednie miejsce
+4) Umieszczamy klucz w odpowiednim miejscu – tak, aby elementy przed nim były mniejsze, a za nim większe
 
-5) Powtarzamy to samo dla każdego kolejnego elementu, aż do końca listy.
+5) Powtarzamy te kroki dla każdego kolejnego elementu, aż do końca listy.
 
 ### SelectSort
 1) Przechodzimy przez całą listę zaczynając od drugiego indeksu i szukamy najmniejszego elementu. 
