@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Globalization;
 
 public class SpeedButton : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class SpeedButton : MonoBehaviour
 
         if (speedText != null)
         {
-            speedText.text = $"{speeds[currentSpeedIndex]}x";
+            speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+
         }
     }
 
@@ -28,7 +30,8 @@ public class SpeedButton : MonoBehaviour
 
         if (speedText != null)
         {
-            speedText.text = $"{speeds[currentSpeedIndex]}x";
+            speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+
         }
     }
 
@@ -50,5 +53,7 @@ public class SpeedButton : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        GetComponent<Button>().interactable = false;
     }
 }
