@@ -6,7 +6,6 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
 
-
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager), typeof(ARAnchorManager))]
 public class PlaceObject : MonoBehaviour
 {
@@ -14,9 +13,10 @@ public class PlaceObject : MonoBehaviour
     private ARPlaneManager planeManager;
     private ARAnchorManager anchorManager;
     private List<ARRaycastHit> hits = new();
-
     private bool placed = false;
     private string algorithmName;
+    private ARAnchor spawnedAnchor;
+    private GameObject spawnedObject;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class PlaceObject : MonoBehaviour
     {
         EnhancedTouch.TouchSimulation.Enable();
         EnhancedTouch.EnhancedTouchSupport.Enable();
-        EnhancedTouch.Touch.onFingerDown += FingerDown;
+        EnhancedTouch.Touch.onFingerDown += FingerDown;        
     }
 
     private void OnDisable()
@@ -40,19 +40,19 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Disable();
     }
 
+
     private void FingerDown(EnhancedTouch.Finger finger)
     {
-        
         int placementMode = PlayerPrefs.GetInt("placement", 0);
 
+        if (finger.index != 0 || placed) return;
+
+        GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
+        
+        if (prefab == null) return;
+
         if (placementMode == 0)
-        
         {
-        
-            if (finger.index != 0 || placed) return;
-
-            GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
-
             if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
             {
                 //foreach (ARRaycastHit hit in hits)
@@ -94,76 +94,62 @@ public class PlaceObject : MonoBehaviour
             }
 
         }
-
-        if (placementMode == 1)
+        else if (placementMode == 1)
         {
-            if (placed) return;
-            
-            GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
-            if (prefab == null) return;
-            
             Camera arCamera = Camera.main;
             Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1.5f;
             
-            ARPlane bestPlane = null;
-            float closestDistance = float.MaxValue;
+            ARPlane bestPlane = FindClosestPlane(spawnPosition);
             
-            foreach (ARPlane plane in planeManager.trackables)
-            {
-                if (plane.trackingState == TrackingState.Tracking)
-                {
-                    if (plane.alignment == PlaneAlignment.HorizontalUp)
-                    {
-                        float distance = Vector3.Distance(plane.center, spawnPosition);
-                        if (distance < closestDistance)
-                        {
-                            closestDistance = distance;
-                            bestPlane = plane;
-                        }
-                    }
-                }
-            }
-            
-            if (bestPlane != null && closestDistance < 3.0f)
+            if (bestPlane != null)
             {
                 Vector3 projectedPosition = ProjectPointOnPlane(bestPlane.transform, spawnPosition);
-                GameObject spawnedObject = Instantiate(prefab, projectedPosition, Quaternion.identity);
-                spawnedObject.transform.parent = bestPlane.transform; 
-            }
-            else
-            {
-                ARAnchor anchor = null;
+                Pose anchorPose = new Pose(projectedPosition, Quaternion.identity);
                 
-                if (GetComponent<ARAnchorManager>() != null)
-                {
-                    anchor = GetComponent<ARAnchorManager>().AddAnchor(new Pose(spawnPosition, Quaternion.identity));
-                }
+                spawnedAnchor = anchorManager.AttachAnchor(bestPlane, anchorPose);
                 
-                if (anchor != null)
+                if (spawnedAnchor != null)
                 {
-                    GameObject spawnedObject = Instantiate(prefab, anchor.transform);
+                    spawnedObject = Instantiate(prefab, spawnedAnchor.transform);
+                    placed = true;
                 }
                 else
                 {
-                    GameObject spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
+                    // Fallback if anchor creation fails
+                    spawnedObject = Instantiate(prefab, projectedPosition, Quaternion.identity);
+                    placed = true;
                 }
             }
-            
-            placed = true;
+            else
+            {
+                Pose anchorPose = new Pose(spawnPosition, Quaternion.identity);
+                spawnedAnchor = anchorManager.AddAnchor(anchorPose);
+                
+                if (spawnedAnchor != null)
+                {
+                    spawnedObject = Instantiate(prefab, spawnedAnchor.transform);
+                    placed = true;
+                }
+                else
+                {
+                    spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
+                    placed = true;
+                }
+            }
+
             string algorithm = PlayerPrefs.GetString("algorithm");
+            
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
-
             }
             else if (algorithm.Contains("StackStruct"))
             {
                 GameObject.Find("BottomButtons/StructButtonsStack/AddItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("BottomButtons/StructButtonsStack/PopItemButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("BottomButtons/StructButtonsStack/PeekItemButton").GetComponent<Button>().interactable = true;
-
             }
             else if (algorithm.Contains("QueueStruct"))
             {
@@ -179,15 +165,51 @@ public class PlaceObject : MonoBehaviour
             }
         }
     }
-        private Vector3 ProjectPointOnPlane(Transform planeTransform, Vector3 point)
-        {
-            Vector3 planeNormal = planeTransform.up;
-            Vector3 planePoint = planeTransform.position;
-            
-            float distance = Vector3.Dot(planeNormal, point - planePoint);
-            return point - planeNormal * distance;
-        }
-
     
+    private ARPlane FindClosestPlane(Vector3 position)
+    {
+        ARPlane bestPlane = null;
+        float closestDistance = 1.5f;
+        
+        foreach (ARPlane plane in planeManager.trackables)
+        {
+            if (plane.trackingState == TrackingState.Tracking && plane.alignment == PlaneAlignment.HorizontalUp)
+            {
+                float distance = Vector3.Distance(plane.center, position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    bestPlane = plane;
+                }
+            }
+        }
+        
+        return bestPlane;
+    }
 
+    private Vector3 ProjectPointOnPlane(Transform planeTransform, Vector3 point)
+    {
+        Vector3 planeNormal = planeTransform.up;
+        Vector3 planePoint = planeTransform.position;
+        
+        float distance = Vector3.Dot(planeNormal, point - planePoint);
+        return point - planeNormal * distance;
+    }
+    
+    public void ResetPlacement()
+    {
+        if (spawnedAnchor != null)
+        {
+            Destroy(spawnedAnchor.gameObject);
+            spawnedAnchor = null;
+        }
+        
+        if (spawnedObject != null)
+        {
+            Destroy(spawnedObject);
+            spawnedObject = null;
+        }
+        
+        placed = false;
+    }
 }
