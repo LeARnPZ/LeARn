@@ -53,7 +53,13 @@ public class PlaceObject : MonoBehaviour
             //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
             //}S
             Pose pose = hits[0].pose;
-                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+
+            // Dodaj scaler do g³ównego obiektu animacji
+            GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+            obj.AddComponent<ObjectScaler>();
+
+        
+
             placed = true;
 
             string algorithm = PlayerPrefs.GetString("algorithm");
@@ -75,4 +81,5 @@ public class PlaceObject : MonoBehaviour
         }
 
     }
+
 }
