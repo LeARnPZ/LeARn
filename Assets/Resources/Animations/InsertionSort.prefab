@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5678352577494420287, guid: 18ca2849f6e844942bcaa5ffb7dcfa71, type: 3}
-  numberOfItems: 15
-  animDuration: 1
-  timeout: 1
+  numberOfItems: 6
+  animDuration: 0.5
+  timeout: 0.5
