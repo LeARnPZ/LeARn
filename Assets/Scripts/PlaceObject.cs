@@ -149,9 +149,10 @@ public class PlaceObject : MonoBehaviour
 
             spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
 
-            spawnedObject.transform.LookAt(arCamera.transform);
-            Vector3 euler = spawnedObject.transform.eulerAngles;
-            spawnedObject.transform.eulerAngles = new Vector3(0, euler.y, 0);
+            Vector3 directionToCamera = arCamera.transform.position - spawnedObject.transform.position;
+            directionToCamera.y = 0;
+            Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera); 
+            spawnedObject.transform.rotation = lookRotation;
 
             float distanceToCamera = Vector3.Distance(arCamera.transform.position, spawnedObject.transform.position);
             float scaleFactor = Mathf.Clamp(distanceToCamera / 1.5f, 0.8f, 1.5f);
