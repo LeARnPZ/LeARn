@@ -129,7 +129,8 @@ public class PlaceObject : MonoBehaviour
                 ARAnchor anchor = anchorManager.AttachAnchor(bestPlane, new Pose(projectedPosition, Quaternion.identity));
                 if (anchor != null)
                 {
-                    Instantiate(prefab, anchor.transform);
+                    GameObject spawnedObject = Instantiate(prefab, anchor.transform.position, anchor.transform.rotation);
+                    spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
                 }
                 else
                 {
@@ -141,7 +142,8 @@ public class PlaceObject : MonoBehaviour
                 ARAnchor anchor = anchorManager.AddAnchor(new Pose(spawnPosition, Quaternion.identity));
                 if (anchor != null)
                 {
-                    Instantiate(prefab, anchor.transform);
+                    GameObject spawnedObject = Instantiate(prefab, anchor.transform.position, anchor.transform.rotation);
+                    spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
                 }
                 else
                 {
