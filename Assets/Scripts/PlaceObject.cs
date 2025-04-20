@@ -98,20 +98,19 @@ public class PlaceObject : MonoBehaviour
         if (placementMode == 1)
         {
             if (placed) return;
-            
+
             GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
             if (prefab == null) return;
-            
+
             Camera arCamera = Camera.main;
             Vector3 spawnPosition = arCamera.transform.position + arCamera.transform.forward * 1.5f;
-            
+
             ARPlane bestPlane = null;
             float closestDistance = float.MaxValue;
-            
+
             foreach (ARPlane plane in planeManager.trackables)
             {
-                if (plane.trackingState == TrackingState.Tracking &&
-                    plane.alignment == PlaneAlignment.HorizontalUp)
+                if (plane.trackingState == TrackingState.Tracking && plane.alignment == PlaneAlignment.HorizontalUp)
                 {
                     float distance = Vector3.Distance(plane.center, spawnPosition);
                     if (distance < closestDistance)
@@ -122,38 +121,45 @@ public class PlaceObject : MonoBehaviour
                 }
             }
 
+            GameObject spawnedObject;
+
             if (bestPlane != null && closestDistance < 3.0f)
             {
                 Vector3 projectedPosition = ProjectPointOnPlane(bestPlane.transform, spawnPosition);
-
-                ARAnchor anchor = anchorManager.AttachAnchor(bestPlane, new Pose(projectedPosition, Quaternion.identity));
-                if (anchor != null)
-                {
-                    GameObject spawnedObject = Instantiate(prefab, anchor.transform.position, anchor.transform.rotation);
-                    spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
-                }
-                else
-                {
-                    Instantiate(prefab, projectedPosition, Quaternion.identity, GameObject.Find("Animation").transform);
-                }
+                spawnedObject = Instantiate(prefab, projectedPosition, Quaternion.identity);
             }
             else
             {
-                ARAnchor anchor = anchorManager.AddAnchor(new Pose(spawnPosition, Quaternion.identity));
+                ARAnchor anchor = null;
+
+                if (anchorManager != null)
+                {
+                    anchor = anchorManager.AddAnchor(new Pose(spawnPosition, Quaternion.identity));
+                }
+
                 if (anchor != null)
                 {
-                    GameObject spawnedObject = Instantiate(prefab, anchor.transform.position, anchor.transform.rotation);
-                    spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
+                    spawnedObject = Instantiate(prefab, anchor.transform.position, anchor.transform.rotation);
                 }
                 else
                 {
-                    Instantiate(prefab, spawnPosition, Quaternion.identity, GameObject.Find("Animation").transform);
+                    spawnedObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
                 }
             }
 
-            placed = true;
-            string algorithm = PlayerPrefs.GetString("algorithm");
+            spawnedObject.transform.SetParent(GameObject.Find("Animation").transform, worldPositionStays: true);
 
+            spawnedObject.transform.LookAt(arCamera.transform);
+            Vector3 euler = spawnedObject.transform.eulerAngles;
+            spawnedObject.transform.eulerAngles = new Vector3(0, euler.y, 0);
+
+            float distanceToCamera = Vector3.Distance(arCamera.transform.position, spawnedObject.transform.position);
+            float scaleFactor = Mathf.Clamp(distanceToCamera / 1.5f, 0.8f, 1.5f);
+            spawnedObject.transform.localScale *= scaleFactor;
+
+            placed = true;
+
+            string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
@@ -179,7 +185,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
-
     }
 
 
