@@ -15,6 +15,8 @@ public class PlaceObject : MonoBehaviour
     private ARAnchorManager anchorManager;
     private List<ARRaycastHit> hits = new();
 
+    private bool canPlace = false;
+
     private bool placed = false;
     private string algorithmName;
 
@@ -24,6 +26,7 @@ public class PlaceObject : MonoBehaviour
         planeManager = GetComponent<ARPlaneManager>();
         anchorManager = GetComponent<ARAnchorManager>();
         algorithmName = PlayerPrefs.GetString("algorithm");
+        StartCoroutine(DelayedPlacement());
     }
 
     private void OnEnable()
@@ -39,6 +42,13 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.EnhancedTouchSupport.Disable();
         EnhancedTouch.TouchSimulation.Disable();
     }
+
+    private IEnumerator DelayedPlacement()
+    {
+        yield return new WaitForSeconds(5f);
+        canPlace = true;
+    }
+
 
     private void FingerDown(EnhancedTouch.Finger finger)
     {
@@ -100,6 +110,12 @@ public class PlaceObject : MonoBehaviour
             if (placed) 
             {
                 planeManager.enabled = false;
+                return;
+            }
+
+            if (!canPlace)
+            {
+                StartCoroutine(DelayedPlacement());
                 return;
             }
 
