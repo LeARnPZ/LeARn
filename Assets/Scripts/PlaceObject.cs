@@ -97,7 +97,11 @@ public class PlaceObject : MonoBehaviour
 
         if (placementMode == 1)
         {
-            if (placed) return;
+            if (placed) 
+            {
+                planeManager.enabled = false;
+                return;
+            }
 
             GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
             if (prefab == null) return;
