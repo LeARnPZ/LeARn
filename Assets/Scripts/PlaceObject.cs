@@ -6,7 +6,6 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
 
-
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
 public class PlaceObject : MonoBehaviour
 {
@@ -56,9 +55,7 @@ public class PlaceObject : MonoBehaviour
 
             // Dodaj scaler do g³ównego obiektu animacji
             GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            obj.AddComponent<ObjectScaler>();
-
-        
+            obj.AddComponent<ObjectScaler>();        
 
             placed = true;
 
@@ -70,7 +67,6 @@ public class PlaceObject : MonoBehaviour
 
             }
                
-
             else if (algorithm.Contains("Struct"))
             {
                 GameObject.Find("BottomButtons/StructButtons/AddItemButton").GetComponent<Button>().interactable = true;
@@ -79,7 +75,5 @@ public class PlaceObject : MonoBehaviour
 
             }
         }
-
     }
-
 }

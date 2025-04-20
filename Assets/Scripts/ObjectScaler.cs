@@ -41,9 +41,24 @@ public class ObjectScaler : MonoBehaviour
 
                 float scaleFactor = currentDistance / initialDistance;
                 transform.localScale = initialScale * scaleFactor;
+
+                Graphs graphs = GetComponent<Graphs>();
+                if (graphs != null)
+                {
+                    graphs.UpdateEdgePositions();
+                }
             }
         }
     }
 
+    private void UpdateLineWidths()
+    {
+        LineRenderer[] lines = GetComponentsInChildren<LineRenderer>();
 
+        foreach (var lr in lines)
+        {
+            float width = 0.1f * transform.localScale.x; // Base width scaled
+            lr.startWidth = lr.endWidth = width;
+        }
+    }
 }
