@@ -24,4 +24,22 @@ public class SceneOrientationManager : MonoBehaviour
             Screen.autorotateToLandscapeRight = true;
         }
     }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            if (Screen.orientation == ScreenOrientation.Portrait)
+            {
+                landscapeCanvas.SetActive(false);
+                portraitCanvas.SetActive(true);
+            }
+            else
+            {
+                portraitCanvas.SetActive(false);
+                landscapeCanvas.SetActive(true);
+            }
+        }
+        
+    }
 }
