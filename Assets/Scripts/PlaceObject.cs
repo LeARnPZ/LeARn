@@ -6,6 +6,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
 
+
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
 public class PlaceObject : MonoBehaviour
 {
@@ -53,7 +54,7 @@ public class PlaceObject : MonoBehaviour
             //}S
             Pose pose = hits[0].pose;
 
-            // Dodaj scaler do g³ównego obiektu animacji
+            // Dodaj scaler do gÂ³Ã³wnego obiektu animacji
             GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
             obj.AddComponent<ObjectScaler>();        
 
@@ -64,16 +65,29 @@ public class PlaceObject : MonoBehaviour
             {
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
 
             }
-               
-            else if (algorithm.Contains("Struct"))
+            else if (algorithm.Contains("StackStruct"))
             {
-                GameObject.Find("BottomButtons/StructButtons/AddItemButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("BottomButtons/StructButtons/PopItemButton").GetComponent<Button>().interactable = true;
-                GameObject.Find("BottomButtons/StructButtons/PeekItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsStack/AddItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsStack/PopItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsStack/PeekItemButton").GetComponent<Button>().interactable = true;
 
+            }
+            else if (algorithm.Contains("QueueStruct"))
+            {
+                GameObject.Find("BottomButtons/StructButtonsQueue/AddItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsQueue/PopItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsQueue/PeekItemButton").GetComponent<Button>().interactable = true;
+            }
+            else if (algorithm.Contains("ListStruct"))
+            {
+                GameObject.Find("BottomButtons/StructButtonsList/AddItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsList/PopItemButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
+
     }
 }

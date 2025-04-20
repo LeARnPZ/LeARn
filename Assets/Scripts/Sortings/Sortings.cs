@@ -19,6 +19,14 @@ public abstract class Sortings : MonoBehaviour
 
     protected bool isPaused;
 
+    protected Color blueColor = new Color(146 / 255f, 212 / 255f, 255 / 255f);
+    protected Color yellowColor = new Color(243 / 255f, 220 / 255f, 102 / 255f);
+    protected Color greenColor = new Color(150 / 255f, 236 / 255f, 174 / 255f);
+    protected Color violetColor = new Color(205 / 255f, 160 / 255f, 255 / 255f);
+    protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
+    protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
+    protected Color redColor = new Color(239 / 255f, 97 / 255f, 109 / 255f);
+
     protected int GetValue(GameObject gameObject)
     {
         return int.Parse(gameObject.transform.GetChild(0).GetComponent<TextMeshPro>().text);
@@ -31,7 +39,7 @@ public abstract class Sortings : MonoBehaviour
             case "BucketSort":
                 return (0, 30);
             case "QuickSort":
-                return (2, 80);
+                return (2, 70);
             default:
                 return (0, 100);
         }
@@ -81,13 +89,20 @@ public abstract class Sortings : MonoBehaviour
         //isPaused = false;
         //Time.timeScale = 1f;
         StopAllCoroutines();
+
+        SpeedButton speedButton = FindObjectOfType<SpeedButton>();
+        if (speedButton != null)
+        {
+            speedButton.SpeedButtonRestart();
+        }
+
         foreach (GameObject item in items)
             Destroy(item);
         items.Clear();
         Start();
     }
 
-    public bool getPaused()
+    public bool IsPaused()
     {
         return isPaused;
     }
@@ -96,7 +111,7 @@ public abstract class Sortings : MonoBehaviour
 
     protected virtual void Start()
     {
-        Vector3 startPosition = new(-numberOfItems / 2 + 1, 0f, 0);
+        Vector3 startPosition = new(-numberOfItems / 2 + 1, 1f, 0);
         (int min, int max) range = GetSortingRange();
 
         for (int i = 0; i < numberOfItems; i++)

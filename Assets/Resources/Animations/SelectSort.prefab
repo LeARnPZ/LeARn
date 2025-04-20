@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf4cfcb03d1bc748a7c7f4d2c067936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7850293414002671526, guid: 1deaeec617bbdd04785ecc4977d97fb8, type: 3}
+  prefab: {fileID: 185193376915255039, guid: e7176ae3ead1e514da81bca16b046cdf, type: 3}
   numberOfItems: 7
-  animDuration: 1
-  timeout: 1
+  animDuration: 0.75
+  timeout: 0.75

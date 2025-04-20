@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ModifyStructure : MonoBehaviour
@@ -12,6 +13,13 @@ public class ModifyStructure : MonoBehaviour
     private float timeout;
     private bool isTimeout;
     private bool touchInput;
+    [SerializeField]
+    private GameObject stackButtonsObject;
+    [SerializeField]
+    private GameObject queueButtonsObject;
+    [SerializeField]
+    private GameObject listButtonsObject;
+
 
     [Header("Button objects")]
     [SerializeField]
@@ -64,9 +72,27 @@ public class ModifyStructure : MonoBehaviour
         touchInput = false;
         if (PlayerPrefs.GetString("algorithm").Contains("Struct"))
         {
-            gameObject.SetActive(true);
-            if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            if (PlayerPrefs.GetString("algorithm").Contains("Stack"))
+            {
+                stackButtonsObject.SetActive(true);
+                queueButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            } 
+            else if (PlayerPrefs.GetString("algorithm").Contains("Queue"))
+            {
+                queueButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            }
+            //gameObject.SetActive(true);
+            else if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            {
                 touchInput = true;
+                listButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                queueButtonsObject.SetActive(false);
+            }
+                
         }
         else
             gameObject.SetActive(false);
@@ -80,12 +106,15 @@ public class ModifyStructure : MonoBehaviour
     {
         if (touchInput && anim.transform.childCount > 0 && Input.touchCount > 0 && !isTimeout)
         {
+            Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            
             int screenWidth = Screen.width;
             int screenHeight = Screen.height;
-            Touch touch = Input.GetTouch(0);
             ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();
 
-            if (touch.position.y > 0.15 * screenHeight && touch.position.y < 0.85 * screenHeight)
+            if (touch.position.y > 0.2 * screenHeight && touch.position.y < 0.8 * screenHeight)
             {
                 if (touch.position.x > 0.7 * screenWidth)
                 {
