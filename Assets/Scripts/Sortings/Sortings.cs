@@ -89,6 +89,13 @@ public abstract class Sortings : MonoBehaviour
         //isPaused = false;
         //Time.timeScale = 1f;
         StopAllCoroutines();
+
+        SpeedButton speedButton = FindObjectOfType<SpeedButton>();
+        if (speedButton != null)
+        {
+            speedButton.SpeedButtonRestart();
+        }
+
         foreach (GameObject item in items)
             Destroy(item);
         items.Clear();
