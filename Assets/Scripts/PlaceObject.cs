@@ -45,18 +45,70 @@ public class PlaceObject : MonoBehaviour
 
     bool delay_started = false;
 
+    // private IEnumerator DelayedPlacement()
+    // {
+    //     delay_started = true;
+    //     for (int i = 5; i > 0; i--)
+    //     {
+    //         placementPromptText.text = $"Place the object in {i}...";
+    //         yield return new WaitForSeconds(1f);
+    //     }
+
+    //     placementPromptText.text = "Place the object!";
+    //     canPlace = true;
+    // }
+
     private IEnumerator DelayedPlacement()
     {
-        delay_started = true;
         for (int i = 5; i > 0; i--)
         {
-            placementPromptText.text = $"Place the object in {i}...";
-            yield return new WaitForSeconds(1f);
+            yield return StartCoroutine(FadeInPrompt($"Placing in {i}...", 0.3f));
+            yield return new WaitForSeconds(0.7f);
         }
 
-        placementPromptText.text = "Place the object!";
+        yield return StartCoroutine(FadeInPrompt("Place the object!", 0.3f));
         canPlace = true;
     }
+
+
+    private IEnumerator FadeInPrompt(string message, float duration = 1f)
+    {
+        placementPromptText.text = message;
+
+        Color originalColor = placementPromptText.color;
+        placementPromptText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            placementPromptText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        placementPromptText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+    }
+
+    private IEnumerator FadeOutPrompt(float duration = 1f)
+    {
+        Color originalColor = placementPromptText.color;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            placementPromptText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        placementPromptText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        placementPromptText.text = "";
+    }
+
+
 
 
     private void FingerDown(EnhancedTouch.Finger finger)
@@ -191,7 +243,7 @@ public class PlaceObject : MonoBehaviour
             spawnedObject.transform.localScale *= scaleFactor;
 
             placed = true;
-            placementPromptText.text = "";
+            StartCoroutine(FadeOutPrompt());
 
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
