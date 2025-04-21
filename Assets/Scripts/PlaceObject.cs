@@ -5,6 +5,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
+using TMPro;
 
 
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager), typeof(ARAnchorManager))]
@@ -19,14 +20,13 @@ public class PlaceObject : MonoBehaviour
 
     private bool placed = false;
     private string algorithmName;
-
+    public TextMeshProUGUI placementPromptText;
     private void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
         planeManager = GetComponent<ARPlaneManager>();
         anchorManager = GetComponent<ARAnchorManager>();
         algorithmName = PlayerPrefs.GetString("algorithm");
-        StartCoroutine(DelayedPlacement());
     }
 
     private void OnEnable()
@@ -43,9 +43,18 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Disable();
     }
 
+    bool delay_started = false;
+
     private IEnumerator DelayedPlacement()
     {
-        yield return new WaitForSeconds(5f);
+        delay_started = true;
+        for (int i = 5; i > 0; i--)
+        {
+            placementPromptText.text = $"Place the object in {i}...";
+            yield return new WaitForSeconds(1f);
+        }
+
+        placementPromptText.text = "Place the object!";
         canPlace = true;
     }
 
@@ -113,11 +122,14 @@ public class PlaceObject : MonoBehaviour
                 return;
             }
 
-            if (!canPlace)
+            if (!canPlace && !delay_started)
             {
                 StartCoroutine(DelayedPlacement());
                 return;
             }
+
+            // placementPromptText.text = "";
+            // placementPromptText.enabled = false;
 
             GameObject prefab = (GameObject)Resources.Load($"Animations/{algorithmName}");
             if (prefab == null) return;
@@ -179,6 +191,7 @@ public class PlaceObject : MonoBehaviour
             spawnedObject.transform.localScale *= scaleFactor;
 
             placed = true;
+            placementPromptText.text = "";
 
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
