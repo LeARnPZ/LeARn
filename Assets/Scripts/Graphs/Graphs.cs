@@ -176,13 +176,12 @@ public abstract class Graphs : MonoBehaviour
             case 3:
                 numberOfNodes = 7;
                 InitializeMatrix();
-                matrix[0][1] = true; matrix[1][0] = true;  
+                //matrix[0][1] = true; matrix[1][0] = true;  
                 matrix[0][2] = true; matrix[2][0] = true;
                 matrix[0][3] = true; matrix[3][0] = true;
-                matrix[0][4] = true; matrix[4][0] = true;
+                //matrix[0][4] = true; matrix[4][0] = true;
                 matrix[0][5] = true; matrix[5][0] = true;
-                matrix[0][6] = true; matrix[6][0] = true;
-                matrix[0][6] = true; matrix[6][0] = true;
+                //matrix[0][6] = true; matrix[6][0] = true;
                 matrix[1][5] = true; matrix[5][1] = true;
                 matrix[1][3] = true; matrix[3][1] = true;
                 matrix[3][4] = true; matrix[4][3] = true;
