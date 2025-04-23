@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DijkstraDropdownController : MonoBehaviour
 {
@@ -13,12 +11,18 @@ public class DijkstraDropdownController : MonoBehaviour
     private GameObject anim;
 
     private int numberOfNodes;
+    private int currentValue;
     private DijkstraGraph dijkstra;
     private TMP_Dropdown tmp_drop;
 
     public void OnValueChange()
     {
-        dijkstra.MarkPath(tmp_drop.value + 1);
+        SetColor(tmp_drop.options[currentValue], "#FFFFFF"); // white
+
+        currentValue = tmp_drop.value;
+        dijkstra.MarkPath(currentValue + 1);
+
+        SetColor(tmp_drop.options[currentValue], "#B399ED"); // purple
     }
 
     private void Start()
@@ -46,5 +50,13 @@ public class DijkstraDropdownController : MonoBehaviour
         for (int i = 1; i < numberOfNodes; i++)
             options.Add(i.ToString());
         tmp_drop.AddOptions(options);
+
+        currentValue = 0;
+        SetColor(tmp_drop.options[currentValue], "#B399ED"); // purple
+    }
+
+    private void SetColor(TMP_Dropdown.OptionData option, string hexColor)
+    {
+        option.text = $"<color={hexColor}>{tmp_drop.options.IndexOf(option) + 1}</color>";
     }
 }
