@@ -11,9 +11,17 @@ public class BucketSort : Sortings
     private float itemSpacing = 1.2f;
     private float liftHeight = 1.5f;
     private float intraBucketSpacing = 1.2f;
-    private float bucketYOffset = 3.5f;
-    private Color[] bucketColors = { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta };
+    private float bucketYOffset = 7.5f;
+
+    private Color[] bucketColors;
+
+    // private Color[] bucketColors = { redColor, violetColor, orangeColor, pinkColor, redColor};
     private Dictionary<int, Transform> bucketContainers = new Dictionary<int, Transform>();
+
+    void Awake()
+    {
+        bucketColors = new Color[] { redColor, violetColor, orangeColor, pinkColor, redColor };
+    }
 
     protected override IEnumerator Sort()
     {
@@ -70,7 +78,7 @@ public class BucketSort : Sortings
                 int keyValue = GetValue(keyItem);
                 int k = j - 1;
                 
-                StartCoroutine(ChangeColor(keyItem, Color.cyan));
+                StartCoroutine(ChangeColor(keyItem, yellowColor));
                 yield return new WaitForSeconds(timeout);
                 
                 Vector3 liftPosition = bucketContainers[i].position + new Vector3((j + 1) * intraBucketSpacing, liftHeight, 0);
@@ -102,7 +110,7 @@ public class BucketSort : Sortings
             
             foreach (var sortedItem in bucket)
             {
-                StartCoroutine(ChangeColor(sortedItem, Color.green));
+                StartCoroutine(ChangeColor(sortedItem, greenColor));
                 Vector3 sortedPosition = new Vector3(index * itemSpacing, 0, 0);
                 yield return StartCoroutine(MoveObject(sortedItem, sortedPosition));
                 index++;

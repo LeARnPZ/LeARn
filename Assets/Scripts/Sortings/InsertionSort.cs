@@ -34,7 +34,7 @@ public class InsertionSort : Sortings
             int keyValue = GetValue(keyItem);
             int j = i - 1;
 
-            yield return StartCoroutine(ChangeColor(keyItem, Color.yellow));
+            yield return StartCoroutine(ChangeColor(keyItem, yellowColor));
             yield return new WaitForSeconds(timeout);
 
             Vector3 originalPos = keyItem.transform.localPosition;
@@ -46,7 +46,7 @@ public class InsertionSort : Sortings
             
             while (j >= 0 && GetValue(items[j]) > keyValue)
             {
-                yield return StartCoroutine(ChangeColor(items[j], Color.yellow));
+                yield return StartCoroutine(ChangeColor(items[j], yellowColor));
                 //yield return StartCoroutine(ChangeColor(keyItem, Color.blue));
                 // yield return new WaitForSeconds(timeout);
 
@@ -72,17 +72,17 @@ public class InsertionSort : Sortings
 
             foreach (GameObject item in movedItems)
             {
-                yield return StartCoroutine(ChangeColor(item, Color.white));
+                yield return StartCoroutine(ChangeColor(item, blueColor));
             }
 
-            yield return StartCoroutine(ChangeColor(keyItem, Color.white));
+            yield return StartCoroutine(ChangeColor(keyItem, blueColor));
             
             yield return new WaitForSeconds(timeout);
         }
 
         for ( int z = 0; z < items.Count; z++)
         {
-            yield return StartCoroutine(ChangeColor(items[z], Color.green));
+            yield return StartCoroutine(ChangeColor(items[z], greenColor));
         }
     }
 }

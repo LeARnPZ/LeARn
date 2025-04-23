@@ -279,6 +279,12 @@ public abstract class Graphs : MonoBehaviour
     {
         StopAllCoroutines();
 
+        SpeedButton speedButton = FindObjectOfType<SpeedButton>();
+        if (speedButton != null)
+        {
+            speedButton.SpeedButtonRestart();
+        }
+
         foreach (GameObject node in nodesList)
         {
             node.transform.localScale = Vector3.one; 
