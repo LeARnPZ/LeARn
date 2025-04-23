@@ -14,15 +14,17 @@ public class DijkstraDropdownController : MonoBehaviour
 
     private int numberOfNodes;
     private DijkstraGraph dijkstra;
+    private TMP_Dropdown tmp_drop;
 
     public void OnValueChange()
     {
-        int value = dropdown.GetComponent<TMP_Dropdown>().value;
-        dijkstra.MarkPath(value+1);
+        dijkstra.MarkPath(tmp_drop.value + 1);
     }
 
     private void Start()
     {
+        tmp_drop = dropdown.GetComponent<TMP_Dropdown>();
+
         string algorithm = PlayerPrefs.GetString("algorithm");
         if (!algorithm.Contains("Dijkstra"))
         {
@@ -31,19 +33,18 @@ public class DijkstraDropdownController : MonoBehaviour
         }
 
         gameObject.SetActive(true);
-        dropdown.GetComponent<TMP_Dropdown>().options.Clear();
-        dropdown.GetComponent<TMP_Dropdown>().interactable = false;
+        tmp_drop.ClearOptions();
+        tmp_drop.interactable = false;
     }
 
     public void DropdownSetup()
     {
         dijkstra = anim.transform.GetChild(0).GetComponent<DijkstraGraph>();
-
         numberOfNodes = dijkstra.GetNumberOfNodes();
 
         List<string> options = new();
         for (int i = 1; i < numberOfNodes; i++)
             options.Add(i.ToString());
-        dropdown.GetComponent<TMP_Dropdown>().AddOptions(options);
+        tmp_drop.AddOptions(options);
     }
 }
