@@ -283,6 +283,30 @@ public abstract class Graphs : MonoBehaviour
         originalColor = nodes.transform.GetChild(0).GetComponent<Renderer>().material.color;
     }
 
+    protected void LateUpdate() //metoda wywo³ywana po Update - updatowanie pozycji krawedzi po przesunieciu kulek
+    {
+        UpdateEdges();
+    }
+
+    private void UpdateEdges()
+    {
+        for (int i = 0; i < edgesList.Count; i++)
+        {
+            LineRenderer lr = edgesList[i].GetComponent<LineRenderer>();
+            string[] nodeNames = edgesList[i].name.Split('-');
+
+            int from = int.Parse(nodeNames[0]);
+            int to = int.Parse(nodeNames[1]);
+
+            Vector3 fromPos = nodesList[from].transform.position;
+            Vector3 toPos = nodesList[to].transform.position;
+
+            lr.SetPosition(0, fromPos);
+            lr.SetPosition(1, toPos);
+        }
+    }
+
+
     protected void Start()
     {
         // Dodanie wêz³ów do listy i nadanie etykiet
