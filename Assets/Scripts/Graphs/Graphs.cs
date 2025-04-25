@@ -6,8 +6,6 @@ using UnityEngine;
 public abstract class Graphs : MonoBehaviour
 {
     [Header("Ustawienia animacji")]
-    protected int numberOfNodes;
-    protected Color originalColor;
     [SerializeField]
     protected int startingNode;
 
@@ -23,6 +21,10 @@ public abstract class Graphs : MonoBehaviour
     [SerializeField]
     protected GameObject searchOrder;
 
+    protected int numberOfNodes;
+    protected Color originalColor;
+    protected bool isPaused;
+
     // Przechowywanie grafu
     protected List<List<bool>> matrix = new();
     protected Dictionary<int, List<int>> neighborsList = new();
@@ -35,32 +37,54 @@ public abstract class Graphs : MonoBehaviour
     protected List<GameObject> nodesList = new();
     protected List<GameObject> edgesList = new();
 
-    protected bool isPaused;
-
     protected Color blueColor = new Color(146 / 255f, 212 / 255f, 255 / 255f);
     protected Color yellowColor = new Color(243 / 255f, 220 / 255f, 102 / 255f);
     protected Color greenColor = new Color(150 / 255f, 236 / 255f, 174 / 255f);
     protected Color violetColor = new Color(205 / 255f, 160 / 255f, 255 / 255f);
     protected Color orangeColor = new Color(255 / 255f, 126 / 255f, 85 / 255f);
     protected Color pinkColor = new Color(255 / 255f, 160 / 255f, 179 / 255f);
+    protected Color redColor = new Color(239 / 255f, 97 / 255f, 109 / 255f);
 
-    protected abstract IEnumerator SearchGraph();
+    protected Color redTextColor = new(210/255f, 16/255f, 30/255f);
+    protected Color blueTextColor = new(18/255f, 64/255f, 97/255f);
+    protected Color greenTextColor = new(44/255f, 167/255f, 58/255f);
 
-    protected IEnumerator ChangeColor(GameObject gameObject, Color newColor)
+    protected virtual IEnumerator SearchGraph() { yield return null; }
+
+    protected IEnumerator ChangeColor(GameObject gameObject, Color newColor, bool isText = false)
     {
-        Renderer renderer = gameObject.GetComponent<Renderer>();
-        Color currentColor = renderer.material.color;
-
-        float elapsedTime = 0f;
-
-        while (elapsedTime < animDuration)
+        if (isText)
         {
-            renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+            TextMeshPro tmpro = gameObject.GetComponent<TextMeshPro>();
+            Color currentColor = tmpro.color;
 
-        renderer.material.color = newColor;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < animDuration)
+            {
+                tmpro.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            tmpro.color = newColor;
+        }
+        else
+        {
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Color currentColor = renderer.material.color;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < animDuration)
+            {
+                renderer.material.color = Color.Lerp(currentColor, newColor, elapsedTime / animDuration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            renderer.material.color = newColor;
+        }
     }
 
     protected IEnumerator ChangeSize(GameObject gameObject, Vector3 newScale)
@@ -79,7 +103,12 @@ public abstract class Graphs : MonoBehaviour
         gameObject.transform.localScale = newScale;
     }
 
-    private void InitializeMatrix()
+    protected int GetEdgeWeight(GameObject edge)
+    {
+        return int.Parse(edge.transform.GetChild(0).GetComponent<TextMeshPro>().text);
+    }
+
+    protected void InitializeMatrix()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -91,8 +120,13 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
+    public int GetNumberOfNodes()
+    {
+        return numberOfNodes;
+    }
+
     /// MACIERZ S¥SIEDZTWA TWORZONA RÊCZNIE!!!
-    private void CreateMatrix(int version = 0)
+    protected void CreateMatrix(int version = 0)
     {
         switch (version)
         {
@@ -142,13 +176,12 @@ public abstract class Graphs : MonoBehaviour
             case 3:
                 numberOfNodes = 7;
                 InitializeMatrix();
-                matrix[0][1] = true; matrix[1][0] = true;  
+                //matrix[0][1] = true; matrix[1][0] = true;  
                 matrix[0][2] = true; matrix[2][0] = true;
                 matrix[0][3] = true; matrix[3][0] = true;
-                matrix[0][4] = true; matrix[4][0] = true;
+                //matrix[0][4] = true; matrix[4][0] = true;
                 matrix[0][5] = true; matrix[5][0] = true;
-                matrix[0][6] = true; matrix[6][0] = true;
-                matrix[0][6] = true; matrix[6][0] = true;
+                //matrix[0][6] = true; matrix[6][0] = true;
                 matrix[1][5] = true; matrix[5][1] = true;
                 matrix[1][3] = true; matrix[3][1] = true;
                 matrix[3][4] = true; matrix[4][3] = true;
@@ -172,7 +205,7 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    private void CreateNeighborsList()
+    protected void CreateNeighborsList()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
@@ -187,17 +220,17 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-    private void DrawEdges()
+    protected void DrawEdges()
     {
         for (int i = 0; i < numberOfNodes; i++)
         {
-            for (int j = 0; j < numberOfNodes; j++)
+            for (int j = i; j < numberOfNodes; j++)
             {
                 if (matrix[i][j])
                 {
-                    GameObject line = new();
+                    GameObject line = new($"{i}-{j}");
                     line.transform.parent = edges.transform;
-                    line.name = $"{i}-{j}";
+                    line.transform.localScale = Vector3.one;
 
                     Vector3 from = nodesList[i].transform.position;
                     Vector3 to = nodesList[j].transform.position;
@@ -210,13 +243,38 @@ public abstract class Graphs : MonoBehaviour
                     lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
+                    if (this.name.Contains("Dijkstra"))
+                    {
+                        GameObject weight = new("EdgeWeight");
+                        weight.transform.parent = line.transform;
+                        weight.transform.localScale = new Vector3(-1, 1, 1);
+
+                        Vector3 middle = (from + to) / 2f;
+                        Vector3 direction = (to - from).normalized;
+                        Vector3 up = Vector3.Cross(direction, Vector3.forward);
+                        Vector3 position = middle + up * 0.25f * transform.localScale.x;
+                        if (position.y < middle.y)
+                        {
+                            up = -up;
+                            position = middle + up * 0.25f * transform.localScale.x;
+                        }
+                        weight.transform.position = position;
+
+                        weight.AddComponent<TextMeshPro>();
+                        TextMeshPro tmpro = weight.GetComponent<TextMeshPro>();
+                        tmpro.text = Random.Range(1, 10).ToString();
+                        tmpro.autoSizeTextContainer = true;
+                        tmpro.fontSize = 4;
+                        tmpro.font = Resources.Load<TMP_FontAsset>("Fonts/Montserrat-SemiBold SDF");
+                    }
+
                     edgesList.Add(line);
                 }
             }
         }
     }
 
-    public void Restart()
+    public virtual void Restart()
     {
         StopAllCoroutines();
 
@@ -264,12 +322,12 @@ public abstract class Graphs : MonoBehaviour
         }
         else
         {
-            frontText.text += $", {n.ToString()}";
-            backText.text += $", {n.ToString()}";
+            frontText.text += $", {n}";
+            backText.text += $", {n}";
         }
     }
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
         int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
@@ -283,7 +341,7 @@ public abstract class Graphs : MonoBehaviour
         originalColor = nodes.transform.GetChild(0).GetComponent<Renderer>().material.color;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         // Dodanie wêz³ów do listy i nadanie etykiet
         for (int i = 0; i < numberOfNodes; i++)
@@ -296,13 +354,9 @@ public abstract class Graphs : MonoBehaviour
         // Utworzenie krawêdzi ³¹cz¹cych odpowiednie wêz³y i dodanie ich do listy
         DrawEdges();
 
+        // Odpauzowanie animacji po restarcie
         isPaused = false;
         Time.timeScale = 1f;
-        searchOrder.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
-        searchOrder.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
-
-        // Uruchomienie animacji
-        StartCoroutine(SearchGraph());
     }
 
     public void UpdateEdgePositions()

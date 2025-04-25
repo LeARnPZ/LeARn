@@ -109,7 +109,7 @@ public class ModifyStructure : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
             int screenWidth = Screen.width;
             int screenHeight = Screen.height;
             ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();

@@ -5,6 +5,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
@@ -43,15 +44,12 @@ public class PlaceObject : MonoBehaviour
     {
         if (finger.index != 0 || placed) return;
 
+        if (IsTouchOverUI(finger.currentTouch.screenPosition)) return;
+
         GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
 
         if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
         {
-            //foreach (ARRaycastHit hit in hits)
-            //{
-            //    Pose pose = hit.pose;
-            //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}S
             Pose pose = hits[0].pose;
 
             // Dodaj scaler do g³ównego obiektu animacji
@@ -66,7 +64,8 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
-
+                if (algorithm.Contains("Dijkstra"))
+                    GameObject.Find("DijkstraDropdownContainer").GetComponent<DijkstraDropdownController>().DropdownSetup();
             }
             else if (algorithm.Contains("StackStruct"))
             {
@@ -90,4 +89,16 @@ public class PlaceObject : MonoBehaviour
         }
 
     }
+
+    private bool IsTouchOverUI(Vector2 touchPosition)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = touchPosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        return results.Count > 0;
+    }
+
 }
