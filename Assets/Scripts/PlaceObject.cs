@@ -16,7 +16,9 @@ public class PlaceObject : MonoBehaviour
     private List<ARRaycastHit> hits = new();
 
     private bool placed = false;
+    private bool poorMode   = true;
     private string algorithmName;
+    private readonly float distanceFromCamera = 0.75f;
 
     private void Awake()
     {
@@ -48,17 +50,41 @@ public class PlaceObject : MonoBehaviour
 
         GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
 
-        if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        if (poorMode)
         {
-            //foreach (ARRaycastHit hit in hits)
-            //{
-            //    Pose pose = hit.pose;
-            //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}S
-            Pose pose = hits[0].pose;
-                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            placed = true;
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                Camera cam = Camera.main;
+                Vector3 position = cam.transform.position + cam.transform.forward * distanceFromCamera;
+                Quaternion rotation = Quaternion.LookRotation(-cam.transform.forward);
 
+                GameObject anchorObject = new("Kotwica");
+                anchorObject.transform.position = position;
+                anchorObject.transform.rotation = rotation;
+                ARAnchor anchor = anchorObject.AddComponent<ARAnchor>();
+
+                GameObject anim = GameObject.Find("Animation");
+                anim.transform.parent = anchorObject.transform;
+                anim.transform.localPosition = Vector3.zero;
+                if (anchor != null)
+                {
+                    Instantiate(prefab, anim.transform);
+                    placed = true;
+                }
+            }
+        }
+        else
+        {
+            if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+            {
+                Pose pose = hits[0].pose;
+                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+                placed = true;
+            }
+        }
+
+        if (placed)
+        {
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
@@ -87,7 +113,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
-
     }
 
     private bool IsTouchOverUI(Vector2 touchPosition)
@@ -100,5 +125,4 @@ public class PlaceObject : MonoBehaviour
 
         return results.Count > 0;
     }
-
 }

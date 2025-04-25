@@ -7455,6 +7455,7 @@ GameObject:
   - component: {fileID: 845617268}
   - component: {fileID: 845617267}
   - component: {fileID: 845617266}
+  - component: {fileID: 845617274}
   - component: {fileID: 845617265}
   - component: {fileID: 845617272}
   m_Layer: 0
@@ -7576,6 +7577,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arPlaneManager: {fileID: 845617266}
   visibilitySlider: {fileID: 1796715337231505849}
+--- !u!114 &845617274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845617264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
 --- !u!1 &846157841
 GameObject:
   m_ObjectHideFlags: 0
