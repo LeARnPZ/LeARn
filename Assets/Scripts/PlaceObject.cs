@@ -70,6 +70,7 @@ public class PlaceObject : MonoBehaviour
                 if (anchor != null)
                 {
                     Instantiate(prefab, anim.transform);
+                    anim.transform.GetChild(0).localScale = Vector3.one / 20f;
                     placed = true;
                 }
             }
