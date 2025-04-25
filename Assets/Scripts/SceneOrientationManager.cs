@@ -8,6 +8,9 @@ public class SceneOrientationManager : MonoBehaviour
 
     public GameObject portraitCanvas;
     public GameObject landscapeCanvas;
+    public GameObject mainCanvas;
+
+    public ScreenOrientation _lastOrientation;
 
     void Awake()
     {
@@ -15,7 +18,7 @@ public class SceneOrientationManager : MonoBehaviour
         {
             Screen.orientation = ScreenOrientation.Portrait;
         }
-        else 
+        else
         {
             Screen.orientation = ScreenOrientation.AutoRotation;
             Screen.autorotateToPortrait = true;
@@ -25,21 +28,64 @@ public class SceneOrientationManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    void Start()
     {
         if (SceneManager.GetActiveScene().name != "MainMenu")
         {
-            if (Screen.orientation == ScreenOrientation.Portrait)
+            _lastOrientation = Screen.orientation;
+            UpdateCanvasForOrientation(_lastOrientation);
+            StartCoroutine(CheckOrientationChange());
+        }
+    }
+
+    private IEnumerator CheckOrientationChange()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.3f);
+
+            if (Screen.orientation != _lastOrientation)
             {
-                landscapeCanvas.SetActive(false);
-                portraitCanvas.SetActive(true);
-            }
-            else
-            {
-                portraitCanvas.SetActive(false);
-                landscapeCanvas.SetActive(true);
+                _lastOrientation = Screen.orientation;
+                UpdateCanvasForOrientation(_lastOrientation);
             }
         }
-        
     }
+
+    private void UpdateCanvasForOrientation(ScreenOrientation orientation)
+    {
+        GameObject referenceCanvas = (orientation == ScreenOrientation.Portrait) ? portraitCanvas : landscapeCanvas;
+
+        CopyLayout(referenceCanvas.transform, mainCanvas.transform);
+    }
+
+    private void CopyLayout(Transform from, Transform to)
+    {
+        for (int i = 0; i < from.childCount; i++)
+        {
+            Transform fromChild = from.GetChild(i);
+            Transform toChild = to.Find(fromChild.name);
+
+            if (toChild != null)
+            {
+                // Rekurencja
+                CopyLayout(fromChild, toChild);
+
+                RectTransform fromRect = fromChild.GetComponent<RectTransform>();
+                RectTransform toRect = toChild.GetComponent<RectTransform>();
+
+                if (fromRect != null && toRect != null)
+                {
+                    toRect.anchoredPosition = fromRect.anchoredPosition;
+                    toRect.sizeDelta = fromRect.sizeDelta;
+                    toRect.anchorMin = fromRect.anchorMin;
+                    toRect.anchorMax = fromRect.anchorMax;
+                    toRect.pivot = fromRect.pivot;
+                    toRect.localScale = fromRect.localScale;
+                    toRect.localRotation = fromRect.localRotation;
+                }
+            }
+        }
+    }
+
 }
