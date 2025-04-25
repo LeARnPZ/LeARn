@@ -2068,6 +2068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedText: {fileID: 782628377}
+  animationObject: {fileID: 566207622}
 --- !u!1 &229349094
 GameObject:
   m_ObjectHideFlags: 0
