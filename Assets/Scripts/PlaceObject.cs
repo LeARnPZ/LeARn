@@ -50,11 +50,6 @@ public class PlaceObject : MonoBehaviour
 
         if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
         {
-            //foreach (ARRaycastHit hit in hits)
-            //{
-            //    Pose pose = hit.pose;
-            //    Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            //}S
             Pose pose = hits[0].pose;
                 Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
             placed = true;
@@ -65,7 +60,8 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
-
+                if (algorithm.Contains("Dijkstra"))
+                    GameObject.Find("DijkstraDropdownContainer").GetComponent<DijkstraDropdownController>().DropdownSetup();
             }
             else if (algorithm.Contains("StackStruct"))
             {

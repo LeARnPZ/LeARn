@@ -20,7 +20,7 @@
 Θ(V + E)
 ### BFSGraph
 Θ(V + E)
-### DijkstraAlgo
+### DijkstraGraph
 Θ(V²)
 ### GrahamAlgo
 

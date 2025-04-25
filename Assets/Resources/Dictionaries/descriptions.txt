@@ -20,7 +20,7 @@ Lista to struktura danych reprezentująca dynamiczną listę, umożliwiająca ef
 Algorytm DFS to algorytm przeszukiwania grafu w głąb (Depth-First Search). Rozpoczyna eksplorację od danego wierzchołka i przechodzi do jego sąsiadów, dopóki to możliwe, a następnie cofa się. Używany do wykrywania cykli, analizy spójności grafu i znajdowania ścieżek. Jego złożoność wynosi O(V + E), gdzie V to liczba wierzchołków, a E liczba krawędzi.
 ### BFSGraph
 Algorytm BFS to algorytm przeszukiwania grafu wszerz (Breadth-First Search). Przeszukuje graf poziomami, eksplorując wszystkie sąsiednie wierzchołki danego poziomu przed przejściem do głębszych warstw. Wykorzystywany w znajdowaniu najkrótszej ścieżki w grafach nieskierowanych. Ma złożoność O(V + E).
-### DijkstraAlgo
+### DijkstraGraph
 Algorytm Dijkstry to algorytm służący do znajdowania najkrótszej ścieżki w grafie z pojedynczym źródłem i krawędziami o nieujemnych wagach. Używa kolejki priorytetowej do wyboru wierzchołków o najmniejszym koszcie dojścia. Jego złożoność wynosi O((V + E) log V) przy zastosowaniu kopca Fibonacciego.
 ### GrahamAlgo
 Algorytm Grahama to algorytm służący do znajdowania otoczki wypukłej zbioru punktów na płaszczyźnie. Najpierw wybiera punkt o najmniejszej współrzędnej Y, sortuje pozostałe według kąta względem niego, a następnie używa stosu do budowy otoczki. Jego złożoność to O(n log n).
