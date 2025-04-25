@@ -56,7 +56,7 @@ public class PlaceObject : MonoBehaviour
             {
                 Camera cam = Camera.main;
                 Vector3 position = cam.transform.position + cam.transform.forward * distanceFromCamera;
-                Quaternion rotation = Quaternion.LookRotation(-cam.transform.forward);
+                Quaternion rotation = Quaternion.LookRotation(cam.transform.position - position);
 
                 GameObject anchorObject = new("Kotwica");
                 anchorObject.transform.position = position;
