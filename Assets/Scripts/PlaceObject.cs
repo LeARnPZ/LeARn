@@ -53,6 +53,7 @@ public class PlaceObject : MonoBehaviour
         if (IsTouchOverUI(finger.currentTouch.screenPosition)) return;
 
         GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
+        GameObject animationObject = GameObject.Find("Animation");
 
         if (poorMode)
         {
@@ -67,13 +68,12 @@ public class PlaceObject : MonoBehaviour
                 anchorObject.transform.rotation = rotation;
                 ARAnchor anchor = anchorObject.AddComponent<ARAnchor>();
 
-                GameObject anim = GameObject.Find("Animation");
-                anim.transform.parent = anchorObject.transform;
-                anim.transform.localPosition = Vector3.zero;
+                animationObject.transform.parent = anchorObject.transform;
+                animationObject.transform.localPosition = Vector3.zero;
                 if (anchor != null)
                 {
-                    Instantiate(prefab, anim.transform);
-                    anim.transform.GetChild(0).localScale = Vector3.one / 20f;
+                    Instantiate(prefab, animationObject.transform);
+                    animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
                     placed = true;
                 }
             }
@@ -81,19 +81,17 @@ public class PlaceObject : MonoBehaviour
         else
         {
             if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
-        {
-            Pose pose = hits[0].pose;
-            ARAnchor anchor = anchorManager.AddAnchor(pose);
-            if (anchor == null)
             {
-                Debug.LogWarning("Nie udało się dodać anchor'a!");
-                return;
-            }
+                Pose pose = hits[0].pose;
+                ARAnchor anchor = anchorManager.AddAnchor(pose);
+                if (anchor == null)
+                {
+                    Debug.LogWarning("Nie udało się dodać anchor'a!");
+                    return;
+                }
 
-            GameObject animationObject = GameObject.Find("Animation");
-            animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
-
-            Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+                animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
+                Instantiate(prefab, pose.position, pose.rotation, animationObject.transform);
                 placed = true;
             }
         }
