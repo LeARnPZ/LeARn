@@ -16,17 +16,34 @@ public class SpeedButton : MonoBehaviour
 
     public void OnSpeedButtonClick()
     {
-        Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+        string algorithm = PlayerPrefs.GetString("algorithm");
 
-        if (!sort.IsPaused())
+        if (algorithm.Contains("Sort"))
         {
-            currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
-            Time.timeScale = speeds[currentSpeedIndex];
-
-            if (speedText != null)
+            Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+            if (!sort.IsPaused())
             {
-                speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
+                Time.timeScale = speeds[currentSpeedIndex];
 
+                if (speedText != null)
+                {
+                    speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+                }
+            }
+        }
+        else if (algorithm.Contains("Graph"))
+        {
+            Graphs graph = animationObject.transform.GetChild(0).GetComponent<Graphs>();
+            if (!graph.IsPaused())
+            {
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
+                Time.timeScale = speeds[currentSpeedIndex];
+
+                if (speedText != null)
+                {
+                    speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+                }
             }
         }
     }
