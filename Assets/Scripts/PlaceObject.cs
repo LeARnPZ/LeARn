@@ -16,7 +16,7 @@ public class PlaceObject : MonoBehaviour
     private List<ARRaycastHit> hits = new();
 
     private bool placed = false;
-    private bool poorMode   = true;
+    private bool poorMode;
     private string algorithmName;
     private readonly float distanceFromCamera = 0.75f;
 
@@ -26,6 +26,7 @@ public class PlaceObject : MonoBehaviour
         planeManager = GetComponent<ARPlaneManager>();
 
         algorithmName = PlayerPrefs.GetString("algorithm");
+        poorMode = PlayerPrefs.GetInt("PoorMode") == 1; 
     }
 
     private void OnEnable()
