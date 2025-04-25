@@ -15,6 +15,8 @@ public class PlaceObject : MonoBehaviour
     private ARPlaneManager planeManager;
     private List<ARRaycastHit> hits = new();
 
+    private ARAnchorManager anchorManager;
+
     private bool placed = false;
     private bool poorMode;
     private string algorithmName;
@@ -24,6 +26,7 @@ public class PlaceObject : MonoBehaviour
     {
         raycastManager = GetComponent<ARRaycastManager>();
         planeManager = GetComponent<ARPlaneManager>();
+        anchorManager = GetComponent<ARAnchorManager>();
 
         algorithmName = PlayerPrefs.GetString("algorithm");
         poorMode = PlayerPrefs.GetInt("PoorMode") == 1; 
@@ -78,9 +81,19 @@ public class PlaceObject : MonoBehaviour
         else
         {
             if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        {
+            Pose pose = hits[0].pose;
+            ARAnchor anchor = anchorManager.AddAnchor(pose);
+            if (anchor == null)
             {
-                Pose pose = hits[0].pose;
-                Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+                Debug.LogWarning("Nie udało się dodać anchor'a!");
+                return;
+            }
+
+            GameObject animationObject = GameObject.Find("Animation");
+            animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
+
+            Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
                 placed = true;
             }
         }
@@ -93,7 +106,8 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("RestartButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("PlayPauseButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("SpeedButton").GetComponent<Button>().interactable = true;
-
+                if (algorithm.Contains("Dijkstra"))
+                    GameObject.Find("DijkstraDropdownContainer").GetComponent<DijkstraDropdownController>().DropdownSetup();
             }
             else if (algorithm.Contains("StackStruct"))
             {

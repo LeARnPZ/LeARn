@@ -24,7 +24,7 @@ public static class Dictionaries
         algorithms.Add("ListStruct", 8);
         algorithms.Add("DFSGraph", 9);
         algorithms.Add("BFSGraph", 10);
-        algorithms.Add("DijkstraAlgo", 11);
+        algorithms.Add("DijkstraGraph", 11);
         algorithms.Add("GrahamAlgo", 12);
     }
 
