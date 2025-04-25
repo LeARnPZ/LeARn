@@ -20,7 +20,7 @@ Lista to struktura danych przechowująca uporządkowane elementy. Podstawowe ope
 Algorytm przeszukiwania grafu w głąb (Depth-First Search) eksploruje graf, odwiedzając kolejne wierzchołki możliwie jak najdalej od punktu początkowego, zanim nastąpi cofnięcie do poprzedniego wierzchołka. Wykorzystywany jest m.in. do wykrywania cykli, analizy spójności, generowania drzew rozpinających oraz rozwiązywania problemów rekurencyjnych.
 ### BFSGraph
 Algorytm przeszukiwania grafu wszerz (Breadth-First Search) eksploruje graf warstwowo, zaczynając od danego wierzchołka i odwiedzając wszystkich jego sąsiadów przed przejściem na kolejną warstwę. Znajduje zastosowanie w wyznaczaniu najkrótszych ścieżek w grafach nieskierowanych oraz w algorytmach planowania i analizy sieci.
-### DijkstraAlgo
+### DijkstraGraph
 Algorytm Dijkstry znajduje najkrótszą ścieżkę w grafie ważonym, zakładając, że wszystkie krawędzie mają nieujemne wagi. Rozpoczyna od źródła i za pomocą kolejki priorytetowej wybiera wierzchołek o najmniejszym koszcie dojścia, aktualizując koszty dla sąsiednich wierzchołków. Algorytm zapewnia najkrótsze ścieżki do wszystkich wierzchołków w grafie. Jeśli istnieje kilka najkrótszych ścieżek do danego wierzchołka, algorytm wybiera pierwszą znalezioną.
 ### GrahamAlgo
 Algorytm Grahama to algorytm służący do znajdowania otoczki wypukłej zbioru punktów na płaszczyźnie. Najpierw wybiera punkt o najmniejszej współrzędnej Y, sortuje pozostałe według kąta względem niego, a następnie używa stosu do budowy otoczki. Blah Blah Blah, i tak tego nie wykorzystujemy xd.

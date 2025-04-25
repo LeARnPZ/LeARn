@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class BFSGraph : Graphs
@@ -81,4 +82,16 @@ public class BFSGraph : Graphs
         }
     }
 
+    protected override void Start()
+    {
+        // Wywo³anie Start() z klasy nadrzêdnej
+        base.Start();
+
+        // Wyczyszczenie tekstu w belce z kolejnoœci¹
+        searchOrder.transform.GetChild(0).GetComponent<TextMeshPro>().text = "";
+        searchOrder.transform.GetChild(1).GetComponent<TextMeshPro>().text = "";
+
+        // Uruchomienie animacji
+        StartCoroutine(SearchGraph());
+    }
 }
