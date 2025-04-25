@@ -15,6 +15,8 @@ public class PlaceObject : MonoBehaviour
     private ARPlaneManager planeManager;
     private List<ARRaycastHit> hits = new();
 
+    private ARAnchorManager anchorManager;
+
     private bool placed = false;
     private string algorithmName;
 
@@ -22,6 +24,7 @@ public class PlaceObject : MonoBehaviour
     {
         raycastManager = GetComponent<ARRaycastManager>();
         planeManager = GetComponent<ARPlaneManager>();
+        anchorManager = GetComponent<ARAnchorManager>();
 
         algorithmName = PlayerPrefs.GetString("algorithm");
     }
@@ -51,6 +54,15 @@ public class PlaceObject : MonoBehaviour
         if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
         {
             Pose pose = hits[0].pose;
+            ARAnchor anchor = anchorManager.AddAnchor(pose);
+            if (anchor == null)
+            {
+                Debug.LogWarning("Nie udało się dodać anchor'a!");
+                return;
+            }
+
+            GameObject animationObject = GameObject.Find("Animation");
+            animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
 
             // Dodaj scaler do g³ównego obiektu animacji
             GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
