@@ -402,6 +402,9 @@ public abstract class Graphs : MonoBehaviour
                     {
                         lr.SetPosition(0, from);
                         lr.SetPosition(1, to);
+
+                        float width = 0.1f * transform.localScale.x;
+                        lr.startWidth = lr.endWidth = width;
                     }
                 }
             }

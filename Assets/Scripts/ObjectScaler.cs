@@ -6,12 +6,14 @@ public class ObjectScaler : MonoBehaviour
 {
     private float initialDistance;
     private Vector3 initialScale;
+    private float currentScale;
 
     private void OnEnable()
     {
         // Aktywacja obs³ugi dotyku i symulacji w edytorze
         TouchSimulation.Enable();
         EnhancedTouchSupport.Enable();
+        initialScale = transform.localScale;
     }
 
     private void OnDisable()
@@ -32,15 +34,22 @@ public class ObjectScaler : MonoBehaviour
             if (touch1.phase == UnityEngine.InputSystem.TouchPhase.Began || touch2.phase == UnityEngine.InputSystem.TouchPhase.Began)
             {
                 initialDistance = Vector2.Distance(touch1.screenPosition, touch2.screenPosition);
-                initialScale = transform.localScale;
             }
             else
             {
                 float currentDistance = Vector2.Distance(touch1.screenPosition, touch2.screenPosition);
                 if (Mathf.Approximately(initialDistance, 0)) return;
 
-                float scaleFactor = currentDistance / initialDistance;
-                transform.localScale = initialScale * scaleFactor;
+                float scaleFactor = (float)0.25 * currentScale * (currentDistance / initialDistance);
+                if(scaleFactor <= 1)
+                {
+                    currentScale = Mathf.Max(scaleFactor, (float)0.4);
+                }
+                else
+                {
+                    currentScale = Mathf.Min(scaleFactor, (float)2.5);
+                }
+                transform.localScale = initialScale * currentScale;
 
                 Graphs graphs = GetComponent<Graphs>();
                 if (graphs != null)
@@ -48,17 +57,6 @@ public class ObjectScaler : MonoBehaviour
                     graphs.UpdateEdgePositions();
                 }
             }
-        }
-    }
-
-    private void UpdateLineWidths()
-    {
-        LineRenderer[] lines = GetComponentsInChildren<LineRenderer>();
-
-        foreach (var lr in lines)
-        {
-            float width = 0.1f * transform.localScale.x; // Base width scaled
-            lr.startWidth = lr.endWidth = width;
         }
     }
 }
