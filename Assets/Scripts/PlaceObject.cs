@@ -17,7 +17,7 @@ public class PlaceObject : MonoBehaviour
 
     private ARAnchorManager anchorManager;
 
-    private bool placed = false;
+    public bool placed = false;
     private string algorithmName;
 
     private void Awake()
