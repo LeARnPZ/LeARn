@@ -40,7 +40,7 @@ public class ObjectScaler : MonoBehaviour
                 float currentDistance = Vector2.Distance(touch1.screenPosition, touch2.screenPosition);
                 if (Mathf.Approximately(initialDistance, 0)) return;
 
-                float scaleFactor = (float)0.25 * currentScale * (currentDistance / initialDistance);
+                float scaleFactor = currentScale * (currentDistance / initialDistance);
                 if(scaleFactor <= 1)
                 {
                     currentScale = Mathf.Max(scaleFactor, (float)0.4);
