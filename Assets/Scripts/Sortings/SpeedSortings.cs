@@ -8,18 +8,43 @@ public class SpeedButton : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI speedText;
 
+    [SerializeField]
+    private GameObject animationObject;
+
     private float[] speeds = { 1.0f, 1.25f, 1.5f, 1.75f, 2.0f };
     private int currentSpeedIndex = 0;
 
     public void OnSpeedButtonClick()
     {
-        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
-        Time.timeScale = speeds[currentSpeedIndex];
+        string algorithm = PlayerPrefs.GetString("algorithm");
 
-        if (speedText != null)
+        if (algorithm.Contains("Sort"))
         {
-            speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+            Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+            if (!sort.IsPaused())
+            {
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
+                Time.timeScale = speeds[currentSpeedIndex];
 
+                if (speedText != null)
+                {
+                    speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+                }
+            }
+        }
+        else if (algorithm.Contains("Graph"))
+        {
+            Graphs graph = animationObject.transform.GetChild(0).GetComponent<Graphs>();
+            if (!graph.IsPaused())
+            {
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
+                Time.timeScale = speeds[currentSpeedIndex];
+
+                if (speedText != null)
+                {
+                    speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
+                }
+            }
         }
     }
 
@@ -33,6 +58,11 @@ public class SpeedButton : MonoBehaviour
             speedText.text = speeds[currentSpeedIndex].ToString("0.##", CultureInfo.InvariantCulture) + "x";
 
         }
+    }
+
+    void OnDisable()
+    {
+        SpeedButtonRestart();
     }
 
     void Start()
