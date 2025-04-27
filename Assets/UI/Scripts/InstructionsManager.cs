@@ -18,6 +18,8 @@ public class InstructionsManager : MonoBehaviour
     [Header("Other")]
     public ARPlaneManager planeManager;
     public PlaceObject placeObjectScript;
+    public GameObject infoPopupWindow;
+    public GameObject infoPopupWindowStructs;
 
     [Header("Settings")]
     public float minPlaneSize = 0.3f;
@@ -25,6 +27,7 @@ public class InstructionsManager : MonoBehaviour
     public float searchDuration = 5f;
 
     private bool instructionsEnabled;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +102,9 @@ public class InstructionsManager : MonoBehaviour
 
     private IEnumerator HandleInstructions()
     {
+        string algorithm = PlayerPrefs.GetString("algorithm");
+        GameObject currentInfoPopup = algorithm.Contains("Struct") ? infoPopupWindowStructs : infoPopupWindow;
+
         //monit skanowania powierzchni
         scanSurfaceInstruction.SetActive(true);
         yield return new WaitForSeconds(instructionDuration);
@@ -106,10 +112,20 @@ public class InstructionsManager : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < searchDuration) //szukanie powierzchni przez okreslony czas
         {
+
+            // jesli okienko z info o algo zamkniete
             if (placeObjectScript.placed || IsSurfaceDetected())
             {
                 break;
             }
+
+            // jesli okienko z info o algo jest otwarte, wstrzymaj odliczanie
+            if (currentInfoPopup.activeSelf)
+            {
+                yield return null;
+                continue;
+            }
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -139,7 +155,6 @@ public class InstructionsManager : MonoBehaviour
                 yield return StartCoroutine(FadeOut(scaleInstruction));
 
                 //monit dla iteratora
-                string algorithm = PlayerPrefs.GetString("algorithm");
                 if (algorithm.Contains("ListStruct"))
                 {
                     yield return StartCoroutine(FadeIn(moveIteratorInstruction));
