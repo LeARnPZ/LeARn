@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneOrientationManager : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class SceneOrientationManager : MonoBehaviour
         {
             Screen.orientation = ScreenOrientation.AutoRotation;
             Screen.autorotateToPortrait = true;
-            Screen.autorotateToPortraitUpsideDown = true;
+            Screen.autorotateToPortraitUpsideDown = false;
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
         }
@@ -68,6 +70,35 @@ public class SceneOrientationManager : MonoBehaviour
 
             if (toChild != null)
             {
+                
+                if (fromChild.gameObject.name == "InfoOptionsButtonContainer")
+                {
+                    Debug.Log(fromChild.gameObject.name);
+                    var existingVertical = toChild.GetComponent<VerticalLayoutGroup>();
+                    var existingHorizontal = toChild.GetComponent<HorizontalLayoutGroup>();
+
+                    Debug.Log(existingVertical);
+                    Debug.Log(existingHorizontal);
+
+                    if (existingVertical) Destroy(existingVertical);
+                    if (existingHorizontal) Destroy(existingHorizontal);
+
+                    var fromVertical = from.GetComponent<VerticalLayoutGroup>();
+                    var fromHorizontal = from.GetComponent<HorizontalLayoutGroup>();
+
+                    if (fromVertical)
+                    {
+                        var copy = to.gameObject.AddComponent<VerticalLayoutGroup>();
+                        CopyLayoutGroupSettings(copy, fromVertical);
+                    }
+                    else if (fromHorizontal)
+                    {
+                        var copy = to.gameObject.AddComponent<HorizontalLayoutGroup>();
+                        CopyLayoutGroupSettings(copy, fromHorizontal);
+                    }
+
+                }
+
                 // Rekurencja
                 CopyLayout(fromChild, toChild);
 
@@ -87,5 +118,17 @@ public class SceneOrientationManager : MonoBehaviour
             }
         }
     }
+
+    void CopyLayoutGroupSettings(HorizontalOrVerticalLayoutGroup target, HorizontalOrVerticalLayoutGroup source)
+    {
+        target.spacing = source.spacing;
+        target.childAlignment = source.childAlignment;
+        target.childForceExpandHeight = source.childForceExpandHeight;
+        target.childForceExpandWidth = source.childForceExpandWidth;
+        target.childControlHeight = source.childControlHeight;
+        target.childControlWidth = source.childControlWidth;
+        target.padding = source.padding;
+    }
+
 
 }
