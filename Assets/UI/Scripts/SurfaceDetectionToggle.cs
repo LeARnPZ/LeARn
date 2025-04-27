@@ -8,10 +8,26 @@ public class ARSurfaceVisibilityController : MonoBehaviour
     public ARPlaneManager arPlaneManager;
     public Slider visibilitySlider;
     private bool isVisible;
+    private bool allowSliderChanges = true;
 
     void Start()
     {
         if (arPlaneManager == null) return;
+
+        bool poorMode = PlayerPrefs.GetInt("PoorMode") == 1;
+        if (poorMode && visibilitySlider != null)
+        {
+            visibilitySlider.interactable = false;
+            visibilitySlider.value = 0f;
+            isVisible = false;
+            SetARPlaneVisibility(false);
+            PlayerPrefs.SetInt("PlaneVisibility", 0);
+            PlayerPrefs.Save();
+            visibilitySlider.enabled = false;
+
+            allowSliderChanges = false;
+            return;
+        }
 
         if (PlayerPrefs.HasKey("PlaneVisibility"))
         {
@@ -47,6 +63,10 @@ public class ARSurfaceVisibilityController : MonoBehaviour
 
     public void OnSliderValueChanged(float value)
     {
+
+        if (!allowSliderChanges)
+            return;
+
         if(value == 1f)
         {
             isVisible = true;
