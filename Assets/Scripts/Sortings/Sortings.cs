@@ -80,8 +80,9 @@ public abstract class Sortings : MonoBehaviour
 
     public void Pause()
     {
+
         isPaused = !isPaused;
-        Time.timeScale = isPaused ? 0f : 1f;
+        Time.timeScale = isPaused ? 0f : SpeedButton.CurrentTimeScale;
     }
 
     public virtual void Restart()
