@@ -13,6 +13,7 @@ public class ModifyStructure : MonoBehaviour
     private float timeout;
     private bool isTimeout;
     private bool touchInput;
+    private bool isScaling;
     [SerializeField]
     private GameObject stackButtonsObject;
     [SerializeField]
@@ -104,8 +105,23 @@ public class ModifyStructure : MonoBehaviour
 
     private void Update()
     {
-        if (touchInput && anim.transform.childCount > 0 && Input.touchCount > 0 && !isTimeout)
+        if (!touchInput) 
+            return;
+
+        if (Input.touchCount == 2)
         {
+            isScaling = true;
+            return;
+        }
+        
+        if (Input.touchCount == 0)
+            isScaling = false;
+
+        if (Input.touchCount == 1 && anim.transform.childCount > 0)
+        {
+            if (isTimeout || isScaling)
+                return;
+
             Touch touch = Input.GetTouch(0);
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
