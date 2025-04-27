@@ -22,6 +22,10 @@ public class PlaceObject : MonoBehaviour
     private string algorithmName;
     private readonly float distanceFromCamera = 0.75f;
 
+    private bool waitingForSurface = false;
+    private float surfaceWaitTimer = 0f;
+    private readonly float maxWaitTime = 15f;
+
     private void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
@@ -37,6 +41,12 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Enable();
         EnhancedTouch.EnhancedTouchSupport.Enable();
         EnhancedTouch.Touch.onFingerDown += FingerDown;
+
+        if (!poorMode)
+        {
+            waitingForSurface = true;
+            surfaceWaitTimer = 0f;
+        }
     }
 
     private void OnDisable()
@@ -70,7 +80,7 @@ public class PlaceObject : MonoBehaviour
 
                 animationObject.transform.parent = anchorObject.transform;
                 animationObject.transform.localPosition = Vector3.zero;
-                if (anchor != null)
+                if (anchor != null)                
                 {
                     Instantiate(prefab, animationObject.transform);
                     animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
@@ -138,5 +148,40 @@ public class PlaceObject : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, results);
 
         return results.Count > 0;
+    }
+
+    private void Update()
+    {
+        if (!waitingForSurface || placed) return;
+
+        surfaceWaitTimer += Time.deltaTime;
+
+        bool planesDetected = false;
+        foreach (var plane in planeManager.trackables)
+        {
+            if (plane.alignment == PlaneAlignment.HorizontalUp && plane.trackingState == TrackingState.Tracking)
+            {
+                planesDetected = true;
+                break;
+            }
+        }
+
+        if (planesDetected)
+        {
+            waitingForSurface = false;
+        }
+        else if (surfaceWaitTimer >= maxWaitTime)
+        {
+            ActivatePoorMode();
+        }
+    }
+
+    private void ActivatePoorMode()
+    {
+        poorMode = true;
+        waitingForSurface = false;
+
+        PlayerPrefs.SetInt("PoorMode", 1);
+        PlayerPrefs.Save();
     }
 }
