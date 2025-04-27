@@ -14,6 +14,7 @@ public class ObjectScaler : MonoBehaviour
         TouchSimulation.Enable();
         EnhancedTouchSupport.Enable();
         initialScale = transform.localScale;
+        currentScale = 1;
     }
 
     private void OnDisable()
@@ -41,14 +42,16 @@ public class ObjectScaler : MonoBehaviour
                 if (Mathf.Approximately(initialDistance, 0)) return;
 
                 float scaleFactor = currentScale * (currentDistance / initialDistance);
-                if(scaleFactor <= 1)
+                if(scaleFactor < 1)
                 {
                     currentScale = Mathf.Max(scaleFactor, (float)0.4);
                 }
-                else
+                else if(scaleFactor > 1)
                 {
                     currentScale = Mathf.Min(scaleFactor, (float)2.5);
                 }
+
+                initialDistance = currentDistance;
                 transform.localScale = initialScale * currentScale;
 
                 Graphs graphs = GetComponent<Graphs>();
