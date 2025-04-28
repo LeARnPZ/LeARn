@@ -38,30 +38,41 @@ public class SceneOrientationManager : MonoBehaviour
         {
             _lastOrientation = Screen.orientation;
             UpdateCanvasForOrientation(_lastOrientation);
-            StartCoroutine(CheckOrientationChange());
+            //StartCoroutine(CheckOrientationChange());
         }
     }
 
-    private IEnumerator CheckOrientationChange()
+    //private IEnumerator CheckOrientationChange()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(0.3f);
+
+    //        if (Screen.orientation != _lastOrientation)
+    //        {
+    //            _lastOrientation = Screen.orientation;
+    //            UpdateCanvasForOrientation(_lastOrientation);
+
+
+    //            // naprawia bug, ¿e nie zmieniaj¹ siê obiekty przez wieczne zatrzymanie
+    //            Time.timeScale = 1f;
+    //           // yield return new WaitForSeconds(0.3f);
+    //            //Time.timeScale = 1f;
+
+    //        }
+    //    }
+    //}
+    void Update()
     {
-        while (true)
+        if (Screen.orientation != _lastOrientation)
         {
-            yield return new WaitForSeconds(0.3f);
+            _lastOrientation = Screen.orientation;
+            UpdateCanvasForOrientation(_lastOrientation);
 
-            if (Screen.orientation != _lastOrientation)
-            {
-                _lastOrientation = Screen.orientation;
-                UpdateCanvasForOrientation(_lastOrientation);
-
-                Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
-                if (sort.IsPaused())
-                {
-                    // naprawia bug, ¿e nie zmieniaj¹ siê obiekty przez wieczne zatrzymanie
-                    sort.Pause();
-                    //sort.Pause();
-                }
-
-            }
+            // naprawia bug, ¿e nie zmieniaj¹ siê obiekty przez wieczne zatrzymanie
+            //Time.timeScale = 1f;
+            // yield return new WaitForSeconds(0.3f);
+            //Time.timeScale = 1f;
         }
     }
 
@@ -107,9 +118,18 @@ public class SceneOrientationManager : MonoBehaviour
                     }
 
                 }
+                //if (fromChild.gameObject.name == "Top")
+                //{
+                //    var existingHorizontal = toChild.GetComponent<HorizontalLayoutGroup>();
+                //    var fromHorizontal = from.GetComponent<HorizontalLayoutGroup>();
+                //    CopyLayoutGroupSettings( fromHorizontal, existingHorizontal);
+                //}
 
                 // Zmiana odpowiedniej czcionki
-                if (fromChild.gameObject.name == "InfoText")
+                if (fromChild.gameObject.name == "InfoText" ||
+                    fromChild.gameObject.name == "ComplexityText" ||
+                    fromChild.gameObject.name == "ComplexityValue" ||
+                    fromChild.gameObject.name == "Text (TMP)")
                 {
                     var fromText = fromChild.GetComponent<TMPro.TextMeshProUGUI>();
                     var toText = toChild.GetComponent<TMPro.TextMeshProUGUI>();
@@ -121,6 +141,7 @@ public class SceneOrientationManager : MonoBehaviour
                         toText.fontSizeMax = fromText.fontSizeMax;
                         toText.characterSpacing = fromText.characterSpacing;
                     }
+
                 }
 
 

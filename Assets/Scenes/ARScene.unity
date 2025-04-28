@@ -11291,15 +11291,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916fbdf3c511c84498ff2de88a6dc089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanSurfaceInstruction: {fileID: 3115842934071803916}
-  scanErrorInstruction: {fileID: 9079936544864591359}
-  touchScreenInstruction: {fileID: 3210582852816891072}
-  scaleInstruction: {fileID: 4951883567018141497}
-  moveIteratorInstruction: {fileID: 1231187430357286448}
+  scanSurfaceInstruction: {fileID: 835606577}
+  scanErrorInstruction: {fileID: 1829830591}
+  touchScreenInstruction: {fileID: 1120100363}
+  scaleInstruction: {fileID: 684494582}
+  moveIteratorInstruction: {fileID: 894834160}
   planeManager: {fileID: 845617266}
   placeObjectScript: {fileID: 845617265}
-  infoPopupWindow: {fileID: 576906013}
-  infoPopupWindowStructs: {fileID: 1916584312}
+  infoPopupWindow: {fileID: 470224379}
+  infoPopupWindowStructs: {fileID: 316080947}
   minPlaneSize: 0.3
   instructionDuration: 1.5
   searchDuration: 20
@@ -16789,7 +16789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 82.2911, y: -408.76843}
+  m_AnchoredPosition: {x: 82.291016, y: -408.76843}
   m_SizeDelta: {x: -284.5792, y: 220.3979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189762169
