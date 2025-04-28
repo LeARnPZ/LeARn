@@ -146,6 +146,7 @@ public abstract class Structures : MonoBehaviour
 
     protected virtual void Start()
     {
+        Time.timeScale = 1f;
         SetDirection();
         iterator = 0;
         for (int i = 0; i < 3; i++)
