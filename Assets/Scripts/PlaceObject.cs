@@ -63,19 +63,19 @@ public class PlaceObject : MonoBehaviour
                 Vector3 position = cam.transform.position + cam.transform.forward * distanceFromCamera;
                 Quaternion rotation = Quaternion.LookRotation(cam.transform.position - position);
 
-                GameObject anchorObject = new("Kotwica");
-                anchorObject.transform.position = position;
-                anchorObject.transform.rotation = rotation;
-                ARAnchor anchor = anchorObject.AddComponent<ARAnchor>();
-
-                animationObject.transform.parent = anchorObject.transform;
-                animationObject.transform.localPosition = Vector3.zero;
-                if (anchor != null)                
+                Pose pose = new(position, rotation);
+                ARAnchor anchor = anchorManager.AddAnchor(pose);
+                if (anchor == null)
                 {
-                    Instantiate(prefab, animationObject.transform);
-                    animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
-                    placed = true;
+                    Debug.LogWarning("Nie udało się dodać anchor'a!");
+                    return;
                 }
+
+                animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
+                animationObject.transform.localPosition = Vector3.zero;
+                Instantiate(prefab, pose.position, Quaternion.identity, animationObject.transform);
+                animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
+                placed = true;
             }
         }
         else
