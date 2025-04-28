@@ -38,41 +38,16 @@ public class SceneOrientationManager : MonoBehaviour
         {
             _lastOrientation = Screen.orientation;
             UpdateCanvasForOrientation(_lastOrientation);
-            //StartCoroutine(CheckOrientationChange());
         }
     }
 
-    //private IEnumerator CheckOrientationChange()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(0.3f);
-
-    //        if (Screen.orientation != _lastOrientation)
-    //        {
-    //            _lastOrientation = Screen.orientation;
-    //            UpdateCanvasForOrientation(_lastOrientation);
-
-
-    //            // naprawia bug, ¿e nie zmieniaj¹ siê obiekty przez wieczne zatrzymanie
-    //            Time.timeScale = 1f;
-    //           // yield return new WaitForSeconds(0.3f);
-    //            //Time.timeScale = 1f;
-
-    //        }
-    //    }
-    //}
+   
     void Update()
     {
         if (Screen.orientation != _lastOrientation)
         {
             _lastOrientation = Screen.orientation;
             UpdateCanvasForOrientation(_lastOrientation);
-
-            // naprawia bug, ¿e nie zmieniaj¹ siê obiekty przez wieczne zatrzymanie
-            //Time.timeScale = 1f;
-            // yield return new WaitForSeconds(0.3f);
-            //Time.timeScale = 1f;
         }
     }
 
@@ -118,12 +93,25 @@ public class SceneOrientationManager : MonoBehaviour
                     }
 
                 }
-                //if (fromChild.gameObject.name == "Top")
-                //{
-                //    var existingHorizontal = toChild.GetComponent<HorizontalLayoutGroup>();
-                //    var fromHorizontal = from.GetComponent<HorizontalLayoutGroup>();
-                //    CopyLayoutGroupSettings( fromHorizontal, existingHorizontal);
-                //}
+
+                //kopiowanie wartosci wlasnosci w layoutach
+                if (fromChild.gameObject.name == "BottomButtons" || fromChild.gameObject.name == "LeftSide" || fromChild.gameObject.name == "Top" || fromChild.gameObject.name == "RightSide" || fromChild.gameObject.name == "BottomButtonsSteps")
+                {
+                    var fromVertical = fromChild.GetComponent<VerticalLayoutGroup>();
+                    var fromHorizontal = fromChild.GetComponent<HorizontalLayoutGroup>();
+                    var fromLayout = fromVertical != null ? (HorizontalOrVerticalLayoutGroup) fromVertical : fromHorizontal;
+
+                    var existingVertical = toChild.GetComponent<VerticalLayoutGroup>();
+                    var existingHorizontal = toChild.GetComponent<HorizontalLayoutGroup>();
+                    var existingLayout = existingVertical != null ? (HorizontalOrVerticalLayoutGroup) existingVertical : existingHorizontal;
+
+                    if (fromLayout != null && existingLayout != null)
+                    {
+                        CopyLayoutGroupSettings(existingLayout, fromLayout);
+                    }
+                }
+
+            }
 
                 // Zmiana odpowiedniej czcionki
                 if (fromChild.gameObject.name == "InfoText" ||
@@ -161,7 +149,7 @@ public class SceneOrientationManager : MonoBehaviour
                     toRect.localScale = fromRect.localScale;
                     toRect.localRotation = fromRect.localRotation;
                 }
-            }
+            
         }
 
     }
