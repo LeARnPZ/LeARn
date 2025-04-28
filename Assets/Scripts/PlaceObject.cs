@@ -17,7 +17,7 @@ public class PlaceObject : MonoBehaviour
 
     private ARAnchorManager anchorManager;
 
-    private bool placed = false;
+    public bool placed = false;
     private bool poorMode;
     private string algorithmName;
     private readonly float distanceFromCamera = 0.75f;
@@ -137,6 +137,7 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
+
     }
 
     private bool IsTouchOverUI(Vector2 touchPosition)

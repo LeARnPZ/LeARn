@@ -9,11 +9,10 @@ public class CloseUIOnTouch : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             if (IsPointerOverSpecificUI(Input.GetTouch(0).position))
             {
-                //tu powinno byc blokowanie raycastow, ale idk na razie jak to zrobic
             }
             else
             {
