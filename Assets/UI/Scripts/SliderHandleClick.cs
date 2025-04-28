@@ -10,7 +10,11 @@ public class SliderHandleClickListener : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (slider == null) return;
+        if (slider == null)
+            return;
+            
+        if (PlayerPrefs.GetInt("PoorMode") == 1 && slider.CompareTag("VisibilitySlider"))
+            return;
 
         if (slider.value == 0)
         {

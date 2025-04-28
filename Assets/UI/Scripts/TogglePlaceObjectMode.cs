@@ -14,12 +14,12 @@ public class TogglePlaceObjectMode : MonoBehaviour
         if (!PlayerPrefs.HasKey("PoorMode"))
         {
             PlayerPrefs.SetInt("PoorMode", 0);
-            slider.value = 1;
             PlayerPrefs.Save();
+            slider.SetValueWithoutNotify(1);
         }
         else
         {
-            slider.value = (PlayerPrefs.GetInt("PoorMode") + 1) % 2;
+            slider.SetValueWithoutNotify((PlayerPrefs.GetInt("PoorMode") + 1) % 2);
         }
     }
 

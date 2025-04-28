@@ -51,14 +51,12 @@ public class ARSurfaceVisibilityController : MonoBehaviour
 
     public void AutoDisableSlider()
     {
-        bool poorMode = PlayerPrefs.GetInt("PoorMode") == 1;
-        if (poorMode && visibilitySlider != null)
+        if (visibilitySlider != null)
         {
             visibilitySlider.value = 0f;
             visibilitySlider.interactable = false;
             PlayerPrefs.SetInt("PlaneVisibility", 0);
             PlayerPrefs.Save();
-            GameObject.FindAnyObjectByType<SliderHandleClickListener>(FindObjectsInactive.Include).enabled = false;
         }
     }
 

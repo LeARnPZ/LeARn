@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using System.Linq;
+using TMPro;
 
 
 public class InstructionsManager : MonoBehaviour
@@ -23,11 +24,11 @@ public class InstructionsManager : MonoBehaviour
 
     [Header("Settings")]
     public float minPlaneSize = 0.3f;
-    public float instructionDuration = 2f;
-    public float searchDuration = 5f;
+    public float instructionDuration = 1.5f;
+    public float searchDuration = 20f;
 
     private bool instructionsEnabled;
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -103,9 +104,12 @@ public class InstructionsManager : MonoBehaviour
     private IEnumerator HandleInstructions()
     {
         string algorithm = PlayerPrefs.GetString("algorithm");
+        bool poorMode = PlayerPrefs.GetInt("PoorMode") == 1;
         GameObject currentInfoPopup = algorithm.Contains("Struct") ? infoPopupWindowStructs : infoPopupWindow;
 
         //monit skanowania powierzchni
+        if (poorMode)
+            scanSurfaceInstruction.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Poruszaj telefonem, aby zeskanowaæ otoczenie";
         scanSurfaceInstruction.SetActive(true);
         yield return new WaitForSeconds(instructionDuration);
 
@@ -138,6 +142,7 @@ public class InstructionsManager : MonoBehaviour
                 if (!placeObjectScript.placed)
                 {
                     //monit "dotknij ekran zeby postawiæ obiekt"
+                    touchScreenInstruction.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Dotknij ekranu, aby umieœciæ animacjê";
                     yield return StartCoroutine(FadeIn(touchScreenInstruction));
 
                     //oczekiwanie na postawienie obiektu
@@ -149,7 +154,7 @@ public class InstructionsManager : MonoBehaviour
                 yield return StartCoroutine(FadeOut(touchScreenInstruction));
 
 
-                //monit o skalowaniu powierzchni
+                //monit o skalowaniu obiektu
                 yield return StartCoroutine(FadeIn(scaleInstruction));
                 yield return new WaitForSeconds(instructionDuration);
                 yield return StartCoroutine(FadeOut(scaleInstruction));
@@ -166,8 +171,19 @@ public class InstructionsManager : MonoBehaviour
         }
         else //wyswietlenie bledu jesli nie znaleziono powierzchni
         {
-            scanSurfaceInstruction.SetActive(false);
-            scanErrorInstruction.SetActive(true); //wyœwietlenie komunikatu b³êdu
+            if (poorMode)
+            {
+                StartCoroutine(FadeOut(scanSurfaceInstruction));
+            }
+            else
+            {
+                scanSurfaceInstruction.SetActive(false);
+                scanErrorInstruction.SetActive(true); //wyœwietlenie komunikatu b³êdu
+
+                placeObjectScript.ActivatePoorMode();
+                yield return new WaitForSeconds(instructionDuration);
+                StartCoroutine(FadeOut(scanErrorInstruction));
+            }
         }
     }
 

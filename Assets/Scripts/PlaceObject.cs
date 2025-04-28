@@ -22,10 +22,6 @@ public class PlaceObject : MonoBehaviour
     private string algorithmName;
     private readonly float distanceFromCamera = 0.75f;
 
-    private bool waitingForSurface = false;
-    private float surfaceWaitTimer = 0f;
-    private readonly float maxWaitTime = 15f;
-
     private void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
@@ -41,12 +37,6 @@ public class PlaceObject : MonoBehaviour
         EnhancedTouch.TouchSimulation.Enable();
         EnhancedTouch.EnhancedTouchSupport.Enable();
         EnhancedTouch.Touch.onFingerDown += FingerDown;
-
-        if (!poorMode)
-        {
-            waitingForSurface = true;
-            surfaceWaitTimer = 0f;
-        }
     }
 
     private void OnDisable()
@@ -137,7 +127,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
-
     }
 
     private bool IsTouchOverUI(Vector2 touchPosition)
@@ -150,41 +139,14 @@ public class PlaceObject : MonoBehaviour
 
         return results.Count > 0;
     }
-
-    private void Update()
-    {
-        if (!waitingForSurface || placed) return;
-
-        surfaceWaitTimer += Time.deltaTime;
-
-        bool planesDetected = false;
-        foreach (var plane in planeManager.trackables)
-        {
-            if (plane.alignment == PlaneAlignment.HorizontalUp && plane.trackingState == TrackingState.Tracking)
-            {
-                planesDetected = true;
-                break;
-            }
-        }
-
-        if (planesDetected)
-        {
-            waitingForSurface = false;
-        }
-        else if (surfaceWaitTimer >= maxWaitTime)
-        {
-            ActivatePoorMode();
-        }
-    }
-
-    private void ActivatePoorMode()
+    
+    public void ActivatePoorMode()
     {
         poorMode = true;
-        waitingForSurface = false;
 
         PlayerPrefs.SetInt("PoorMode", 1);
         PlayerPrefs.Save();
 
-        GameObject.FindAnyObjectByType<ARSurfaceVisibilityController>().AutoDisableSlider();
+        FindAnyObjectByType<ARSurfaceVisibilityController>().AutoDisableSlider();
     }
 }
