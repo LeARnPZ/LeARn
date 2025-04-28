@@ -183,5 +183,7 @@ public class PlaceObject : MonoBehaviour
 
         PlayerPrefs.SetInt("PoorMode", 1);
         PlayerPrefs.Save();
+
+        GameObject.FindAnyObjectByType<ARSurfaceVisibilityController>().AutoDisableSlider();
     }
 }
