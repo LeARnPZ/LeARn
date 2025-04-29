@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MergeSort : Sortings
 {
-    private float horizontalOffset = 2.0f; // Jak daleko rozchodzi siê na boki
-    private float verticalOffset = 2.0f;   // Jak wysoko unosz¹ siê elementy
 
     private IEnumerator Sorting(List<GameObject> array)
     {

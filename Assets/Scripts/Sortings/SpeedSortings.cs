@@ -13,6 +13,8 @@ public class SpeedButton : MonoBehaviour
 
     private float[] speeds = { 1.0f, 1.25f, 1.5f, 1.75f, 2.0f };
     private int currentSpeedIndex = 0;
+    public static float CurrentTimeScale { get; set; } = 1.0f;
+
 
     public void OnSpeedButtonClick()
     {
@@ -25,6 +27,8 @@ public class SpeedButton : MonoBehaviour
             {
                 currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
                 Time.timeScale = speeds[currentSpeedIndex];
+                CurrentTimeScale = Time.timeScale;
+
 
                 if (speedText != null)
                 {
@@ -39,6 +43,8 @@ public class SpeedButton : MonoBehaviour
             {
                 currentSpeedIndex = (currentSpeedIndex + 1) % speeds.Length;
                 Time.timeScale = speeds[currentSpeedIndex];
+                CurrentTimeScale = Time.timeScale;
+
 
                 if (speedText != null)
                 {
@@ -52,6 +58,8 @@ public class SpeedButton : MonoBehaviour
     {
         currentSpeedIndex = 0;
         Time.timeScale = speeds[currentSpeedIndex];
+        CurrentTimeScale = Time.timeScale;
+
 
         if (speedText != null)
         {
@@ -74,6 +82,8 @@ public class SpeedButton : MonoBehaviour
         {
             gameObject.SetActive(true);
             Time.timeScale = speeds[currentSpeedIndex];
+            CurrentTimeScale = Time.timeScale;
+
             if (speedText != null)
             {
                 speedText.text = $"{speeds[currentSpeedIndex]}x";
