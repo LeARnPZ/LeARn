@@ -70,11 +70,11 @@ public class MergeSort : Sortings
             GameObject rightObj = right[rightIndex];
 
 
-            yield return StartCoroutine(BounceObject(leftObj));
             StartCoroutine(ChangeColor(leftObj, yellowColor));
+            yield return StartCoroutine(BounceObject(leftObj));
 
-            yield return StartCoroutine(BounceObject(rightObj));
             StartCoroutine(ChangeColor(rightObj, yellowColor));
+            yield return StartCoroutine(BounceObject(rightObj));
 
             yield return new WaitForSeconds(timeout);
 
