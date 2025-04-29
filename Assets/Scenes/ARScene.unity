@@ -7618,7 +7618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bbfaae73bf949b44bc65d4bceec55af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation: {fileID: 566207622}
+  ParentAnimation: {fileID: 566207622}
 --- !u!1 &846157841
 GameObject:
   m_ObjectHideFlags: 0
