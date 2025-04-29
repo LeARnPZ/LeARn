@@ -38,7 +38,7 @@ public class InsertionSort : Sortings
             yield return new WaitForSeconds(timeout);
 
             Vector3 originalPos = keyItem.transform.localPosition;
-            Vector3 moveUpPos = originalPos + Vector3.up;
+            Vector3 moveUpPos = originalPos + Vector3.up * 1.5f;
             yield return StartCoroutine(MoveObject(keyItem, moveUpPos)); 
 
             Vector3 finalPosition = originalPos; 
