@@ -73,8 +73,14 @@ public class PlaceObject : MonoBehaviour
 
                 animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
                 animationObject.transform.localPosition = Vector3.zero;
-                Instantiate(prefab, pose.position, Quaternion.identity, animationObject.transform);
+                GameObject spawnedObject = Instantiate(prefab, pose.position, Quaternion.identity, animationObject.transform);
                 animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
+
+                Vector3 directionToCamera = cam.transform.position - spawnedObject.transform.position;
+                directionToCamera.y = 0;
+                Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
+                spawnedObject.transform.rotation = lookRotation;
+
                 placed = true;
             }
         }
