@@ -14,14 +14,14 @@ public class InstructionsSlider : MonoBehaviour
         {
             int enabled = PlayerPrefs.GetInt("InstructionsEnabled", 1);
             instructionsSlider.value = enabled;
-            Debug.Log("Start: Odczytano InstructionsEnabled = " + enabled);
+            //Debug.Log("Start: Odczytano InstructionsEnabled = " + enabled);
         }
         else
         {
             PlayerPrefs.SetInt("InstructionsEnabled", 1);
             PlayerPrefs.Save();
             instructionsSlider.value = 1f;
-            Debug.Log("Start: Nie znaleziono klucza. Ustawiono InstructionsEnabled = 1");
+            //Debug.Log("Start: Nie znaleziono klucza. Ustawiono InstructionsEnabled = 1");
         }
     }
 
@@ -30,6 +30,6 @@ public class InstructionsSlider : MonoBehaviour
         int intValue = Mathf.RoundToInt(value);
         PlayerPrefs.SetInt("InstructionsEnabled", intValue);
         PlayerPrefs.Save();
-        Debug.Log("OnSliderChanged: Zmieniono InstructionsEnabled na " + intValue);
+        //Debug.Log("OnSliderChanged: Zmieniono InstructionsEnabled na " + intValue);
     }
 }
