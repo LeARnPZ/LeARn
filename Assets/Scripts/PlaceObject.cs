@@ -17,7 +17,7 @@ public class PlaceObject : MonoBehaviour
 
     private ARAnchorManager anchorManager;
 
-    private bool placed = false;
+    public bool placed = false;
     private string algorithmName;
 
     private void Awake()
@@ -64,7 +64,10 @@ public class PlaceObject : MonoBehaviour
             GameObject animationObject = GameObject.Find("Animation");
             animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
 
-            Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+            // Dodaj scaler do g³ównego obiektu animacji
+            GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
+            obj.AddComponent<ObjectScaler>();        
+
             placed = true;
 
             string algorithm = PlayerPrefs.GetString("algorithm");
