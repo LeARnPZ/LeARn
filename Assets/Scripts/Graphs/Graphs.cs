@@ -231,6 +231,7 @@ public abstract class Graphs : MonoBehaviour
                     GameObject line = new($"{i}-{j}");
                     line.transform.parent = edges.transform;
                     line.transform.localScale = Vector3.one;
+                    line.transform.rotation = Quaternion.Euler(0, 0, 0);
 
                     Vector3 from = nodesList[i].transform.position;
                     Vector3 to = nodesList[j].transform.position;
@@ -243,20 +244,20 @@ public abstract class Graphs : MonoBehaviour
                     lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
-                    if (this.name.Contains("Dijkstra"))
+                    if (name.Contains("Dijkstra"))
                     {
                         GameObject weight = new("EdgeWeight");
                         weight.transform.parent = line.transform;
-                        weight.transform.localScale = new Vector3(-1, 1, 1);
+                        weight.transform.localScale = Vector3.one;
 
                         Vector3 middle = (from + to) / 2f;
                         Vector3 direction = (to - from).normalized;
                         Vector3 up = Vector3.Cross(direction, Vector3.forward);
-                        Vector3 position = middle + up * 0.25f * transform.localScale.x;
+                        Vector3 position = middle + 0.25f * transform.localScale.x * up;
                         if (position.y < middle.y)
                         {
                             up = -up;
-                            position = middle + up * 0.25f * transform.localScale.x;
+                            position = middle + 0.25f * transform.localScale.x * up;
                         }
                         weight.transform.position = position;
 
