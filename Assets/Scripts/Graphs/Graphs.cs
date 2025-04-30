@@ -382,4 +382,32 @@ public abstract class Graphs : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
     }
+
+    public void UpdateEdgePositions()
+    {
+        for (int i = 0; i < edgesList.Count; i++)
+        {
+            GameObject line = edgesList[i];
+
+            string[] parts = line.name.Split('-');
+            if (parts.Length == 2 && int.TryParse(parts[0], out int a) && int.TryParse(parts[1], out int b))
+            {
+                if (a < nodesList.Count && b < nodesList.Count)
+                {
+                    Vector3 from = nodesList[a].transform.position;
+                    Vector3 to = nodesList[b].transform.position;
+
+                    LineRenderer lr = line.GetComponent<LineRenderer>();
+                    if (lr != null)
+                    {
+                        lr.SetPosition(0, from);
+                        lr.SetPosition(1, to);
+
+                        float width = 0.1f * transform.localScale.x;
+                        lr.startWidth = lr.endWidth = width;
+                    }
+                }
+            }
+        }
+    }
 }

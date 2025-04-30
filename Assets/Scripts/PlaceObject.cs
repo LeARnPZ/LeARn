@@ -70,9 +70,9 @@ public class PlaceObject : MonoBehaviour
                     Debug.LogWarning("Nie udało się dodać anchor'a!");
                     return;
                 }
-
                 animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
                 animationObject.transform.localPosition = Vector3.zero;
+
                 GameObject spawnedObject = Instantiate(prefab, pose.position, Quaternion.identity, animationObject.transform);
                 animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
 
@@ -80,7 +80,7 @@ public class PlaceObject : MonoBehaviour
                 directionToCamera.y = 0;
                 Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
                 spawnedObject.transform.rotation = lookRotation;
-
+		        spawnedObject.AddComponent<ObjectScaler>();
                 placed = true;
             }
         }
@@ -95,9 +95,10 @@ public class PlaceObject : MonoBehaviour
                     Debug.LogWarning("Nie udało się dodać anchor'a!");
                     return;
                 }
-
                 animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
-                Instantiate(prefab, pose.position, pose.rotation, animationObject.transform);
+
+                GameObject spawnedObject = Instantiate(prefab, pose.position, pose.rotation, animationObject.transform);
+		        spawnedObject.AddComponent<ObjectScaler>();
                 placed = true;
             }
         }
