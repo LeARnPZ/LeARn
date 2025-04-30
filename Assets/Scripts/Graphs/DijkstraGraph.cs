@@ -191,7 +191,7 @@ public class DijkstraGraph : Graphs
     {
         // Obracanie tekstu o 180 stopni w zależności od pozycji kamery
         Camera cam = Camera.main;
-        if (cam.transform.position.z < transform.position.z)
+        if (Vector3.Dot(transform.forward, cam.transform.position - transform.position) < 0)
         {
             foreach (GameObject arriveText in arriveCostTexts)
                 arriveText.transform.SetLocalPositionAndRotation(new Vector3(0, 0.75f, -0.25f), Quaternion.Euler(0, 0, 0));
