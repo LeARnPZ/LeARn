@@ -194,14 +194,15 @@ public class DijkstraGraph : Graphs
         if (cam.transform.position.z < transform.position.z)
         {
             foreach (GameObject arriveText in arriveCostTexts)
-                arriveText.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                arriveText.transform.SetLocalPositionAndRotation(new Vector3(0, 0.75f, -0.25f), Quaternion.Euler(0, 0, 0));
+
             foreach (GameObject edge in edgesList)
                 edge.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
             foreach (GameObject arriveText in arriveCostTexts)
-                arriveText.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                arriveText.transform.SetLocalPositionAndRotation(new Vector3(0, 0.75f, 0.25f), Quaternion.Euler(0, 180, 0));
             foreach (GameObject edge in edgesList)
                 edge.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 180, 0);
         }

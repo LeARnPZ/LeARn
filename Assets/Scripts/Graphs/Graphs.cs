@@ -231,7 +231,7 @@ public abstract class Graphs : MonoBehaviour
                     GameObject line = new($"{i}-{j}");
                     line.transform.parent = edges.transform;
                     line.transform.localScale = Vector3.one;
-                    line.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    line.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
                     Vector3 from = nodesList[i].transform.position;
                     Vector3 to = nodesList[j].transform.position;
@@ -252,7 +252,7 @@ public abstract class Graphs : MonoBehaviour
 
                         Vector3 middle = (from + to) / 2f;
                         Vector3 direction = (to - from).normalized;
-                        Vector3 up = Vector3.Cross(direction, Vector3.forward);
+                        Vector3 up = Vector3.Cross(direction, line.transform.forward);
                         Vector3 position = middle + 0.25f * transform.localScale.x * up;
                         if (position.y < middle.y)
                         {
