@@ -71,9 +71,11 @@ public class MergeSort : Sortings
 
 
             StartCoroutine(ChangeColor(leftObj, yellowColor));
+            yield return new WaitForSeconds(timeout);
             yield return StartCoroutine(BounceObject(leftObj));
 
             StartCoroutine(ChangeColor(rightObj, yellowColor));
+            yield return new WaitForSeconds(timeout);
             yield return StartCoroutine(BounceObject(rightObj));
 
             yield return new WaitForSeconds(timeout);
