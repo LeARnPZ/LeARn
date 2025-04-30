@@ -66,13 +66,17 @@
 5) Powtarzamy te kroki dla każdego kolejnego elementu, aż do końca listy.
 
 ### SelectSort
-1) Przechodzimy przez całą listę zaczynając od drugiego indeksu i szukamy najmniejszego elementu. 
+1) Ustawiamy się na pierwszym elemencie listy. 
 
-2) Znaleziony najmniejszy element zamieniamy miejscami z pierwszym elementem listy. Liczba znajduje się teraz na docelowej pozycji.
+2) Przeszukujemy całą resztę listy (od bieżącego indeksu do końca) i szukamy najmniejszego elementu. 
 
-3) Przechodzimy do następnego elementu powtarzając proces z kroku 1. i 2. Zakres przeszukiwanych pozycji zmniejsza się po każdym przeszukaniu.
+3) Znaleziony najmniejszy element zamieniamy miejscami z bieżącym elementem. Liczba znajduje się teraz na docelowej pozycji.
 
-4) Proces trwa aż dojdziemy do ostatniej liczby. Lista jest posortowana.
+4) Przechodzimy do następnego indeksu w liście.
+
+5) Powtarzamy kroki 2-4, aż dotrzemy do przedostaniego elementu listy.
+
+6) Lista jest posortowana.
 
 ### StackStruct – bez listy kroków
 
