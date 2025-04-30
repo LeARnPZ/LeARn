@@ -12,7 +12,7 @@ public class InsertionSort : Sortings
         isPaused = false;
         Time.timeScale = 1f;
         
-        values.Clear();
+        // values.Clear();
         
         foreach (Transform child in transform)
         {
