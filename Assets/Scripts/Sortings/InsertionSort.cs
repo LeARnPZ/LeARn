@@ -65,12 +65,12 @@ public class InsertionSort : Sortings
                 else
                 {
                     yield return StartCoroutine(ChangeColor(items[j], blueColor));
-                    yield return StartCoroutine(ChangeColor(keyItem, blueColor));
+                    // yield return StartCoroutine(ChangeColor(keyItem, blueColor));
                     break;
                 }
 
-                yield return StartCoroutine(ChangeColor(items[j + 1], blueColor));
-                yield return StartCoroutine(ChangeColor(keyItem, blueColor));
+                yield return StartCoroutine(ChangeColor(items[j + 1], blueColor));            
+            
             }
 
 
@@ -80,6 +80,7 @@ public class InsertionSort : Sortings
             Vector3 finalPos = new Vector3(moveLeftPos.x, originalPos.y, originalPos.z);
             yield return StartCoroutine(MoveObject(keyItem, finalPos));
 
+            // yield return StartCoroutine(ChangeColor(keyItem, blueColor));
 
             items[j + 1] = keyItem;
 
