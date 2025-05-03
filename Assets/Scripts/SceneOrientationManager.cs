@@ -15,6 +15,7 @@ public class SceneOrientationManager : MonoBehaviour
     private GameObject animationObject;
 
     private ScreenOrientation _lastOrientation;
+    private bool fromLandscapeToLandscape = false;
 
     void Awake()
     {
@@ -46,8 +47,14 @@ public class SceneOrientationManager : MonoBehaviour
     {
         if (Screen.orientation != _lastOrientation)
         {
+            if(Screen.orientation == ScreenOrientation.LandscapeLeft && _lastOrientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeRight && _lastOrientation == ScreenOrientation.LandscapeLeft)
+            {
+                Debug.Log("Przejscie z portrait na portrait!");
+                fromLandscapeToLandscape = true;
+            }
             _lastOrientation = Screen.orientation;
             UpdateCanvasForOrientation(_lastOrientation);
+            fromLandscapeToLandscape = false;
         }
     }
 
@@ -148,7 +155,16 @@ public class SceneOrientationManager : MonoBehaviour
                     toRect.pivot = fromRect.pivot;
                     toRect.localScale = fromRect.localScale;
                     toRect.localRotation = fromRect.localRotation;
+
+                    if (fromLandscapeToLandscape && (toChild.name == "Info" || toChild.name == "InfoForStructs" || toChild.name == "OptionsBackground"))
+                    {
+                        RectTransform target = toRect;
+                        RectTransform reference = GameObject.Find("InfoButton").GetComponent<RectTransform>();
+
+                        PositionElementWithOffset(target, reference, 720f);
+                    }
                 }
+            
             
         }
 
@@ -164,6 +180,30 @@ public class SceneOrientationManager : MonoBehaviour
         target.childControlWidth = source.childControlWidth;
         target.padding = source.padding;
     }
+
+
+    public void PositionElementWithOffset(RectTransform target, RectTransform reference, float pixelOffset)
+    {
+        RectTransform canvasRect = mainCanvas.GetComponent<RectTransform>();
+
+        float scale = mainCanvas.GetComponent<Canvas>().scaleFactor;
+        float scaledOffset = pixelOffset / scale;
+
+        // Przekszta³cenie pozycji do lokalnej przestrzeni canvasu
+        Vector3 referenceLocalPos = canvasRect.InverseTransformPoint(reference.position);
+        Vector3 targetLocalPos = canvasRect.InverseTransformPoint(target.position);
+
+        // Oblicz przesuniêcie
+        float newX = referenceLocalPos.x - scaledOffset;
+
+        // Przypisz now¹ pozycjê w przestrzeni Canvasu
+        Vector3 newLocalTargetPos = new Vector3(newX, targetLocalPos.y, targetLocalPos.z);
+
+        // Przekszta³æ z powrotem do œwiatowej pozycji i przypisz
+        target.position = canvasRect.TransformPoint(newLocalTargetPos);
+    }
+
+
 
 
 }
