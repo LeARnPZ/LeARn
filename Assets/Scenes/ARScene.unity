@@ -11350,6 +11350,7 @@ GameObject:
   - component: {fileID: 845617265}
   - component: {fileID: 845617272}
   - component: {fileID: 845617274}
+  - component: {fileID: 845617275}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -11469,7 +11470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arPlaneManager: {fileID: 845617266}
-  visibilitySlider: {fileID: 1796715337231505849}
+  visibilitySlider: {fileID: 633987596}
 --- !u!114 &845617273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11507,6 +11508,19 @@ MonoBehaviour:
   minPlaneSize: 0.3
   instructionDuration: 1.5
   searchDuration: 20
+--- !u!114 &845617275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845617264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbfaae73bf949b44bc65d4bceec55af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentAnimation: {fileID: 566207622}
 --- !u!1 &846157841
 GameObject:
   m_ObjectHideFlags: 0
