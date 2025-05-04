@@ -1,5 +1,5 @@
 // Ten plik jest generowany automatycznie przy buildzie.
 public static class BuildInfo
 {
-    public const string BuildDate = "29.04.2025";
+    public const string BuildDate = "04.05.2025";
 }
