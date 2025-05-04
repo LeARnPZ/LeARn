@@ -8,7 +8,13 @@ public class InsertionSort : Sortings
     public override void Restart()
     {
         StopAllCoroutines();
-        
+
+        SpeedButton speedButton = FindObjectOfType<SpeedButton>();
+        if (speedButton != null)
+        {
+            speedButton.SpeedButtonRestart();
+        }
+
         isPaused = false;
         Time.timeScale = 1f;
         
