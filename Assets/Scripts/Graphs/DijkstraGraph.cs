@@ -19,8 +19,8 @@ public class DijkstraGraph : Graphs
     {
         GameObject gameObject = new($"ArriveCost{n}");
         gameObject.transform.parent = nodesList[n].transform;
-        gameObject.transform.localPosition = new Vector3(0, 0.75f, 0);
-        gameObject.transform.localScale = new Vector3(-1, 1, 1);
+        gameObject.transform.localPosition = new Vector3(0, 0.75f, -0.25f);
+        gameObject.transform.localScale = Vector3.one;
 
         gameObject.AddComponent<TextMeshPro>();
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
@@ -189,11 +189,22 @@ public class DijkstraGraph : Graphs
 
     private void Update()
     {
-        // Obracanie tekstu w kierunku kamery
-        foreach (GameObject edge in edgesList)
-            edge.transform.GetChild(0).transform.LookAt(Camera.main.transform);
+        // Obracanie tekstu o 180 stopni w zależności od pozycji kamery
+        Camera cam = Camera.main;
+        if (Vector3.Dot(transform.forward, cam.transform.position - transform.position) < 0)
+        {
+            foreach (GameObject arriveText in arriveCostTexts)
+                arriveText.transform.SetLocalPositionAndRotation(new Vector3(0, 0.75f, -0.25f), Quaternion.Euler(0, 0, 0));
 
-        foreach (GameObject arriveText in arriveCostTexts)
-            arriveText.transform.LookAt(Camera.main.transform);
+            foreach (GameObject edge in edgesList)
+                edge.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            foreach (GameObject arriveText in arriveCostTexts)
+                arriveText.transform.SetLocalPositionAndRotation(new Vector3(0, 0.75f, 0.25f), Quaternion.Euler(0, 180, 0));
+            foreach (GameObject edge in edgesList)
+                edge.transform.GetChild(0).transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
     }
 }

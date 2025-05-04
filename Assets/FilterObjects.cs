@@ -7,8 +7,6 @@ public class FilterCategories : MonoBehaviour
 {
     public ToggleGroup toggleGroup;
     public GameObject contentContainer;
-    public GameObject emptyObject;
-    public GameObject emptyObject2;
     public ScrollRect scrollRect;
     private string defaultToggleName = "All";
     private Toggle lastSelectedToggle;
@@ -51,13 +49,6 @@ public class FilterCategories : MonoBehaviour
 
             item.gameObject.SetActive(shouldBeVisible);
             
-        }
-
-
-        if (emptyObject != null && emptyObject2 != null)
-        {
-            emptyObject.SetActive(selectedTag == "Structures");
-            emptyObject2.SetActive(selectedTag == "Graphs");
         }
 
         if (scrollRect != null)

@@ -231,6 +231,7 @@ public abstract class Graphs : MonoBehaviour
                     GameObject line = new($"{i}-{j}");
                     line.transform.parent = edges.transform;
                     line.transform.localScale = Vector3.one;
+                    line.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
                     Vector3 from = nodesList[i].transform.position;
                     Vector3 to = nodesList[j].transform.position;
@@ -243,20 +244,20 @@ public abstract class Graphs : MonoBehaviour
                     lr.material.color = blueColor;
                     lr.material.SetFloat("_Glossiness", 0);
 
-                    if (this.name.Contains("Dijkstra"))
+                    if (name.Contains("Dijkstra"))
                     {
                         GameObject weight = new("EdgeWeight");
                         weight.transform.parent = line.transform;
-                        weight.transform.localScale = new Vector3(-1, 1, 1);
+                        weight.transform.localScale = Vector3.one;
 
                         Vector3 middle = (from + to) / 2f;
                         Vector3 direction = (to - from).normalized;
-                        Vector3 up = Vector3.Cross(direction, Vector3.forward);
-                        Vector3 position = middle + up * 0.25f * transform.localScale.x;
+                        Vector3 up = Vector3.Cross(direction, line.transform.forward);
+                        Vector3 position = middle + 0.25f * transform.localScale.x * up;
                         if (position.y < middle.y)
                         {
                             up = -up;
-                            position = middle + up * 0.25f * transform.localScale.x;
+                            position = middle + 0.25f * transform.localScale.x * up;
                         }
                         weight.transform.position = position;
 
@@ -381,5 +382,33 @@ public abstract class Graphs : MonoBehaviour
         // Odpauzowanie animacji po restarcie
         isPaused = false;
         Time.timeScale = 1f;
+    }
+
+    public void UpdateEdgePositions()
+    {
+        for (int i = 0; i < edgesList.Count; i++)
+        {
+            GameObject line = edgesList[i];
+
+            string[] parts = line.name.Split('-');
+            if (parts.Length == 2 && int.TryParse(parts[0], out int a) && int.TryParse(parts[1], out int b))
+            {
+                if (a < nodesList.Count && b < nodesList.Count)
+                {
+                    Vector3 from = nodesList[a].transform.position;
+                    Vector3 to = nodesList[b].transform.position;
+
+                    LineRenderer lr = line.GetComponent<LineRenderer>();
+                    if (lr != null)
+                    {
+                        lr.SetPosition(0, from);
+                        lr.SetPosition(1, to);
+
+                        float width = 0.1f * transform.localScale.x;
+                        lr.startWidth = lr.endWidth = width;
+                    }
+                }
+            }
+        }
     }
 }

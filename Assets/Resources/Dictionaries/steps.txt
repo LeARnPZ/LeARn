@@ -108,14 +108,14 @@
 1) Wybieramy węzeł początkowy. Ustawiamy jego koszt dotarcia na 0, a dla pozostałych węzłów ustawiamy ∞ (nieskończoność). Wszystkie węzły oznaczamy jako nieodwiedzone. Na początek żaden węzeł nie ma poprzednika.
 
 2) Sprawdzamy nieodwiedzone węzły:
-	a) Jeżeli koszt dotarcia dla każdego z tych węzłów wynosi ∞, zakończ algorytm – węzły te są nieosiągalne.
-	b) W przeciwnym wypadku, wybieramy węzeł o najniższym koszcie dotarcia.
+   a) Jeżeli koszt dotarcia dla każdego z tych węzłów wynosi ∞, zakończ algorytm – węzły te są nieosiągalne.
+   b) W przeciwnym wypadku, wybieramy węzeł o najniższym koszcie dotarcia.
 
 3) Oznaczamy wybrany węzeł jako odwiedzony.
 
 4) Dla każdego sąsiada obecnego węzła wykonujemy kroki:
-	a) Obliczamy potencjalny nowy koszt dotarcia do sąsiada: <i>koszt_sąsiada = koszt_obecnego_węzła + waga_krawędzi</i>
-	b) Jeżeli nowy koszt dotarcia do sąsiada jest niższy od obecnego, aktualizujemy tę wartość i ustawiamy obecny węzeł jako poprzednik dla danego sąsiada.
+   a) Obliczamy potencjalny nowy koszt dotarcia do sąsiada: <i>koszt_sąsiada = koszt_obecnego_węzła + waga_krawędzi</i>
+   b) Jeżeli nowy koszt dotarcia do sąsiada jest niższy od obecnego, aktualizujemy tę wartość i ustawiamy obecny węzeł jako poprzednik dla danego sąsiada.
 
 5) Powtarzamy kroki 2–4 aż wszystkie węzły zostaną odwiedzone lub do momentu, gdy nie ma już dostępnych węzłów (krok 2a).
 
