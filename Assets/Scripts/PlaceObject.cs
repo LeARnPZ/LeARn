@@ -18,7 +18,9 @@ public class PlaceObject : MonoBehaviour
     private ARAnchorManager anchorManager;
 
     public bool placed = false;
+    private bool poorMode;
     private string algorithmName;
+    private readonly float distanceFromCamera = 0.75f;
 
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class PlaceObject : MonoBehaviour
         anchorManager = GetComponent<ARAnchorManager>();
 
         algorithmName = PlayerPrefs.GetString("algorithm");
+        poorMode = PlayerPrefs.GetInt("PoorMode") == 1; 
     }
 
     private void OnEnable()
@@ -50,26 +53,58 @@ public class PlaceObject : MonoBehaviour
         if (IsTouchOverUI(finger.currentTouch.screenPosition)) return;
 
         GameObject prefab = (GameObject) Resources.Load($"Animations/{algorithmName}");
+        GameObject animationObject = GameObject.Find("Animation");
 
-        if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+        if (poorMode)
         {
-            Pose pose = hits[0].pose;
-            ARAnchor anchor = anchorManager.AddAnchor(pose);
-            if (anchor == null)
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                Debug.LogWarning("Nie udało się dodać anchor'a!");
-                return;
+                Camera cam = Camera.main;
+                Vector3 position = cam.transform.position + cam.transform.forward * distanceFromCamera;
+                Quaternion rotation = Quaternion.LookRotation(cam.transform.position - position);
+
+                Pose pose = new(position, rotation);
+                ARAnchor anchor = anchorManager.AddAnchor(pose);
+                if (anchor == null)
+                {
+                    Debug.LogWarning("Nie udało się dodać anchor'a!");
+                    return;
+                }
+                animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
+                animationObject.transform.localPosition = Vector3.zero;
+
+                GameObject spawnedObject = Instantiate(prefab, pose.position, Quaternion.identity, animationObject.transform);
+                animationObject.transform.GetChild(0).localScale = Vector3.one / 20f;
+
+                Vector3 directionToCamera = cam.transform.position - spawnedObject.transform.position;
+                directionToCamera.y = 0;
+                Quaternion lookRotation = Quaternion.LookRotation(-directionToCamera);
+                spawnedObject.transform.rotation = lookRotation;
+		        spawnedObject.AddComponent<ObjectScaler>();
+                placed = true;
             }
+        }
+        else
+        {
+            if (raycastManager.Raycast(finger.currentTouch.screenPosition, hits, TrackableType.PlaneWithinPolygon))
+            {
+                Pose pose = hits[0].pose;
+                ARAnchor anchor = anchorManager.AddAnchor(pose);
+                if (anchor == null)
+                {
+                    Debug.LogWarning("Nie udało się dodać anchor'a!");
+                    return;
+                }
+                animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
 
-            GameObject animationObject = GameObject.Find("Animation");
-            animationObject.transform.SetParent(anchor.transform, worldPositionStays: true);
+                GameObject spawnedObject = Instantiate(prefab, pose.position, pose.rotation, animationObject.transform);
+		        spawnedObject.AddComponent<ObjectScaler>();
+                placed = true;
+            }
+        }
 
-            // Dodaj scaler do g³ównego obiektu animacji
-            GameObject obj = Instantiate(prefab, pose.position, pose.rotation, GameObject.Find("Animation").transform);
-            obj.AddComponent<ObjectScaler>();        
-
-            placed = true;
-
+        if (placed)
+        {
             string algorithm = PlayerPrefs.GetString("algorithm");
             if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             {
@@ -99,7 +134,6 @@ public class PlaceObject : MonoBehaviour
                 GameObject.Find("BottomButtons/StructButtonsList/PeekItemButton").GetComponent<Button>().interactable = true;
             }
         }
-
     }
 
     private bool IsTouchOverUI(Vector2 touchPosition)
@@ -112,5 +146,14 @@ public class PlaceObject : MonoBehaviour
 
         return results.Count > 0;
     }
+    
+    public void ActivatePoorMode()
+    {
+        poorMode = true;
 
+        PlayerPrefs.SetInt("PoorMode", 1);
+        PlayerPrefs.Save();
+
+        FindAnyObjectByType<ARSurfaceVisibilityController>().AutoDisableSlider();
+    }
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 public class ARSurfaceVisibilityController : MonoBehaviour
 {
@@ -11,18 +10,15 @@ public class ARSurfaceVisibilityController : MonoBehaviour
 
     void Start()
     {
-        if (arPlaneManager == null) return;
+        if (arPlaneManager == null)
+            return;
+
+        if (PlayerPrefs.GetInt("PoorMode") == 1)
+            AutoDisableSlider();
 
         if (PlayerPrefs.HasKey("PlaneVisibility"))
         {
-            if(PlayerPrefs.GetInt("PlaneVisibility") == 1)
-            {
-                isVisible = true;
-            }
-            else if(PlayerPrefs.GetInt("PlaneVisibility") == 0)
-            {
-                isVisible = false;
-            }
+            isVisible = PlayerPrefs.GetInt("PlaneVisibility") == 1;
         }
         else
         {
@@ -31,15 +27,7 @@ public class ARSurfaceVisibilityController : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-
-        if (isVisible)
-        {
-            visibilitySlider.value = 1f;
-        }
-        else
-        {
-            visibilitySlider.value = 0f;
-        }
+        visibilitySlider.value = isVisible ? 1f : 0f;
 
         arPlaneManager.planesChanged += OnPlanesChanged;
         SetARPlaneVisibility(isVisible);
@@ -47,14 +35,7 @@ public class ARSurfaceVisibilityController : MonoBehaviour
 
     public void OnSliderValueChanged(float value)
     {
-        if(value == 1f)
-        {
-            isVisible = true;
-        }
-        else
-        {
-            isVisible = false;
-        }
+        isVisible = value == 1f;
 
         SetARPlaneVisibility(isVisible);
         PlayerPrefs.SetInt("PlaneVisibility", isVisible ? 1 : 0);
@@ -65,36 +46,35 @@ public class ARSurfaceVisibilityController : MonoBehaviour
     {
         arPlaneManager.planePrefab.SetActive(visible);
         foreach (var plane in arPlaneManager.trackables)
-        {
             plane.gameObject.SetActive(visible);
-        }
+    }
 
+    public void AutoDisableSlider()
+    {
+        if (visibilitySlider != null)
+        {
+            visibilitySlider.value = 0f;
+            visibilitySlider.interactable = false;
+            PlayerPrefs.SetInt("PlaneVisibility", 0);
+            PlayerPrefs.Save();
+        }
     }
 
     private void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
         foreach (var addedPlane in args.added)
-        {
             addedPlane.gameObject.SetActive(isVisible);
 
-        }
-
         foreach (var removedPlane in args.removed)
-        {
             removedPlane.gameObject.SetActive(isVisible);
-        }
 
         foreach (var updatedPlane in args.updated)
-        {
             updatedPlane.gameObject.SetActive(isVisible);
-        }
     }
 
     void OnDisable()
     {
         if (arPlaneManager != null)
-        {
             arPlaneManager.planesChanged -= OnPlanesChanged;
-        }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Structures
   - Graphs
   - Empty
+  - VisibilitySlider
   layers:
   - Default
   - TransparentFX
