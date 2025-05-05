@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5981211425227568185}
   - component: {fileID: 1950540890845960100}
   - component: {fileID: 5269585581282058891}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,6 +112,7 @@ MonoBehaviour:
   prefab: {fileID: 185193376915255039, guid: 215b947ca3cb8cb4b984454346d0f47c, type: 3}
   maxCount: 10
   offset: 1.5
+  animDuration: 0.25
   speed: 1
   iteratorObject: {fileID: 3169089251475361215}
 --- !u!1001 &5656781179115432390

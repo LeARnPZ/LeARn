@@ -48,6 +48,7 @@ MonoBehaviour:
   prefab: {fileID: 185193376915255039, guid: 215b947ca3cb8cb4b984454346d0f47c, type: 3}
   maxCount: 10
   offset: 1.5
+  animDuration: 0.25
 --- !u!1 &8132882296070092401
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +60,7 @@ GameObject:
   - component: {fileID: 1875563715561208513}
   - component: {fileID: 363274223734211733}
   - component: {fileID: 8441500721820562809}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,29 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
-public class Dictionaries : MonoBehaviour
+public static class Dictionaries
 {
-    public static Dictionary<string, int> algorithms = new Dictionary<string, int>();
-    public static Dictionary<int, string> descriptions = new Dictionary<int, string>();
+    public static readonly Dictionary<string, int> algorithms = new();
+    public static readonly Dictionary<int, string> descriptions = new();
+    public static readonly Dictionary<int, string> stepBySteps = new();
+    public static readonly Dictionary<int, string> complexityValues = new();
 
-    // Start is called before the first frame update
-    private void Awake()
+    /// Dodanie indeksów do nazw algorytmów
+    private static void AddIndices()
     {
-        // Add indices for algorithms
-        if (!algorithms.ContainsKey("StalinSort")) algorithms.Add("StalinSort", 0);
-        if (!algorithms.ContainsKey("SelectionSort")) algorithms.Add("SelectionSort", 1);
-        if (!algorithms.ContainsKey("BubbleSort")) algorithms.Add("BubbleSort", 2);
-        if (!algorithms.ContainsKey("StackStruct")) algorithms.Add("StackStruct", 3);
-        if (!algorithms.ContainsKey("QueueStruct")) algorithms.Add("QueueStruct", 4);
-        if (!algorithms.ContainsKey("ListStruct")) algorithms.Add("ListStruct", 5);
+        algorithms.Add("BubbleSort", 0);
+        algorithms.Add("QuickSort", 1);
+        algorithms.Add("MergeSort", 2);
+        algorithms.Add("BucketSort", 3);
+        algorithms.Add("InsertionSort", 4);
+        algorithms.Add("SelectSort", 5);
+        algorithms.Add("StackStruct", 6);
+        algorithms.Add("QueueStruct", 7);
+        algorithms.Add("ListStruct", 8);
+        algorithms.Add("DFSGraph", 9);
+        algorithms.Add("BFSGraph", 10);
+        algorithms.Add("DijkstraGraph", 11);
+        algorithms.Add("GrahamAlgo", 12);
+    }
 
-        // Add descriptions for indices
-        if (!descriptions.ContainsKey(0)) descriptions.Add(0, "Stalin sort (znany równie¿ jako „dictator sort”) to absurdalny algorytm sortowania, w którym ka¿dy element, który nie znajduje siê we w³aœciwej kolejnoœci, jest po prostu usuwany z listy. W efekcie, na koniec faktycznie dostajemy posortowan¹ listê, jednak czêœæ danych zostaje utracona.");
-        if (!descriptions.ContainsKey(1)) descriptions.Add(1, "Sortowanie przez wybór to prosty algorytm sortowania, w którym za ka¿dym razem wybierany jest najmniejszy element i zamieniany z kolejnym w kolejnoœci, a¿ lista stanie siê ca³kowicie uporz¹dkowana.");
-        if (!descriptions.ContainsKey(2)) descriptions.Add(2, "Sortowanie b¹belkowe to algorytm sortowania, w którym s¹siednie elementy s¹ wielokrotnie porównywane i zamieniane miejscami, a¿ najwiêksze wartoœci „wyp³yn¹” na koniec listy. Proces ten jest powtarzany tak d³ugo, a¿ lista stanie siê posortowana.");
-        if (!descriptions.ContainsKey(3)) descriptions.Add(3, "Stos to struktura danych dzia³aj¹ca na zasadzie LIFO (Last In, First Out), co oznacza, ¿e ostatni dodany element jest pierwszym usuwanym. Mo¿na go porównaæ do stosu talerzy – nowy talerz k³adziemy na wierzchu, a zdejmujemy zawsze ten, który jest na samej górze.\n\nPodstawowe operacje na stosie to:\n• push – dodanie elementu na szczyt stosu,\n• pop – usuniêcie elementu ze szczytu stosu,\n• top – podejrzenie elementu na szczycie bez jego usuwania.");
-        if (!descriptions.ContainsKey(4)) descriptions.Add(4, "Kolejka to struktura danych dzia³aj¹ca na zasadzie FIFO (First In, First Out), co oznacza, ¿e elementy s¹ usuwane w takiej samej kolejnoœci, w jakiej zosta³y dodane – jak w kolejce do kasy w sklepie.\n\nPodstawowe operacje na kolejce to:\n• enqueue – dodanie elementu na koniec kolejki,\n• dequeue – usuniêcie elementu z pocz¹tku kolejki,\n• front – podejrzenie pierwszego elementu bez jego usuwania.");
-        if (!descriptions.ContainsKey(5)) descriptions.Add(5, "Lista to struktura danych umo¿liwiaj¹ca przechowywanie elementów w okreœlonej kolejnoœci, z mo¿liwoœci¹ ich dynamicznego dodawania, usuwania i modyfikowania. W przeciwieñstwie do stosu i kolejki, elementy mog¹ byæ wstawiane lub usuwane w dowolnym miejscu.\n\nPodstawowe operacje na liœcie to:\n• wstawianie – dodawanie elementu na pocz¹tku, koñcu lub w œrodku listy,\n• usuwanie – kasowanie dowolnego elementu,\n• wyszukiwanie – odnalezienie elementu na podstawie wartoœci lub indeksu,\n• iterowanie – przechodzenie przez kolejne elementy listy.");
+    private static void ContentToDictionary(string[] content, Dictionary<int, string> dictionary)
+    {
+        int i = -1;
+        string text = "";
+        foreach (string line in content)
+        {
+            if (line.Contains("###"))
+            {
+                if (i < 0)
+                {
+                    i++;
+                    continue;
+                }
+
+                dictionary.Add(i, text);
+                text = "";
+                i++;
+            }
+            else
+            {
+                text += line + '\n';
+            }
+        }
+    }
+
+    /// Dodanie opisów algorytmów
+    private static void AddDescriptions()
+    {
+        TextAsset file = (TextAsset)Resources.Load("Dictionaries/descriptions");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, descriptions);
+    }
+
+    /// Dodanie opisów krok-po-kroku
+    private static void AddStepBySteps()
+    {
+        TextAsset file = (TextAsset) Resources.Load("Dictionaries/steps");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, stepBySteps);
+    }
+
+    /// Dodanie z³o¿onoœci
+    private static void AddComplexityValues()
+    {
+        TextAsset file = (TextAsset)Resources.Load("Dictionaries/complexity");
+        string[] content = file.text.Split('\n');
+        ContentToDictionary(content, complexityValues);
+    }
+
+    static Dictionaries()
+    {
+        AddIndices();
+        AddDescriptions();
+        AddStepBySteps();
+        AddComplexityValues();
     }
 }

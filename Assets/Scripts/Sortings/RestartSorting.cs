@@ -13,13 +13,22 @@ public class RestartSorting : MonoBehaviour
     public void OnButtonClick()
     {
         if (GetComponent<Button>().interactable)
-            anim.transform.GetChild(0).GetComponent<Sortings>().Restart();
-        playPauseButton.GetComponent<PlayPauseAnimation>().resetButtonText();
+            if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
+                anim.transform.GetChild(0).GetComponent<Sortings>().Restart();
+            else if (PlayerPrefs.GetString("algorithm").Contains("Graph"))
+            {
+                anim.transform.GetChild(0).GetComponent<Graphs>().Restart();
+                if (!PlayerPrefs.GetString("algorithm").Contains("Dijkstra"))
+                    anim.transform.GetChild(0).GetChild(1).GetComponent<Structures>().Restart();
+            }  
+        playPauseButton.GetComponent<PlayPauseAnimation>().ResetButtonText();
     }
 
     private void Start()
     {
         if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
+            gameObject.SetActive(true);
+        else if (PlayerPrefs.GetString("algorithm").Contains("Graph"))
             gameObject.SetActive(true);
         else
             gameObject.SetActive(false);

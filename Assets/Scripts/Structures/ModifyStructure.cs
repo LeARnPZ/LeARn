@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ModifyStructure : MonoBehaviour
@@ -12,6 +13,17 @@ public class ModifyStructure : MonoBehaviour
     private float timeout;
     private bool isTimeout;
     private bool touchInput;
+    private int taps;
+    private float elapsedTimeForDoubleTap;
+    private readonly float maxTimeForDoubleTap = 0.5f;
+
+    [SerializeField]
+    private GameObject stackButtonsObject;
+    [SerializeField]
+    private GameObject queueButtonsObject;
+    [SerializeField]
+    private GameObject listButtonsObject;
+
 
     [Header("Button objects")]
     [SerializeField]
@@ -59,17 +71,51 @@ public class ModifyStructure : MonoBehaviour
         isTimeout = false;
     }
 
+    private void RecordTap()
+    {
+        if (elapsedTimeForDoubleTap > maxTimeForDoubleTap)
+        {
+            taps = 1;
+            elapsedTimeForDoubleTap = 0f;
+        }
+        else
+        {
+            taps++;
+        }
+    }
+
     private void Start()
     {
         touchInput = false;
         if (PlayerPrefs.GetString("algorithm").Contains("Struct"))
         {
-            gameObject.SetActive(true);
-            if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            if (PlayerPrefs.GetString("algorithm").Contains("Stack"))
+            {
+                stackButtonsObject.SetActive(true);
+                queueButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            }
+            else if (PlayerPrefs.GetString("algorithm").Contains("Queue"))
+            {
+                queueButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                listButtonsObject.SetActive(false);
+            }
+            else if (PlayerPrefs.GetString("algorithm").Contains("List"))
+            {
                 touchInput = true;
+                taps = 0;
+                elapsedTimeForDoubleTap = 0f;
+                listButtonsObject.SetActive(true);
+                stackButtonsObject.SetActive(false);
+                queueButtonsObject.SetActive(false);
+            }
+
         }
         else
+        {
             gameObject.SetActive(false);
+        }
 
         addBtn.GetComponent<Button>().interactable = false;
         popBtn.GetComponent<Button>().interactable = false;
@@ -78,30 +124,45 @@ public class ModifyStructure : MonoBehaviour
 
     private void Update()
     {
-        if (touchInput && anim.transform.childCount > 0 && Input.touchCount > 0 && !isTimeout)
+        elapsedTimeForDoubleTap += Time.deltaTime;
+
+        if (!touchInput) 
+            return;
+
+        if (Input.touchCount == 1 && anim.transform.childCount > 0)
         {
+            if (isTimeout)
+                return;
+
+            Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject() || touch.phase != TouchPhase.Began)
+                return;
+
             int screenWidth = Screen.width;
             int screenHeight = Screen.height;
-            Touch touch = Input.GetTouch(0);
             ListStruct listStruct = anim.transform.GetChild(0).GetComponent<ListStruct>();
 
-            if (touch.position.y < 0.8 * screenHeight)
+            if (touch.position.y > 0.2 * screenHeight && touch.position.y < 0.8 * screenHeight)
             {
                 if (touch.position.x > 0.7 * screenWidth)
                 {
-                    if (listStruct.GetIterator() < listStruct.GetCount())
+                    RecordTap();
+                    if (listStruct.GetIterator() < listStruct.GetCount() && taps == 2)
                     {
                         StartCoroutine(listStruct.MoveIterator(Vector3.right));
                         StartCoroutine(ButtonsTimeout());
+                        taps = 0;
                     }
                 }
 
-                if (touch.position.x < 0.3 * screenWidth)
+                else if (touch.position.x < 0.3 * screenWidth)
                 {
-                    if (listStruct.GetIterator() > 0)
+                    RecordTap();
+                    if (listStruct.GetIterator() > 0 && taps == 2)
                     {
                         StartCoroutine(listStruct.MoveIterator(Vector3.left));
                         StartCoroutine(ButtonsTimeout());
+                        taps = 0;
                     }
                 }
             }

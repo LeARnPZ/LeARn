@@ -1,0 +1,27 @@
+### BubbleSort
+Θ(n²)
+### QuickSort
+Θ(n log n)
+### MergeSort
+Θ(n log n)
+### BucketSort
+Θ(n)
+### InsertionSort
+Θ(n²)
+### SelectSort
+Θ(n²)
+### StackStruct – bez złożoności
+
+### QueueStruct – bez złożoności
+
+### ListStruct – bez złożoności
+
+### DFSGraph
+Θ(V + E)
+### BFSGraph
+Θ(V + E)
+### DijkstraGraph
+Θ(V²)
+### GrahamAlgo
+
+###

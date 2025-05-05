@@ -12,42 +12,61 @@ public class PlayPauseAnimation : MonoBehaviour
     [SerializeField]
     private Button playPauseButton;
 
-    private TextMeshProUGUI buttonText;
+    private Transform pauseImage;
+    private Transform playImage;
 
 
-    public void onButtonClick()
+    public void OnButtonClick()
     {
+        string algorithm = PlayerPrefs.GetString("algorithm");
 
-        Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
-        bool isPaused = sort.getPaused();
-
-         //Debug.Log("Bool pauza = " + isPaused);
- 
-        sort.Pause();
-
-        if (sort.getPaused())
+        if (algorithm.Contains("Sort"))
         {
-            buttonText.text = "PLAY";
-        }
-        else
-        {
-            buttonText.text = "PAUZA";
-        }
-        
+            Sortings sort = animationObject.transform.GetChild(0).GetComponent<Sortings>();
+            sort.Pause();
 
-        //Debug.Log("Przycisk Play/Pause klikniêty. Bool pauza = " + isPaused);
+            if (sort.IsPaused())
+            {
+                pauseImage.gameObject.SetActive(false);
+                playImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                playImage.gameObject.SetActive(false);
+                pauseImage.gameObject.SetActive(true);
+            }
+        }
+        else if (algorithm.Contains("Graph"))
+        {
+            Graphs graph = animationObject.transform.GetChild(0).GetComponent<Graphs>();
+            graph.Pause();
+
+            if (graph.IsPaused())
+            {
+                pauseImage.gameObject.SetActive(false);
+                playImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                playImage.gameObject.SetActive(false);
+                pauseImage.gameObject.SetActive(true);
+            }
+        }
     }
 
-    public void resetButtonText()
+    public void ResetButtonText()
     {
-        buttonText.text = "PAUZA";
+        playImage.gameObject.SetActive(false);
+        pauseImage.gameObject.SetActive(true);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        buttonText = playPauseButton.GetComponentInChildren<TextMeshProUGUI>();
-        if (PlayerPrefs.GetString("algorithm").Contains("Sort"))
+        playImage = playPauseButton.transform.Find("PlayImage");
+        pauseImage = playPauseButton.transform.Find("PauseImage");
+
+        string algorithm = PlayerPrefs.GetString("algorithm");
+        if (algorithm.Contains("Sort") || algorithm.Contains("Graph"))
             gameObject.SetActive(true);
         else
             gameObject.SetActive(false);
