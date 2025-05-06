@@ -11501,6 +11501,7 @@ MonoBehaviour:
   touchScreenInstruction: {fileID: 1120100363}
   scaleInstruction: {fileID: 684494582}
   moveIteratorInstruction: {fileID: 894834160}
+  moveObjectInstruction: {fileID: 1637467230}
   planeManager: {fileID: 845617266}
   placeObjectScript: {fileID: 845617265}
   infoPopupWindow: {fileID: 470224379}
