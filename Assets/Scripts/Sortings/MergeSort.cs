@@ -48,27 +48,29 @@ public class MergeSort : Sortings
         yield return StartCoroutine(Sorting(right));
 
         // Scalanie obu posortowanych czêœci
-        yield return StartCoroutine(Merge(left, right, array));
+        bool isFinalMerge = array.Count == items.Count;
+        yield return StartCoroutine(Merge(left, right, array, isFinalMerge));
     }
 
 
-    private IEnumerator Merge(List<GameObject> left, List<GameObject> right, List<GameObject> result)
+    private IEnumerator Merge(List<GameObject> left, List<GameObject> right, List<GameObject> result, bool isFinalMerge = false)
     {
         int leftIndex = 0, rightIndex = 0, resultIndex = 0;
 
-        // Wyznaczamy œrodkow¹ pozycjê, aby elementy podczas scalania nie rozchodzi³y siê
-        float startX = (left[0].transform.localPosition.x + right[right.Count - 1].transform.localPosition.x) / 2;
-        float stepX = 1.0f; // Ma³y odstêp poziomy miêdzy elementami
-        float startY = left[0].transform.localPosition.y - 1.5f; // Przesuwamy ni¿ej, aby zachowaæ strukturê drzewa
+        float stepX = isFinalMerge ? 1.15f : 1.0f;
+        float startY = left[0].transform.localPosition.y - 1.5f;
 
-        List<Vector3> resultPositions = new List<Vector3>(); // Lista docelowych pozycji elementów
+        float centerX = (result[0].transform.localPosition.x + result[result.Count - 1].transform.localPosition.x) / 2f;
+        float totalWidth = (result.Count - 1) * stepX;
+        float startX = centerX - totalWidth / 2f;
 
-        // Scalanie dwóch list, wybieraj¹c mniejsze wartoœci
+        List<Vector3> resultPositions = new List<Vector3>();
+
+        // Scalanie dwóch list
         while (leftIndex < left.Count && rightIndex < right.Count)
         {
             GameObject leftObj = left[leftIndex];
             GameObject rightObj = right[rightIndex];
-
 
             StartCoroutine(ChangeColor(leftObj, yellowColor));
             yield return new WaitForSeconds(timeout);
@@ -80,22 +82,18 @@ public class MergeSort : Sortings
 
             yield return new WaitForSeconds(timeout);
 
-
-            if (GetValue(left[leftIndex]) <= GetValue(right[rightIndex]))
+            if (GetValue(leftObj) <= GetValue(rightObj))
             {
-                result[resultIndex] = left[leftIndex++]; // Wybieramy mniejszy element
+                result[resultIndex] = left[leftIndex++];
             }
             else
             {
-                result[resultIndex] = right[rightIndex++]; // Wybieramy mniejszy element
+                result[resultIndex] = right[rightIndex++];
             }
 
-            // Ustawiamy docelow¹ pozycjê w nowym zbiorze
             resultPositions.Add(new Vector3(startX + resultIndex * stepX, startY, 0));
             resultIndex++;
 
-
-            //Przywracamy pierwotny kolor po porównaniu
             StartCoroutine(ChangeColor(leftObj, blueColor));
             StartCoroutine(ChangeColor(rightObj, blueColor));
             yield return new WaitForSeconds(timeout);
@@ -104,17 +102,14 @@ public class MergeSort : Sortings
             {
                 Vector3 positionToMove = resultPositions[0];
                 GameObject objectToMove = result[resultIndex - resultPositions.Count];
-
-
                 resultPositions.RemoveAt(0);
 
                 StartCoroutine(MoveObject(objectToMove, positionToMove));
                 yield return new WaitForSeconds(timeout);
             }
-
         }
 
-        // Dodajemy pozosta³e elementy z lewej czêœci (jeœli jakieœ zosta³y)
+        // Dodaj resztê z lewej
         while (leftIndex < left.Count)
         {
             result[resultIndex] = left[leftIndex++];
@@ -122,7 +117,7 @@ public class MergeSort : Sortings
             resultIndex++;
         }
 
-        // Dodajemy pozosta³e elementy z prawej czêœci (jeœli jakieœ zosta³y)
+        // Dodaj resztê z prawej
         while (rightIndex < right.Count)
         {
             result[resultIndex] = right[rightIndex++];
@@ -130,20 +125,18 @@ public class MergeSort : Sortings
             resultIndex++;
         }
 
-        // Animujemy przesuwanie elementów na ich ostateczne pozycje
+        // Przesuñ pozosta³e elementy
         while (resultPositions.Count > 0 && result.Count > 0)
         {
             Vector3 positionToMove = resultPositions[0];
             GameObject objectToMove = result[resultIndex - resultPositions.Count];
-
-
             resultPositions.RemoveAt(0);
 
             StartCoroutine(MoveObject(objectToMove, positionToMove));
             yield return new WaitForSeconds(timeout);
         }
-
     }
+
 
 
     private IEnumerator BounceObject(GameObject obj, float bounceHeight = 0.5f, float bounceTime = 0.3f)
@@ -199,7 +192,7 @@ public class MergeSort : Sortings
         yield return StartCoroutine(Sorting(items));
 
 
-        yield return new WaitForSeconds(timeout * 2f);
+        yield return new WaitForSeconds(timeout);
         yield return StartCoroutine(EndSorting(items));
 
     }
