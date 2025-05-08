@@ -24,7 +24,7 @@
 
 5) Jeśli taki istnieje, to zamień miejscami elementy i oraz j.
 
-6) Powtarzamy od kroki 3-5 zaczynając szukać od indeksu i aż do zbadania każdego elementu przed pivotem.
+6) Powtarzamy kroki 3-5 zaczynając szukać od indeksu i aż do zbadania każdego elementu przed pivotem.
 
 7) Jeśli pivot nie znajduje się na właściwym miejscu, zamień miejscami pivot i pierwszy element większy od niego.
 
