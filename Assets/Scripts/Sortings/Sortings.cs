@@ -97,8 +97,10 @@ public abstract class Sortings : MonoBehaviour
             speedButton.SpeedButtonRestart();
         }
 
-        foreach (GameObject item in items)
-            Destroy(item);
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
         items.Clear();
         Start();
     }
