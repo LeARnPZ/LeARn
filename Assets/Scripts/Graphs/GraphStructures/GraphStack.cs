@@ -8,6 +8,7 @@ public class GraphStack : StackStruct
     protected override void Start()
     {
         base.SetDirection();
+        baseScale = transform.parent.localScale.x;
         iterator = 0;
     }
 
