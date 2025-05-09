@@ -15,7 +15,7 @@ public class SceneOrientationManager : MonoBehaviour
     private GameObject animationObject;
 
     private ScreenOrientation _lastOrientation;
-    private bool fromLandscapeToLandscape = false;
+    private bool Landscape = false;
 
     void Awake()
     {
@@ -31,6 +31,9 @@ public class SceneOrientationManager : MonoBehaviour
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
         }
+
+
+
     }
 
     void Start()
@@ -47,14 +50,14 @@ public class SceneOrientationManager : MonoBehaviour
     {
         if (Screen.orientation != _lastOrientation)
         {
-            if(Screen.orientation == ScreenOrientation.LandscapeLeft && _lastOrientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeRight && _lastOrientation == ScreenOrientation.LandscapeLeft)
+            if(Screen.orientation == ScreenOrientation.LandscapeLeft  || Screen.orientation == ScreenOrientation.LandscapeRight )
             {
                 Debug.Log("Przejscie z portrait na portrait!");
-                fromLandscapeToLandscape = true;
+                Landscape = true;
             }
             _lastOrientation = Screen.orientation;
             UpdateCanvasForOrientation(_lastOrientation);
-            fromLandscapeToLandscape = false;
+            Landscape = false;
         }
     }
 
@@ -67,6 +70,15 @@ public class SceneOrientationManager : MonoBehaviour
 
     private void CopyLayout(Transform from, Transform to)
     {
+        CanvasScaler mainScaler = mainCanvas.GetComponent<CanvasScaler>();
+        if (Landscape)
+        {
+            mainScaler.matchWidthOrHeight = 0;
+        }
+        else
+        {
+            mainScaler.matchWidthOrHeight = 0.4f;
+        }
         for (int i = 0; i < from.childCount; i++)
         {
             Transform fromChild = from.GetChild(i);
@@ -156,18 +168,8 @@ public class SceneOrientationManager : MonoBehaviour
                     toRect.localScale = fromRect.localScale;
                     toRect.localRotation = fromRect.localRotation;
 
-                    if (fromLandscapeToLandscape && (toChild.name == "Info" || toChild.name == "InfoForStructs" || toChild.name == "OptionsBackground"))
-                    {
-                        RectTransform target = toRect;
-                        RectTransform reference = GameObject.Find("InfoButton").GetComponent<RectTransform>();
-
-                        PositionElementWithOffset(target, reference, 720f);
-                    }
                 }
-            
-            
         }
-
     }
 
     void CopyLayoutGroupSettings(HorizontalOrVerticalLayoutGroup target, HorizontalOrVerticalLayoutGroup source)
@@ -180,30 +182,5 @@ public class SceneOrientationManager : MonoBehaviour
         target.childControlWidth = source.childControlWidth;
         target.padding = source.padding;
     }
-
-
-    public void PositionElementWithOffset(RectTransform target, RectTransform reference, float pixelOffset)
-    {
-        RectTransform canvasRect = mainCanvas.GetComponent<RectTransform>();
-
-        float scale = mainCanvas.GetComponent<Canvas>().scaleFactor;
-        float scaledOffset = pixelOffset / scale;
-
-        // Przekszta³cenie pozycji do lokalnej przestrzeni canvasu
-        Vector3 referenceLocalPos = canvasRect.InverseTransformPoint(reference.position);
-        Vector3 targetLocalPos = canvasRect.InverseTransformPoint(target.position);
-
-        // Oblicz przesuniêcie
-        float newX = referenceLocalPos.x - scaledOffset;
-
-        // Przypisz now¹ pozycjê w przestrzeni Canvasu
-        Vector3 newLocalTargetPos = new Vector3(newX, targetLocalPos.y, targetLocalPos.z);
-
-        // Przekszta³æ z powrotem do œwiatowej pozycji i przypisz
-        target.position = canvasRect.TransformPoint(newLocalTargetPos);
-    }
-
-
-
 
 }
