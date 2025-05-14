@@ -24,9 +24,11 @@
 
 5) Jeśli taki istnieje, to zamień miejscami elementy i oraz j.
 
-6) Powtarzamy od kroku 3) zaczynając szukać od indeksu i aż do ustawienia pivota.
+6) Powtarzamy kroki 3-5 zaczynając szukać od indeksu i aż do zbadania każdego elementu przed pivotem.
 
-7) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
+7) Jeśli pivot nie znajduje się na właściwym miejscu, zamień miejscami pivot i pierwszy element większy od niego.
+
+8) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
 
 ### MergeSort
 1) Jeśli lista ma więcej niż jeden element: 
