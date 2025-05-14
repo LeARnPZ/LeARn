@@ -13,8 +13,8 @@ public abstract class Structures : MonoBehaviour
     protected float offset;
     [SerializeField]
     private float animDuration;
-    private LimitWarning warning;
 
+    protected float baseScale;
     protected Vector3 direction;
     protected int iterator;
 
@@ -72,10 +72,7 @@ public abstract class Structures : MonoBehaviour
     public virtual void AddItem()
     {
         if (items.Count >= maxCount)
-        {
-            //StartCoroutine(warning.ShowWarning());
             return;
-        }
 
         items.Insert(iterator, Instantiate(prefab, this.transform));
 
@@ -103,7 +100,10 @@ public abstract class Structures : MonoBehaviour
 
         Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.AddRelativeForce(2 * Vector3.up + 0.5f * Vector3.forward + 0.5f * Vector3.right, ForceMode.Impulse);
+        float scaleRatio = this is GraphStack || this is GraphQueue ? 
+            Mathf.Pow(transform.parent.localScale.x / baseScale, 0.25f) : Mathf.Pow(transform.localScale.x / baseScale, 0.25f);
+        Vector3 force = scaleRatio * (2.0f * Vector3.up + 0.5f * Vector3.forward + 0.5f * Vector3.right);
+        rigidbody.AddRelativeForce(force, ForceMode.Impulse);
 
         StartCoroutine(Blink(items[iterator], orangeColor));
 
@@ -123,16 +123,16 @@ public abstract class Structures : MonoBehaviour
         }
 
         Rigidbody rigidbody = items[iterator].GetComponent<Rigidbody>();
-        rigidbody.AddRelativeForce(2 * Vector3.up, ForceMode.Impulse);
+        float scaleRatio = Mathf.Pow(transform.localScale.x / baseScale, 0.25f);
+        Vector3 force = scaleRatio * 2.0f * Vector3.up;
+        rigidbody.AddRelativeForce(force, ForceMode.Impulse);
 
         StartCoroutine(Blink(items[iterator], yellowColor));
     }
-
-
+    
     public void Restart()
     {
         StopAllCoroutines();
-
 
         foreach (GameObject item in items)
         {
@@ -146,6 +146,7 @@ public abstract class Structures : MonoBehaviour
 
     protected virtual void Start()
     {
+        baseScale = transform.localScale.x;
         Time.timeScale = 1f;
         SetDirection();
         iterator = 0;
@@ -154,7 +155,5 @@ public abstract class Structures : MonoBehaviour
             AddItem();
         }
         iterator = 0;
-
-        //warning = FindAnyObjectByType<LimitWarning>(FindObjectsInactive.Include);
     }
 }
