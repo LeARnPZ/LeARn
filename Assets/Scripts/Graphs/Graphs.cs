@@ -331,7 +331,13 @@ public abstract class Graphs : MonoBehaviour
     protected virtual void Awake()
     {
         // Wylosowanie wersji grafu oraz utworzenie do niego macierzy i list s¹siedztwa
-        int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
+        //int graphVersion = (int)(Random.value * 10) % 5; // <-- po znaku modulo musi byæ liczba dostêpnych wersji grafu
+        int graphVersion;
+        if (name.Contains("Dijkstra"))
+            graphVersion = 1;
+        else
+            graphVersion = 0;
+        
         CreateMatrix(graphVersion);
         CreateNeighborsList();
         

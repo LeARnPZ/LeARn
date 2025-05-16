@@ -7,7 +7,14 @@ public class OpenAR : MonoBehaviour
 {
     public void OnButtonClick()
     {
-        PlayerPrefs.SetString("algorithm", name);
-        SceneManager.LoadScene("ARScene");
+        if (name.StartsWith('!'))
+        {
+            StartCoroutine(FindAnyObjectByType<DemoNotification>(FindObjectsInactive.Include).ShowNotification());
+        }
+        else
+        {
+            PlayerPrefs.SetString("algorithm", name);
+            SceneManager.LoadScene("ARScene");
+        }
     }
 }
