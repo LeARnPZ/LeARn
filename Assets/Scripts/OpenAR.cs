@@ -9,7 +9,7 @@ public class OpenAR : MonoBehaviour
     {
         if (name.StartsWith('!'))
         {
-            StartCoroutine(FindAnyObjectByType<DemoNotification>(FindObjectsInactive.Include).ShowNotification());
+            //StartCoroutine(FindAnyObjectByType<DemoNotification>(FindObjectsInactive.Include).ShowNotification());
         }
         else
         {
