@@ -14,6 +14,7 @@ public class MovePlacedObject : MonoBehaviour
     private GameObject selectedObject;
     private bool isDragging = false;
     private ARAnchor currentAnchor;
+    private bool poorMode;
 
     [SerializeField]
     GameObject ParentAnimation;
@@ -21,10 +22,14 @@ public class MovePlacedObject : MonoBehaviour
     private void Awake()
     {
         raycastManager = GetComponent<ARRaycastManager>();
+        poorMode = PlayerPrefs.GetInt("PoorMode") == 1;
     }
 
     private void Update()
     {
+        if (poorMode)
+            return;
+
         if (Input.touchCount == 0)
             return;
 
