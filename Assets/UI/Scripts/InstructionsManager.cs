@@ -15,6 +15,7 @@ public class InstructionsManager : MonoBehaviour
     public GameObject touchScreenInstruction;
     public GameObject scaleInstruction;
     public GameObject moveIteratorInstruction;
+    public GameObject moveObjectInstruction;
 
     [Header("Other")]
     public ARPlaneManager planeManager;
@@ -156,14 +157,23 @@ public class InstructionsManager : MonoBehaviour
 
                 //monit o skalowaniu obiektu
                 yield return StartCoroutine(FadeIn(scaleInstruction));
-                yield return new WaitForSeconds(instructionDuration);
+                yield return new WaitForSeconds(instructionDuration+0.5f);
                 yield return StartCoroutine(FadeOut(scaleInstruction));
+
+                //monit o przesuwaniu obiektu
+                if (!poorMode)
+                {
+                    yield return StartCoroutine(FadeIn(moveObjectInstruction));
+                    yield return new WaitForSeconds(instructionDuration + 0.5f);
+                    yield return StartCoroutine(FadeOut(moveObjectInstruction));
+                }
+                    
 
                 //monit dla iteratora
                 if (algorithm.Contains("ListStruct"))
                 {
                     yield return StartCoroutine(FadeIn(moveIteratorInstruction));
-                    yield return new WaitForSeconds(instructionDuration);
+                    yield return new WaitForSeconds(instructionDuration+1.5f);
                     yield return StartCoroutine(FadeOut(moveIteratorInstruction));
                 }
 

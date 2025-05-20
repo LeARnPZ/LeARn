@@ -24,18 +24,22 @@
 
 5) Jeśli taki istnieje, to zamień miejscami elementy i oraz j.
 
-6) Powtarzamy od kroku 3) zaczynając szukać od indeksu i aż do ustawienia pivota.
+6) Powtarzamy kroki 3-5 zaczynając szukać od indeksu i aż do zbadania każdego elementu przed pivotem.
 
-7) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
+7) Jeśli pivot nie znajduje się na właściwym miejscu, zamień miejscami pivot i pierwszy element większy od niego.
+
+8) Pivot znajduje się na właściwej pozycji. Powtarzamy wszystkie kroki dla list na lewo i prawo od pivota.
 
 ### MergeSort
-1) Jeśli lista ma więcej niż jeden element: a. Podziel listę na dwie równe (lub prawie równe) części.
+1) Jeśli lista ma więcej niż jeden element: 
+	a. Podziel listę na dwie równe (lub prawie równe) części.
 	b. Rekurencyjnie zastosuj MergeSort do obu części.
 
 2) Jeśli lista ma jeden element:
 	a. Lista jest już posortowana – nic nie robimy.
 
-3) Scalanie posortowanych podlist: a. Porównaj pierwszy element każdej z dwóch posortowanych podlist.
+3) Scalanie posortowanych podlist: 
+	a. Porównaj pierwszy element każdej z dwóch posortowanych podlist.
 	b. Przenieś mniejszy z tych elementów do nowej listy wynikowej.
 	c. Powtarzaj porównywanie i przenoszenie, aż jedna z podlist się wyczerpie.
 	d. Dołącz pozostałe elementy z niepustej podlisty do listy wynikowej.

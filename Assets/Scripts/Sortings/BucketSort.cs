@@ -85,17 +85,33 @@ public class BucketSort : Sortings
                 StartCoroutine(MoveObject(keyItem, liftPosition));
                 yield return new WaitForSeconds(timeout);
                 
-                while (k >= 0 && GetValue(bucket[k]) > keyValue)
+                while (k >= 0)
                 {
-                    bucket[k + 1] = bucket[k];
+                    if (GetValue(bucket[k]) > keyValue)
+                    {
+                        StartCoroutine(ChangeColor(bucket[k], yellowColor));
+                        yield return new WaitForSeconds(timeout);
+                        bucket[k + 1] = bucket[k];
+                        
+                        Vector3 newPos = bucketContainers[i].position + new Vector3((k + 2) * intraBucketSpacing, 0, 0);
+                        StartCoroutine(MoveObject(bucket[k], newPos));
+                        StartCoroutine(ChangeColor(bucket[k], bucketColors[i]));
+                        yield return new WaitForSeconds(timeout);
+                        
+                        k--;
+                    }
+                    else
+                    {
+                        StartCoroutine(ChangeColor(bucket[k], yellowColor));
+                        yield return new WaitForSeconds(timeout);
+                        StartCoroutine(ChangeColor(bucket[k], bucketColors[i]));
+                        yield return new WaitForSeconds(timeout);
+                        break;
+                    }
                     
-                    Vector3 newPos = bucketContainers[i].position + new Vector3((k + 2) * intraBucketSpacing, 0, 0);
-                    StartCoroutine(MoveObject(bucket[k], newPos));
-                    yield return new WaitForSeconds(timeout);
-                    
-                    k--;
                 }
-                
+
+
                 bucket[k + 1] = keyItem;
                 
                 Vector3 finalPosition = bucketContainers[i].position + new Vector3((k + 2) * intraBucketSpacing, liftHeight, 0);

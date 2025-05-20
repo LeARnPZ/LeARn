@@ -365,7 +365,6 @@ public abstract class Graphs : MonoBehaviour
         }
     }
 
-
     protected virtual void Start()
     {
         // Dodanie wêz³ów do listy i nadanie etykiet
