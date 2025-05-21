@@ -161,9 +161,13 @@ public class InstructionsManager : MonoBehaviour
                 yield return StartCoroutine(FadeOut(scaleInstruction));
 
                 //monit o przesuwaniu obiektu
-                yield return StartCoroutine(FadeIn(moveObjectInstruction));
-                yield return new WaitForSeconds(instructionDuration + 0.5f);
-                yield return StartCoroutine(FadeOut(moveObjectInstruction));
+                if (!poorMode)
+                {
+                    yield return StartCoroutine(FadeIn(moveObjectInstruction));
+                    yield return new WaitForSeconds(instructionDuration + 0.5f);
+                    yield return StartCoroutine(FadeOut(moveObjectInstruction));
+                }
+                    
 
                 //monit dla iteratora
                 if (algorithm.Contains("ListStruct"))
