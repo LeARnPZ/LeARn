@@ -57,7 +57,7 @@ Projekt został stworzony przez zespół studentów UMK:
 -  Wiktoria Ziętak – [@github](https://github.com/wzietak)
 -  Kacper Pogodziński – [@github](https://github.com/kpogodzinski)
 -  Kamil Orczyk - [@github](https://github.com/Gybominator)
-- Aleksander Wierzchowski
-- Mateusz Przystawski
+- Aleksander Wierzchowski - [@github](https://github.com/a-wierzchowski)
+- Mateusz Przystawski - [@github](https://github.com/Qrag11)
 - Adrian Augustyniak
 
